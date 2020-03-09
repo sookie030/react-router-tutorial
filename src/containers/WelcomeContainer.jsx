@@ -11,11 +11,6 @@ class WelcomeContainer extends React.Component {
   render() {
     return (
       <div>
-        <div className="global-title-area">
-          {/* <img src={icLogo} alt="logo" width="32" height="32" /> */}
-          <p className="global-title-text">Knowledge Studio 2.0</p>
-        </div>
-
         <div className="global-content-area">
           <Link to="/linkboard">
             <button id="btn-new-link">Create new link</button>

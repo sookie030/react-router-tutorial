@@ -26,7 +26,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Welcome} />
         <Route path="linkboard" component={LinkWorkspace} />
-        <Route path="linkboard" component={LinkWorkspace} />
+        {/* <Route path="application-view" component={LinkWorkspace} /> */}
         <Route path="home" component={Home} />
         <Route path="about" component={About} />
         <Route path="post" component={Posts}>

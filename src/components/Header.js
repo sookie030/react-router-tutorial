@@ -2,30 +2,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import './Header.css';
 
-const MenuItem = ({active, children, to}) => (
-    <Link to={to} className={`menu-item ${active ? 'active': ''}`}>
-            {children}
-    </Link>
-);
-
-const Header = (props, context) => {
-    const { router } = context;
+const Header = props => {
     return (
-        <div>
-            <div className="logo">
-                velopert
-            </div>
-            <div className="menu">
-                <MenuItem to={'/'} active={router.isActive('/', true)}>홈</MenuItem>
-                <MenuItem to={'/about'} active={router.isActive('/about')}>소개</MenuItem>
-                <MenuItem to={'/post'} active={router.isActive('/post')}>포스트</MenuItem>
-            </div>
+        <div className="global-title-area">
+          <p className="global-title-text">Knowledge Studio 2.0</p>
         </div>
     );
 };
-
-Header.contextTypes = {
-    router: React.PropTypes.object
-}
 
 export default Header;
