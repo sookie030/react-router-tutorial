@@ -1,0 +1,59 @@
+#file-navigator {
+    position: fixed;
+    top: 65px;
+    right: 0px;
+    width: 200px;
+    height: 100%;
+    background-color: black;
+}
+
+.file-navigator-title {
+    background-color: rgb(61, 61, 61);
+    width: 100%;
+    height: 30px;
+}
+
+.file-navigator-title p {
+    color: rgb(200, 200, 200);
+    font-size: 13px;
+}
+
+.file-navigator-content {
+    display: table;
+    vertical-align: middle;
+}
+
+.file-navigator-content p {
+    color: white;
+    font-size: 13px;
+}
+
+#property-navigator {
+    position: fixed;
+    top: 65px;
+    right: 0px;
+    width: 200px;
+    height: 100%;
+    background-color: black;
+}
+
+.property-navigator-title {
+    background-color: rgb(61, 61, 61);
+    width: 100%;
+    height: 30px;
+}
+
+.property-navigator-title p {
+    color: rgb(200, 200, 200);
+    font-size: 13px;
+}
+
+.property-navigator-content {
+    display: table;
+    vertical-align: middle;
+}
+
+.property-navigator-content p {
+    color: white;
+    font-size: 13px;
+}

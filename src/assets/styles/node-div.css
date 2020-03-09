@@ -1,0 +1,144 @@
+.node {
+    /* cursor: move; */
+    position: absolute;
+    border-radius: 10px;
+    /* padding: 10px; */
+    /* margin: 10px; */
+    background-color: #000000;
+    border: 1px solid rgb(21, 70, 70);
+    width: 204px;
+    /* height: 106px; */
+}
+
+.node.selected {
+    border: 1px solid #d0ff00;
+}
+
+.node-container {
+    position: relative;
+    padding: 10px;
+}
+
+.header-group {
+    text-align: center;
+}
+
+.header-group > p {
+    font-size: 8px;
+    fill: rgb(199, 199, 199);
+    text-anchor: middle;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.header-title {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.header-title > p {
+    font-size: 13px;
+    fill: rgb(255, 255, 255);
+    text-anchor: middle;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.node-content {
+    fill: #3C3C3C;
+}
+
+.content-property {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 3px;
+    margin: 3px;
+    background-color: #3b3b3b;
+}
+
+.content-property > p {
+    font-size: 10px;
+    font-weight: bold;
+    color: #36aec4;
+    padding: 10;
+}
+
+#ports {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /* width: 240px;
+    height: 100px; */
+    /* display: none; */
+}
+
+#port-left {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+}
+
+.port-outer {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #777777;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.port-inner {
+    /* position: absolute; */
+    display: inline-block;  
+    width: 10px;
+    height: 10px;
+    background-color: #202020;
+    border-radius: 50%;
+}
+
+.port-scrim {
+    fill: transparent;
+}
+
+.port-outer {
+    fill: #777777;
+}
+
+.port-inner {
+    fill: #202020;
+}
+
+.port-label {
+    font-size: 12px;
+    fill: #fff;
+}
+
+.input-field .port-label {
+    text-anchor: start;
+}
+
+.output-field .port-label {
+    text-anchor: end;
+}
+
+.link-handle {
+    fill: rgb(119, 158, 168);
+}
+
+.link-path {
+    stroke: rgb(119, 158, 168);
+    stroke-width: 3;
+    fill: none;
+}
+
+.link-path-outline {
+    stroke: rgb(185, 210, 216);
+    stroke-width: 4;
+    fill: none;
+}

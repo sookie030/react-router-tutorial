@@ -15,12 +15,10 @@
     "immutable": "^4.0.0-rc.12",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-redux": "^7.1.0",
+    "react-redux": "^5.1.2",
     "react-router": "^3.0.1",
     "react-scripts": "^3.4.0",
-    "redux": "^4.0.4",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.1"
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

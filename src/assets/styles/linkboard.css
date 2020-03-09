@@ -1,0 +1,8 @@
+#linkboard {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* background: #1a1a1a; */
+    font-family: Arial sans-serif;
+    overflow: auto;
+}

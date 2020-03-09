@@ -1,0 +1,126 @@
+.node-container {
+}
+
+.node-background {
+    fill: #000000;
+    stroke: rgb(21, 70, 70);
+    stroke-width: 2px;
+    /* fill: rgb(255, 255, 255); */
+    /* width: 204px;
+    height: 97px; */
+}
+
+.content-property-rect {
+    /* height: 20px; */
+    fill: #252525;
+}
+
+.content-property {
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: bold;
+    fill: rgb(72, 168, 168);
+}
+
+.node-selector {
+    /* width: 204px;
+    height: 97px; */
+    fill: rgba(255, 255, 255, 0);
+}
+
+
+
+.node-preview-button {
+    stroke: rgb(69, 165, 165);
+}
+
+.node-preview {
+    /* cursor: pointer; */
+}
+
+.node-preview-text {
+    fill: rgb(69, 165, 165);
+    font-size: 10px;
+    text-anchor: middle;
+}
+
+.header-title {
+    font-size: 13px;
+    fill: rgb(255, 255, 255);
+    text-anchor: middle;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.header-group {
+    font-size: 8px;
+    fill: rgb(199, 199, 199);
+    text-anchor: middle;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.node-content {
+    fill: #3C3C3C;
+}
+
+.content-round-rect {
+    width: 200px;
+    height: 50px;
+}
+
+.content-rect {
+    width: 200px;
+    height: 46px;
+}
+
+.port {
+    /* cursor: pointer; */
+}
+
+.port-scrim {
+    fill: transparent;
+}
+
+.port-outer {
+    fill: #777777;
+}
+
+.port-inner {
+    fill: #202020;
+}
+
+.port-label {
+    font-size: 12px;
+    fill: #fff;
+}
+
+.input-field .port-label {
+    text-anchor: start;
+}
+
+.output-field .port-label {
+    text-anchor: end;
+}
+
+.link-handle {
+    fill: rgb(119, 158, 168);
+}
+
+.link-path {
+    stroke: rgb(119, 158, 168);
+    stroke-width: 3;
+    fill: none;
+}
+
+.link-path-outline {
+    stroke: rgb(185, 210, 216);
+    stroke-width: 4;
+    fill: none;
+}

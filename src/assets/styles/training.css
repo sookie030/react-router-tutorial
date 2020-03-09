@@ -1,0 +1,13 @@
+/* Style the tab */
+
+canvas {
+    position: absolute;
+}
+
+#test {
+    fill: white;
+}
+
+#test1 {
+    fill: rgb(255, 230, 5);
+}

@@ -1,0 +1,228 @@
+/**
+ * navigator body
+ */
+#property-navigator {
+  font-family: 'Open Sans', --apple-system, 'Helvetica Neue', Helvetica, Arial,
+    sans-serf;
+  font-size: 12px;
+  height: 100%;
+  position: fixed;
+  transition: 0.5s;
+  z-index: 1;
+  top: 65px;
+  right: 0;
+  background-color: #f2f2f2;
+  overflow: hidden;
+  border-left: 1px solid #ccc;
+}
+
+/**
+ * top buttons (edit, refresh, close)
+ */
+#property-navigator-top {
+  height: 20px;
+  margin-bottom: 5px;
+  text-align: right;
+  margin: 10px;
+}
+
+.navigator-button {
+  background-color: inherit;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+/**
+ * selected module name
+ */
+.navigator-title {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.25;
+  padding-bottom: 0.3em;
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: default;
+  margin: 20px;
+}
+
+/**
+ * navigator content body
+ */
+.navigator-content {
+  margin: 20px;
+}
+
+/**
+ * property group name
+ */
+.navigator-header {
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.25;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  /* border-bottom: 1px solid #f2f2f2; */
+  display: block;
+  color: #333;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: default;
+}
+
+/**
+ * property row body
+ */
+.navigator-item {
+  margin-bottom: 0px;
+  display: block;
+}
+
+/**
+ * property name (key)
+ */
+.navigator-item-name {
+  float: left;
+  font-size: 10px;
+  min-width: 100px;
+  max-width: 100px;
+  padding-right: 5px;
+  padding-top: 7px;
+  display: block;
+}
+
+.navigator-item-name input {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: inherit;
+  width: 100%;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  text-overflow: ellipsis;
+}
+
+/**
+ * property value body
+ */
+
+.navigator-item-value-list {
+  margin: 0;
+  margin-left: 110px;
+  padding: 0;
+  overflow: hidden;
+  display: block;
+}
+
+/**
+ * property value
+ */
+
+/********** Display **********/
+
+.navigator-item-value {
+  font-size: 10px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  border: 1px solid #dedede;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  overflow: auto;
+  min-height: 29px;
+  /* max-height: 29px; */
+}
+
+.navigator-item-value-line {
+  padding: 4px 6px 4px 6px;
+}
+
+.navigator-item-value-line > ul {
+  padding: 0px;
+  margin: 5px;
+  color: black;
+}
+
+.navigator-item-value-line .navigator-file-image {
+  max-width: 60px;
+  max-height: 40px;
+}
+
+.navigator-item-value-line .navigator-file-image > img {
+  width: 60px;
+  height: 40px;
+}
+
+.navigator-item-value-line .navigator-file-name {
+  margin-left: 65px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.navigator-file-list {
+  cursor: pointer;
+  margin: 2px 0px 2px 0px;
+}
+
+.navigator-file-list:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.navigator-file-list.selected {
+  background-color: rgb(201, 247, 187);
+}
+
+.navigator-file-list.selected:hover {
+  background-color: rgb(161, 202, 149);
+}
+
+
+/********** Edit **********/
+
+.navigator-item-value.editable {
+  border: 1px solid #addeff;
+}
+
+.navigator-item-value-line.editable > .one {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: inherit;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+}
+
+.navigator-item-value-line.editable > .input-directory {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: inherit;
+  width: 89%;
+  margin: 0;
+  padding-right: 7px;
+  border: 0;
+  outline: none;
+}
+
+.navigator-item-value-line.editable > .button-directory {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: inherit;
+  border-radius: 4px;
+  outline: none;
+}
