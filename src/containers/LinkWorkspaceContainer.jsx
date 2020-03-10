@@ -11,7 +11,7 @@ const LinkWorkspaceContainer = props => (
     <Linkboard />
     <Sidebar />
     <PropertyNavigator />
-    {/* <Toast /> */}
+    <Toast />
   </div>
 );
 

@@ -2,16 +2,17 @@
  * navigator body
  */
 #property-navigator {
+  position: fixed;
+  /* top: 56px; */
+  right: 0;
+  height: 100%;
+  background-color: #f2f2f2;
+  border-left: 1px solid #ccc;
   font-family: "Open Sans", --apple-system, "Helvetica Neue", Helvetica, Arial,
     sans-serf;
   font-size: 12px;
-  height: 100%;
-  position: fixed;
   transition: 0.5s;
-  right: 0;
-  background-color: #f2f2f2;
   overflow: hidden;
-  border-left: 1px solid #ccc;
 }
 
 /**

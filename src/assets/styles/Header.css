@@ -1,17 +1,21 @@
 .header-area {
   display: table;
   width: 100%;
-  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
   background-image: linear-gradient(to right, #425eff, #7355fc 50%);
 }
 
-.header-area * {
+.header-area.bg-color-orange {
+  background-image: linear-gradient(to right, #ffa600, #fcb93e 50%);
+}
+
+.header-area > div {
   display: table-cell;
   vertical-align: middle;
 }
 
 .header-text {
-  /* display: table-cell; */
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   font-family: Arial;
   font-size: 24px;
@@ -23,38 +27,54 @@
   color: #ffffff;
 }
 
-/* 
 .header-button-area {
-    position: fixed;
-    right: 15px;
-    margin-left: 10px;
-    align-items: center;
-    display: inline-flex;
-} */
-
-.header-button {
-    width: 88px;
-    height: 40px;
-    color: rgb(0, 0, 0);
-    background-color: #47cf73;
-    box-shadow: 1px 1px 1px rgba(170, 170, 170, 0.2);
-    border: 3px solid transparent;
-    border-radius: 4px;
-
-    text-align: center;
-    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
-    font-size: 16px;
-
-    pointer-events: auto;
-    cursor: pointer;
-
-    /* text 가운데정렬 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
+  position: fixed;
+  right: 15px;
+  width: 300px;
+  display: table;
 }
 
-.header-button:hover {
-    background-color: #3aad5e;
+.header-button {
+  display: table-cell;
+  width: 88px;
+  height: 40px;
+  box-shadow: 1px 1px 1px rgba(170, 170, 170, 0.2);
+  border: 3px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  text-align: center;
+  vertical-align: middle;
+  font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma,
+    Sans-Serif;
+  font-size: 15px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.bg-color-green {
+  background-color: #47cf73;
+}
+
+.bg-color-green:hover {
+  background-color: #3aad5e;
+}
+
+.bg-color-orange {
+  background-color: #ffac31;
+}
+
+.bg-color-orange:hover {
+  background-color: #dd9529;
+}
+
+.header-button.disabled {
+  background-color: #a0a0a0;
+}
+
+.header-button.disabled:hover {
+  background-color: #8f8f8f;
+}
+
+.button {
+  cursor: pointer;
 }

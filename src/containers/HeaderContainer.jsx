@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, browserHistory } from "react-router";
 import "../assets/styles/Header.css";
 
 // test
 import icLogo from "../assets/images/ic_logo.png";
+import icBack from "../assets/images/ic_back.png";
 
 // import constants
 import * as EVENT_TYPE from "../constants/EventType";
@@ -14,6 +15,68 @@ import { connect } from "react-redux";
 import { setPipelineManager, setDummyNumber, setToast } from "../redux/actions";
 
 import PipelineManager from "../manager/PipelineManager";
+
+const WelcomeHeader = props => {
+  return (
+    <div className="header-area">
+      <Link to="/">
+        <img src={icLogo} alt="" width="30" height="30" />
+      </Link>
+      <div className="header-text-area">
+        <p className="header-text">Knowledge Studio 2.0</p>
+      </div>
+    </div>
+  );
+};
+
+const LinkboardHeader = props => {
+  return (
+    <div className="header-area">
+      <div className="button" onClick={browserHistory.goBack}>
+        <img src={icBack} alt="" width="30" height="30" />
+      </div>
+      <div className="header-text-area">
+        <p className="header-text">{props.name}</p>
+      </div>
+      <div className="header-button-area">
+        <div
+          className="header-button bg-color-green"
+          onMouseUp={props.handleClickRunBtn}
+        >
+          {props.isPipelineRunning === true ? "STOP" : "RUN"}
+        </div>
+        <Link
+          to="/app-view"
+          className="header-button bg-color-orange disabled"
+          // onMouseUp={props.handleClickAppViewBtn}
+        >
+          Application View
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+const AppViewHeader = props => {
+  return (
+    <div className="header-area bg-color-orange">
+      <div className="button" onClick={browserHistory.goBack}>
+        <img src={icBack} alt="" width="30" height="30" />
+      </div>
+      <div className="header-text-area">
+        <p className="header-text">Pipeline Link</p>
+      </div>
+      <div className="header-button-area">
+        <div
+          className="header-button bg-color-green"
+          onMouseUp={props.handleClickRunBtn}
+        >
+          {props.isPipelineRunning === true ? "STOP" : "RUN"}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // const Header = props => {
 class Header extends React.Component {
@@ -92,17 +155,21 @@ class Header extends React.Component {
   };
 
   render() {
-    return (
-      <div className="header-area">
-        <div className="header-text-area">
-          <p className="header-text">Knowledge Studio 2.0</p>
-        </div>
-        <div className="header-button-area">
-          <div className="header-button" onMouseUp={this.handleClickRunBtn}>
-            {this.state.isPipelineRunning === true ? "STOP" : "RUN"}
-          </div>
-        </div>
-      </div>
+    // console.log(this.props.location);
+    return this.props.location === "/" ? (
+      <WelcomeHeader />
+    ) : this.props.location === "/linkboard" ? (
+      <LinkboardHeader
+        name={"untitled"}
+        isPipelineRunning={this.state.isPipelineRunning}
+        handleClickRunBtn={this.handleClickRunBtn}
+      />
+    ) : this.props.location === "/app-view" ? (
+      <AppViewHeader 
+      isPipelineRunning={this.state.isPipelineRunning}
+      handleClickRunBtn={this.handleClickRunBtn}/>
+    ) : (
+      <WelcomeHeader />
     );
   }
 }

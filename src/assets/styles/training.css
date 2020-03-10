@@ -1,4 +1,12 @@
 /* Style the tab */
+.workspace {
+    width: 100%;
+    height: 100%;
+}
+
+.bg-color-black {
+    background-color: #102131;
+}
 
 canvas {
     position: absolute;

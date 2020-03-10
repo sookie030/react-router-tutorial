@@ -1,6 +1,6 @@
-import React from 'react';
-import Draggable from 'react-draggable';
-import '../../assets/styles/node.css';
+import React from "react";
+import Draggable from "react-draggable";
+import "../../assets/styles/node.css";
 
 class Node extends React.Component {
   TEXT_SPACE_X = 6;
@@ -24,7 +24,7 @@ class Node extends React.Component {
    * Canvas에 캡쳐 이미지 뿌리기
    */
   updateCanvas() {
-    const canvasCtx = this.canvasRef.getContext('2d');
+    const canvasCtx = this.canvasRef.getContext("2d");
     canvasCtx.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height);
     canvasCtx.drawImage(
       this.props.output,
@@ -35,7 +35,7 @@ class Node extends React.Component {
       0,
       0,
       this.canvasRef.width,
-      this.canvasRef.height,
+      this.canvasRef.height
     );
   }
 
@@ -44,34 +44,34 @@ class Node extends React.Component {
       <svg>
         <Draggable
           defaultPosition={{
-            x: this.props.node.getPosition()['x'],
-            y: this.props.node.getPosition()['y'],
+            x: this.props.node.getPosition()["x"],
+            y: this.props.node.getPosition()["y"]
           }}
           onDrag={this.props.handleNodeDrag}
           onStop={this.props.handleNodeDragStop}
         >
           {/* Node body */}
-          <g className="node-container" id={'node-' + this.props.node.getID()}>
+          <g className="node-container" id={"node-" + this.props.node.getID()}>
             <rect
               className="node-background"
               x="0"
               y="0"
               rx="6"
               ry="6"
-              width={this.props.node.getSize()['width']}
-              height={this.props.node.getSize()['height']}
+              width={this.props.node.getSize()["width"]}
+              height={this.props.node.getSize()["height"]}
             />
             <g className="node">
               <text
                 className="header-group"
-                x={this.props.node.getSize()['width'] / 2}
+                x={this.props.node.getSize()["width"] / 2}
                 y="20"
               >
                 {this.props.node.getGroup()}
               </text>
               <text
                 className="header-title"
-                x={this.props.node.getSize()['width'] / 2}
+                x={this.props.node.getSize()["width"] / 2}
                 y="35"
               >
                 {this.props.node.getName()}
@@ -122,18 +122,18 @@ class Node extends React.Component {
             >
               {/* Node stroke when mouse over */}
               <rect
-                className="node-selector"
+                className={this.props.node.getID() === this.props.selectedNodeID ? 'node-selector selected' : 'node-selector'}
                 x="0"
                 y="0"
                 rx="6"
                 ry="6"
-                width={this.props.node.getSize()['width']}
-                height={this.props.node.getSize()['height']}
-                style={
-                  this.props.node.getID() === this.props.selectedNodeID
-                    ? { stroke: '#d0ff00' }
-                    : { stroke: 'none' }
-                }
+                width={this.props.node.getSize()["width"]}
+                height={this.props.node.getSize()["height"]}
+                // style={
+                //   this.props.node.getID() === this.props.selectedNodeID
+                //     ? { stroke: "#d0ff00" }
+                //     : { stroke: "none" }
+                // }
               />
 
               {/* Node Preview */}
@@ -147,16 +147,16 @@ class Node extends React.Component {
                     ry="3"
                     width={20}
                     height={10}
-                    x={(this.props.node.getSize()['width'] - 20) / 2}
-                    y={this.props.node.getSize()['height'] - 20}
+                    x={(this.props.node.getSize()["width"] - 20) / 2}
+                    y={this.props.node.getSize()["height"] - 20}
                   ></rect>
 
                   <text
                     className="node-preview-text"
-                    x={this.props.node.getSize()['width'] / 2}
-                    y={this.props.node.getSize()['height'] - 11}
+                    x={this.props.node.getSize()["width"] / 2}
+                    y={this.props.node.getSize()["height"] - 11}
                   >
-                    {this.props.preview ? '∧' : '∨'}
+                    {this.props.preview ? "∧" : "∨"}
                   </text>
                 </g>
                 <g>
@@ -164,17 +164,17 @@ class Node extends React.Component {
                     <foreignObject
                       x="10"
                       y={
-                        this.props.node.getSize()['height'] -
+                        this.props.node.getSize()["height"] -
                         this.PREVIEW_SIZE -
                         10
                       }
-                      width={this.props.node.getSize()['width'] - 20}
-                      height={this.props.node.getSize()['width'] - 20}
+                      width={this.props.node.getSize()["width"] - 20}
+                      height={this.props.node.getSize()["width"] - 20}
                     >
                       <canvas
                         ref={r => (this.canvasRef = r)}
-                        width={this.props.node.getSize()['width'] - 20}
-                        height={this.props.node.getSize()['width'] - 20}
+                        width={this.props.node.getSize()["width"] - 20}
+                        height={this.props.node.getSize()["width"] - 20}
                       ></canvas>
                     </foreignObject>
                   ) : null}
@@ -186,8 +186,8 @@ class Node extends React.Component {
                 className="ports"
                 style={
                   this.props.node.getID() === this.props.selectedNodeID
-                    ? { display: 'block' }
-                    : { display: 'none' }
+                    ? { display: "block" }
+                    : { display: "none" }
                 }
               >
                 <Ports
@@ -208,67 +208,67 @@ class Node extends React.Component {
  * @param {*} props
  */
 const Ports = props => (
-  <g style={{ display: 'block' }} onMouseDown={props.onMouseDown}>
+  <g style={{ display: "block" }} onMouseDown={props.onMouseDown}>
     {/* Left port */}
-    <g className="port" id={props.node.getID() + '-left'}>
+    <g className="port" id={props.node.getID() + "-left"}>
       <circle
         className="port-outer"
         cx="0"
-        cy={props.node.getSize()['height'] / 2}
+        cy={props.node.getSize()["height"] / 2}
         r="7.5"
       />
       <circle
         className="port-inner"
         cx="0"
-        cy={props.node.getSize()['height'] / 2}
+        cy={props.node.getSize()["height"] / 2}
         r="5"
       />
     </g>
 
     {/* Right port */}
-    <g className="port" id={props.node.getID() + '-right'}>
+    <g className="port" id={props.node.getID() + "-right"}>
       <circle
         className="port-outer"
-        cx={props.node.getSize()['width']}
-        cy={props.node.getSize()['height'] / 2}
+        cx={props.node.getSize()["width"]}
+        cy={props.node.getSize()["height"] / 2}
         r="7.5"
       />
       <circle
         className="port-inner"
-        cx={props.node.getSize()['width']}
-        cy={props.node.getSize()['height'] / 2}
+        cx={props.node.getSize()["width"]}
+        cy={props.node.getSize()["height"] / 2}
         r="5"
       />
     </g>
 
     {/* Top port */}
-    <g className="port" id={props.node.getID() + '-top'}>
+    <g className="port" id={props.node.getID() + "-top"}>
       <circle
         className="port-outer"
-        cx={props.node.getSize()['width'] / 2}
+        cx={props.node.getSize()["width"] / 2}
         cy="0"
         r="7.5"
       />
       <circle
         className="port-inner"
-        cx={props.node.getSize()['width'] / 2}
+        cx={props.node.getSize()["width"] / 2}
         cy="0"
         r="5"
       />
     </g>
 
     {/* Bottom port */}
-    <g className="port" id={props.node.getID() + '-bottom'}>
+    <g className="port" id={props.node.getID() + "-bottom"}>
       <circle
         className="port-outer"
-        cx={props.node.getSize()['width'] / 2}
-        cy={props.node.getSize()['height']}
+        cx={props.node.getSize()["width"] / 2}
+        cy={props.node.getSize()["height"]}
         r="7.5"
       />
       <circle
         className="port-inner"
-        cx={props.node.getSize()['width'] / 2}
-        cy={props.node.getSize()['height']}
+        cx={props.node.getSize()["width"] / 2}
+        cy={props.node.getSize()["height"]}
         r="5"
       />
     </g>

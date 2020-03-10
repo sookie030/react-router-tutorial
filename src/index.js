@@ -8,6 +8,7 @@ import App from "./App";
 // import Post from "./containers/Post";
 import Welcome from "./containers/WelcomeContainer";
 import LinkWorkspace from "./containers/LinkWorkspaceContainer";
+import AppView from "./containers/TrainingContainer";
 
 import { Router, Route, IndexRoute, browserHistory } from "react-router";
 
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Welcome} />
         <Route path="linkboard" component={LinkWorkspace} />
+        <Route path="app-view" component={AppView} />
         {/* <Route path="application-view" component={LinkWorkspace} /> */}
         {/* <Route path="home" component={Home} />
         <Route path="about" component={About} />
