@@ -72,13 +72,36 @@ class Header extends React.Component {
     );
 
     this.props.onSetPipelineManager(pipelineManager);
-    console.log('setpipeline')
+    console.log("setpipeline");
   }
+
+  /**
+   * Pipeline 실행
+   */
+  handleClickRunBtn = e => {
+    let flag = this.state.isPipelineRunning;
+    this.setState(
+      {
+        isPipelineRunning: !flag
+      },
+      () => {
+        this.props.pipelineManager.setIsPipelineRunning(!flag);
+        // this.props.onIsPipelineRunning(!flag);
+      }
+    );
+  };
 
   render() {
     return (
-      <div className="global-title-area">
-        <p className="global-title-text">Knowledge Studio 2.0</p>
+      <div className="header-area">
+        <div className="header-text-area">
+          <p className="header-text">Knowledge Studio 2.0</p>
+        </div>
+        <div className="header-button-area">
+          <div className="header-button" onMouseUp={this.handleClickRunBtn}>
+            {this.state.isPipelineRunning === true ? "STOP" : "RUN"}
+          </div>
+        </div>
       </div>
     );
   }
@@ -86,9 +109,9 @@ class Header extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    links: state.linksManager.get('links'),
-    pipelineManager: state.pipelineManager.get('pipelineManager'),
-    isPipelineDragging: state.pipelineManager.get('isDragging'),
+    links: state.linksManager.get("links"),
+    pipelineManager: state.pipelineManager.get("pipelineManager"),
+    isPipelineDragging: state.pipelineManager.get("isDragging")
   };
 };
 
@@ -99,11 +122,8 @@ let mapDispatchToProps = dispatch => {
     onSetDummyNumber: () => dispatch(setDummyNumber()),
 
     onSetToast: (timeStamp, message, messageType) =>
-      dispatch(setToast(timeStamp, message, messageType)),
+      dispatch(setToast(timeStamp, message, messageType))
   };
 };
-Header = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Header);
+Header = connect(mapStateToProps, mapDispatchToProps)(Header);
 export default Header;

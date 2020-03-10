@@ -113,8 +113,8 @@ class SidebarContainer extends React.Component {
             key={i}
             className={
               this.state.selectedModuleId === i
-                ? 'listItem moduleItem selected'
-                : 'listItem moduleItem'
+                ? 'list-item module-item selected'
+                : 'list-item module-item'
             }
             draggable="true"
             onDragStart={e => this.handleDragStart(i, e)}
@@ -138,8 +138,8 @@ class SidebarContainer extends React.Component {
           key={i}
           className={
             this.state.selectedGroupId === i
-              ? 'listItem groupItem selected'
-              : 'listItem groupItem'
+              ? 'list-item group-item selected'
+              : 'list-item group-item'
           }
           onMouseDown={e => this.handleMouseDown(e)}
           onMouseUp={e => this.handleMouseUp('group', i, e)}

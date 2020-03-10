@@ -11,7 +11,7 @@ const Sidebar = props => (
       <div id="groups" style={{ width: props.groupWidth }}>
         {props.groups}
       </div>
-      <div id="moduleList" style={{ width: props.moduleListWidth }}>
+      <div id="module-list" style={{ width: props.moduleListWidth }}>
         {props.moduleList}
       </div>
     </div>

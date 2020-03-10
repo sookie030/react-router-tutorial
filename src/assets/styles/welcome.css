@@ -1,28 +1,3 @@
-.global-title-area {
-  display: table;
-  width: 100%;
-  height: 56px;
-  background-image: radial-gradient(circle at 50% 0, #5b9af8, #567de9 7%);
-}
-
-.global-title-area * {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.global-title-area .global-title-text {
-  /* display: table-cell; */
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  font-family: Arial;
-  font-size: 24px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 0.67;
-  letter-spacing: normal;
-  color: #ffffff;
-}
-
 .global-content-area {
   padding: 43px;
 }

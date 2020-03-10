@@ -2,14 +2,12 @@
  * navigator body
  */
 #property-navigator {
-  font-family: 'Open Sans', --apple-system, 'Helvetica Neue', Helvetica, Arial,
+  font-family: "Open Sans", --apple-system, "Helvetica Neue", Helvetica, Arial,
     sans-serf;
   font-size: 12px;
   height: 100%;
   position: fixed;
   transition: 0.5s;
-  z-index: 1;
-  top: 65px;
   right: 0;
   background-color: #f2f2f2;
   overflow: hidden;
@@ -186,7 +184,6 @@
 .navigator-file-list.selected:hover {
   background-color: rgb(161, 202, 149);
 }
-
 
 /********** Edit **********/
 
