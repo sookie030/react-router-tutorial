@@ -1,8 +1,5 @@
 import React from 'react';
-import './welcome.css';
-
-// import image
-// import icLogo from '../../assets/images/ic_logo.png';
+import '../assets/styles/welcome.css';
 
 // import external component
 import { Link } from 'react-router';
