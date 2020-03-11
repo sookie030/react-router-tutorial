@@ -29,7 +29,7 @@ class TitlebarContainer extends React.Component {
     let pipelineManager = new PipelineManager();
 
     // 파이프라인 사이클 한 번 돌았음을 알려줌
-    pipelineManager.setEventHandler(
+    pipelineManager.addListener(
       EVENT_TYPE.ONE_PIPELINE_CYCLE_IS_OVER,
       flag => {
         console.log('ONE_PIPELINE_CYCLE_IS_OVER');
@@ -52,7 +52,7 @@ class TitlebarContainer extends React.Component {
     );
 
     // 파이프라인 실행/중단
-    // pipelineManager.setEventHandler(EVENT_TYPE.PIPELINE_RUN_OR_STOP, () => {
+    // pipelineManager.addListener(EVENT_TYPE.PIPELINE_RUN_OR_STOP, () => {
     //   console.log('PIPELINE_RUN_OR_STOP');
     //   let flag = this.state.isPipelineRunning;
     //   this.setState(
@@ -67,7 +67,7 @@ class TitlebarContainer extends React.Component {
     // });
 
     // Toast 띄우기
-    pipelineManager.setEventHandler(
+    pipelineManager.addListener(
       EVENT_TYPE.POP_UP_TOAST,
       (message, messageType) => {
         this.props.onSetToast(Date.now(), message, messageType);

@@ -7,7 +7,7 @@ import { Link } from 'react-router';
 class WelcomeContainer extends React.Component {
   render() {
     return (
-      <div>
+      <div className="content-area">
         <div className="global-content-area">
           <Link to="/linkboard">
             <button id="btn-new-link">Create new link</button>

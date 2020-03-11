@@ -58,6 +58,7 @@
 
 .welcome-table {
   display: table;
+  width: 100%;
 }
 
 .welcome-table-cell {

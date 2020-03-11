@@ -12,7 +12,7 @@ import MODULE_LIST from '../constants/module/ModuleList';
 
 class SidebarContainer extends React.Component {
   state = {
-    sidebarWidth: 250,
+    sidebarWidth: 260,
     groupWidth: 100,
 
     selectedGroupId: 0,
@@ -63,7 +63,7 @@ class SidebarContainer extends React.Component {
       } else {
         this.setState({
           selectedGroupId: id,
-          sidebarWidth: 250,
+          sidebarWidth: 260,
         });
       }
 

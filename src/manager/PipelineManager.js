@@ -279,8 +279,17 @@ class PipelineManager {
    * @param {String} eventName
    * @param {Function} handler
    */
-  setEventHandler(eventName, handler) {
+  addListener(eventName, handler) {
     this.eventEmitter.on(eventName, handler);
+  }
+
+    /**
+   * 이벤트를 제거한다.
+   * @param {String} eventName
+   * @param {Function} handler
+   */
+  removeListener(eventName, handler) {
+    this.eventEmitter.off(eventName, handler);
   }
 
   /**
@@ -354,6 +363,13 @@ class PipelineManager {
 
     // 유효한 파이프라인인 경우에만 실행
     if (isValid) {
+
+      // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
+      this.eventEmitter.emit(
+        EVENT_TYPE.SEND_PIPELINE_INFO,
+        this._pipeline
+      );
+
       this.execute();
       this.requestID = requestAnimationFrame(() => this.run());
 
@@ -506,8 +522,7 @@ class PipelineManager {
           // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
           this.eventEmitter.emit(
             EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
-            module,
-            result,
+            module
           );
           i++;
         } else {

@@ -92,7 +92,7 @@ class Header extends React.Component {
     let pipelineManager = new PipelineManager();
 
     // 파이프라인 사이클 한 번 돌았음을 알려줌
-    pipelineManager.setEventHandler(
+    pipelineManager.addListener(
       EVENT_TYPE.ONE_PIPELINE_CYCLE_IS_OVER,
       flag => {
         console.log("ONE_PIPELINE_CYCLE_IS_OVER");
@@ -115,7 +115,7 @@ class Header extends React.Component {
     );
 
     // Toast 띄우기
-    pipelineManager.setEventHandler(
+    pipelineManager.addListener(
       EVENT_TYPE.POP_UP_TOAST,
       (message, messageType) => {
         this.props.onSetToast(Date.now(), message, messageType);
