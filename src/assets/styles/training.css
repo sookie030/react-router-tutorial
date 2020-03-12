@@ -13,9 +13,10 @@
 
 .module-area {
   float: left;
+  margin: 20px;
 }
 
-.input-canvas {
+.preview-canvas {
   width: 210px;
   height: 210px;
   border: solid 3px #ffffff;
@@ -77,6 +78,10 @@
   color: #ffffff;
 
   display: inline-block;
+}
+
+.source-area {
+    position: relative;
 }
 
 .source-area > canvas {

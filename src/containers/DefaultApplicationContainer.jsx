@@ -16,7 +16,10 @@ import * as MODULES from "../constants/module/Modules";
 import * as EVENT_TYPE from "../constants/EventType";
 import { MODIFY_LINK } from "../redux/actionTypes";
 
-class TrainingContainer extends React.Component {
+import TrainingContainer from "./TrainingContainer";
+import RecognitionContainer from "./RecognitionContainer";
+
+class DefaultApplicationContainer extends React.Component {
   // video source (camera, image files..)
   // roi
   // nm500
@@ -123,6 +126,30 @@ class TrainingContainer extends React.Component {
           break;
       }
     });
+
+    // switch (true) {
+    //   case !this.modulesInPipeline:
+    //     break;
+    //   case MODULES.ROI:
+    //     this.modulesInPipeline.roi = true;
+    //     break;
+    //   case MODULES.NM500:
+    //     this.setState({
+    //       nm500: {
+    //         context: {
+    //           id: "-",
+    //           name: "-"
+    //         },
+    //         category: {
+    //           id: "-",
+    //           name: "-"
+    //         }
+    //       }
+    //     })
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
 
   /**
@@ -577,6 +604,7 @@ class TrainingContainer extends React.Component {
   };
 
   render() {
+    console.log()
     return (
       <React.Fragment>
         <div className="workspace bg-color-black">
@@ -631,13 +659,13 @@ class TrainingContainer extends React.Component {
 
           {/** footer */}
           <div className="footer">
-            <Link to="/app-view/training">
+            <Link to="/app-view/1">
               <div className="footer-button">
                 <div className="footer-indicator selected" />
-                <p>Training</p>
+                <p>Training (d)</p>
               </div>
             </Link>
-            <Link to="/app-view/recognition">
+            <Link to="/app-view/2">
               <div className="footer-button">
                 <div className="footer-indicator" />
                 <p>Recognition</p>
@@ -664,8 +692,8 @@ let mapDispatchToProps = dispatch => {
   };
 };
 
-TrainingContainer = connect(
+DefaultApplicationContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(TrainingContainer);
-export default TrainingContainer;
+)(DefaultApplicationContainer);
+export default DefaultApplicationContainer;
