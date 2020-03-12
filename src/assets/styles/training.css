@@ -12,7 +12,10 @@
 }
 
 .module-area {
+  position: relative;
   float: left;
+  /* margin: 20px; */
+  padding: 20px;
 }
 
 .input-canvas {
@@ -77,6 +80,10 @@
   color: #ffffff;
 
   display: inline-block;
+}
+
+.source-area {
+  position: relative;
 }
 
 .source-area > canvas {

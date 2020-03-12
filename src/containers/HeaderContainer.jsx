@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, browserHistory } from "react-router";
+import { Link } from 'react-router-dom';
 import "../assets/styles/Header.css";
 
 // test
@@ -32,7 +32,7 @@ const WelcomeHeader = props => {
 const LinkboardHeader = props => {
   return (
     <div className="header-area">
-      <div className="button" onClick={browserHistory.goBack}>
+      <div className="button">
         <img src={icBack} alt="" width="30" height="30" />
       </div>
       <div className="header-text-area">
@@ -60,7 +60,7 @@ const LinkboardHeader = props => {
 const AppViewHeader = props => {
   return (
     <div className="header-area bg-color-orange">
-      <div className="button" onClick={browserHistory.goBack}>
+      <div className="button">
         <img src={icBack} alt="" width="30" height="30" />
       </div>
       <div className="header-text-area">
@@ -155,7 +155,7 @@ class Header extends React.Component {
   };
 
   render() {
-    // console.log(this.props.location);
+    console.log(this.props.match);
     return this.props.location === "/" ? (
       <WelcomeHeader />
     ) : this.props.location === "/linkboard" ? (
