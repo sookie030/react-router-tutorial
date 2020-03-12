@@ -5,6 +5,11 @@ import '../assets/styles/welcome.css';
 import { Link } from 'react-router-dom';
 
 class WelcomeContainer extends React.Component {
+
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <div className="content-area">

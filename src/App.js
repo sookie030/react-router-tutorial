@@ -11,7 +11,8 @@ import Reducer from "./redux/reducer";
 // Components
 import Welcome from "./containers/WelcomeContainer";
 import LinkWorkspace from "./containers/LinkWorkspaceContainer";
-import AppView from "./containers/TrainingContainer";
+import AppView from "./containers/AppViewContainer";
+import NotFound from "./containers/NotFound";
 
 import Header from "./containers/HeaderContainer";
 
@@ -23,13 +24,16 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div>
-            <Header />
+            <Header
+              test={this.props.match}
+            />
             <div>
               <Switch>
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/linkboard" component={LinkWorkspace} />
-                <Route path={["/appview", "/appview/:viewname"]} component={AppView}/>
+                <Route path={["/appview/:viewname"]} component={AppView}/>
                 {/* <Route path="/appview" component={AppView}/> */}
+                <Route component={NotFound} />
               </Switch>
             </div>
           </div>

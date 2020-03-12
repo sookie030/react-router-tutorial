@@ -46,7 +46,7 @@ const LinkboardHeader = props => {
           {props.isPipelineRunning === true ? "STOP" : "RUN"}
         </div>
         <Link
-          to="/app-view"
+          to="/appview/0"
           className="header-button bg-color-orange disabled"
           // onMouseUp={props.handleClickAppViewBtn}
         >
@@ -135,7 +135,6 @@ class Header extends React.Component {
     );
 
     this.props.onSetPipelineManager(pipelineManager);
-    console.log("setpipeline");
   }
 
   /**
@@ -155,22 +154,28 @@ class Header extends React.Component {
   };
 
   render() {
-    console.log(this.props.match);
-    return this.props.location === "/" ? (
-      <WelcomeHeader />
-    ) : this.props.location === "/linkboard" ? (
+    return (
       <LinkboardHeader
         name={"untitled"}
         isPipelineRunning={this.state.isPipelineRunning}
         handleClickRunBtn={this.handleClickRunBtn}
       />
-    ) : this.props.location === "/app-view" ? (
-      <AppViewHeader 
-      isPipelineRunning={this.state.isPipelineRunning}
-      handleClickRunBtn={this.handleClickRunBtn}/>
-    ) : (
-      <WelcomeHeader />
-    );
+    )
+    // return this.props.location === "/" ? (
+    //   <WelcomeHeader />
+    // ) : this.props.location === "/linkboard" ? (
+    //   <LinkboardHeader
+    //     name={"untitled"}
+    //     isPipelineRunning={this.state.isPipelineRunning}
+    //     handleClickRunBtn={this.handleClickRunBtn}
+    //   />
+    // ) : this.props.location === "/app-view" ? (
+    //   <AppViewHeader 
+    //   isPipelineRunning={this.state.isPipelineRunning}
+    //   handleClickRunBtn={this.handleClickRunBtn}/>
+    // ) : (
+    //   <WelcomeHeader />
+    // );
   }
 }
 

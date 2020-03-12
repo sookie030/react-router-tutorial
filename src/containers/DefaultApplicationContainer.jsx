@@ -16,8 +16,8 @@ import * as MODULES from "../constants/module/Modules";
 import * as EVENT_TYPE from "../constants/EventType";
 import { MODIFY_LINK } from "../redux/actionTypes";
 
-import TrainingContainer from "./TrainingContainer";
-import RecognitionContainer from "./RecognitionContainer";
+import TrainingContainer from "./DefaultApplicationTrainingContainer";
+// import RecognitionContainer from "./RecognitionContainer";
 
 class DefaultApplicationContainer extends React.Component {
   // video source (camera, image files..)
@@ -26,9 +26,10 @@ class DefaultApplicationContainer extends React.Component {
   // 모듈 유무 확인
   modulesInPipeline = { source: false, roi: false, nm500: false };
 
-  sourceCanvasRef = React.createRef();
-  roiCanvasRef = React.createRef();
-  previewCanvasRef = React.createRef();
+  // sourceCanvasRef = React.createRef();
+  // roiCanvasRef = React.createRef();
+  // previewCanvasRef = React.createRef();
+  childViewRef = React.createRef();
 
   inputCanvas = {
     id: null,
@@ -159,8 +160,8 @@ class DefaultApplicationContainer extends React.Component {
     // Training 탭 선택한 경우에만 화면을 뿌려준다.
     // if (this.props.selectedIndex !== this.props.tabIndex) return;
 
-    const inputCanvasCtx = this.sourceCanvasRef.getContext("2d");
-    const roiCanvasCtx = this.roiCanvasRef.getContext("2d");
+    const inputCanvasCtx = this.childViewRef.sourceCanvasRef.getContext("2d");
+    const roiCanvasCtx = this.childViewRef.roiCanvasRef.getContext("2d");
 
     switch (module.getName()) {
       case MODULES.CAMERA:
@@ -171,8 +172,8 @@ class DefaultApplicationContainer extends React.Component {
           .getRawData();
 
         // Camera Preview Size에 맞추어 Canvas Size 설정
-        this.sourceCanvasRef.width = image.width;
-        this.sourceCanvasRef.height = image.height;
+        this.childViewRef.sourceCanvasRef.width = image.width;
+        this.childViewRef.sourceCanvasRef.height = image.height;
 
         // Canvas에 캡쳐 이미지 뿌리기
         inputCanvasCtx.drawImage(image, 0, 0);
@@ -184,10 +185,10 @@ class DefaultApplicationContainer extends React.Component {
         ) {
           this.inputCanvas = {
             id: module.getID(),
-            x: this.sourceCanvasRef.getBoundingClientRect().left,
-            y: this.sourceCanvasRef.getBoundingClientRect().top,
-            width: this.sourceCanvasRef.getBoundingClientRect().width,
-            height: this.sourceCanvasRef.getBoundingClientRect().height
+            x: this.childViewRef.sourceCanvasRef.getBoundingClientRect().left,
+            y: this.childViewRef.sourceCanvasRef.getBoundingClientRect().top,
+            width: this.childViewRef.sourceCanvasRef.getBoundingClientRect().width,
+            height: this.childViewRef.sourceCanvasRef.getBoundingClientRect().height
           };
         }
 
@@ -227,14 +228,14 @@ class DefaultApplicationContainer extends React.Component {
               this.state.roi.height !== height ||
               this.state.roi.color !== color)
           ) {
-            this.roiCanvasRef.width = this.sourceCanvasRef.width;
-            this.roiCanvasRef.height = this.sourceCanvasRef.height;
+            this.childViewRef.roiCanvasRef.width = this.childViewRef.sourceCanvasRef.width;
+            this.childViewRef.roiCanvasRef.height = this.childViewRef.sourceCanvasRef.height;
 
             roiCanvasCtx.clearRect(
               0,
               0,
-              this.roiCanvasRef.width,
-              this.roiCanvasRef.height
+              this.childViewRef.roiCanvasRef.width,
+              this.childViewRef.roiCanvasRef.height
             );
             roiCanvasCtx.beginPath();
             roiCanvasCtx.lineWidth = "3";
@@ -263,14 +264,14 @@ class DefaultApplicationContainer extends React.Component {
           }
         } else {
           // Camera Preview Size에 맞추어 Canvas Size 설정
-          this.roiCanvasRef.width = this.sourceCanvasRef.width;
-          this.roiCanvasRef.height = this.sourceCanvasRef.height;
+          this.childViewRef.roiCanvasRef.width = this.childViewRef.sourceCanvasRef.width;
+          this.childViewRef.roiCanvasRef.height = this.childViewRef.sourceCanvasRef.height;
 
           roiCanvasCtx.clearRect(
             0,
             0,
-            this.roiCanvasRef.width,
-            this.roiCanvasRef.height
+            this.childViewRef.roiCanvasRef.width,
+            this.childViewRef.roiCanvasRef.height
           );
           roiCanvasCtx.beginPath();
           roiCanvasCtx.lineWidth = "3";
@@ -341,14 +342,14 @@ class DefaultApplicationContainer extends React.Component {
       .getRawData();
 
     // Canvas에 캡쳐 이미지 뿌리기
-    this.previewCanvasRef
+    this.childViewRef.previewCanvasRef
       .getContext("2d")
       .drawImage(
         previewImage,
         0,
         0,
-        this.previewCanvasRef.width,
-        this.previewCanvasRef.height
+        this.childViewRef.previewCanvasRef.width,
+        this.childViewRef.previewCanvasRef.height
       );
   };
 
@@ -525,12 +526,12 @@ class DefaultApplicationContainer extends React.Component {
   };
 
   draw = () => {
-    const roiCanvasCtx = this.roiCanvasRef.getContext("2d");
+    const roiCanvasCtx = this.childViewRef.roiCanvasRef.getContext("2d");
     roiCanvasCtx.clearRect(
       0,
       0,
-      this.roiCanvasRef.width,
-      this.roiCanvasRef.height
+      this.childViewRef.roiCanvasRef.width,
+      this.childViewRef.roiCanvasRef.height
     );
 
     roiCanvasCtx.beginPath();
@@ -604,15 +605,25 @@ class DefaultApplicationContainer extends React.Component {
   };
 
   render() {
-    console.log()
+    console.log(this.props.match)
     return (
       <React.Fragment>
         <div className="workspace bg-color-black">
-          <div className="module-area">
+          <TrainingContainer
+            hasROI={this.state.hasROI}
+            nm500={this.state.nm500}
+            sourceCanvasRef={this.childViewRef.sourceCanvasRef}
+            previewCanvasRef={this.childViewRef.previewCanvasRef}
+            ref = {r => this.childViewRef = r}
+            handleROIMouseDown= {this.handleROIMouseDown}
+            handleROIMouseMove={this.handleROIMouseMove}
+            handleROIMouseUp={this.handleROIMouseUp}
+          />
+          {/* <div className="module-area">
             <div className="preview-area">
               <canvas
                 className="preview-canvas"
-                ref={r => (this.previewCanvasRef = r)}
+                ref={r => (this.childViewRef.previewCanvasRef = r)}
                 width="210"
                 height="210"
               />
@@ -645,27 +656,27 @@ class DefaultApplicationContainer extends React.Component {
             <div className="source-area">
               <canvas
                 className="source-canvas"
-                ref={r => (this.sourceCanvasRef = r)}
+                ref={r => (this.childViewRef.sourceCanvasRef = r)}
               />
               <canvas
                 className="roi-canvas"
-                ref={r => (this.roiCanvasRef = r)}
+                ref={r => (this.childViewRef.roiCanvasRef = r)}
                 onMouseDown={this.state.hasROI ? this.handleROIMouseDown : null}
                 onMouseMove={this.state.hasROI ? this.handleROIMouseMove : null}
                 onMouseUp={this.state.hasROI ? this.handleROIMouseUp : null}
               />
             </div>
-          </div>
+          </div> */}
 
           {/** footer */}
           <div className="footer">
-            <Link to="/app-view/1">
+            <Link to="/appview/0">
               <div className="footer-button">
                 <div className="footer-indicator selected" />
                 <p>Training (d)</p>
               </div>
             </Link>
-            <Link to="/app-view/2">
+            <Link to="/appview/1">
               <div className="footer-button">
                 <div className="footer-indicator" />
                 <p>Recognition</p>

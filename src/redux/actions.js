@@ -184,3 +184,10 @@ export function isPropertyNavigatorShowing(isShowing, selectedNode) {
         isShowing, selectedNode
     }
 }
+
+export function setCurrentMatch(match) {
+    return {
+        type: types.SET_CURRENT_MATCH,
+        match
+    }
+}

@@ -549,6 +549,7 @@ class TrainingContainer extends React.Component {
   };
 
   render() {
+    console.log(this.props.match, this.props.location, this.props.history )
     return (
       <React.Fragment>
         <div className="workspace bg-color-black">
