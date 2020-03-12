@@ -91,4 +91,14 @@ property[MODULES.CROP] = node => {
   ];
 };
 
+property[MODULES.GRID] = node => {
+  return [
+    `Size ${
+      node.getProperties().getIn(['Size', 'properties', 'Size Width', 'value'])
+    }x${
+      node.getProperties().getIn(['Size', 'properties', 'Size Height', 'value'])
+    }`,
+  ];
+};
+
 export default property;

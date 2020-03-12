@@ -15,6 +15,7 @@ export const EDGE_HOUGH = 'Edge Hough';
 export const GRAYSCALE = 'Grayscale';
 export const RESIZE = 'Resize';
 export const CROP = 'Crop';
+export const GRID = 'Grid';
 export const FACE_DETECTOR = 'Face Detector';
 export const SUBSAMPLE = 'Subsample';
 export const HOG = 'HOG';
@@ -23,6 +24,7 @@ export const DECISION_MAKER = 'Decision Maker';
 export const SOUND = 'Sound';
 export const VIBRATION = 'Vibration';
 export const DISPLAY = 'Display';
+export const GRID_MAKER = 'Grid Maker';
 
 // dispatcher
 export const FILE_SAVER = 'File Saver';

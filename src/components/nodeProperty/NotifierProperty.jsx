@@ -20,4 +20,10 @@ property[MODULES.DISPLAY] = node => {
     ]
 }
 
+property[MODULES.GRID_MAKER] = node => {
+    return [
+        `Threshold ${node.getProperties().getIn(['Threshold', 'value'])}`
+    ]
+}
+
 export default property;
