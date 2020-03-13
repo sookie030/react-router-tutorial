@@ -1,22 +1,54 @@
 import React from "react";
+import { Route } from "react-router-dom";
 
 import DefaultAppContainer from "./DefaultApplicationContainer";
 import NotFound from "./NotFound";
 
 class AppViewContainer extends React.Component {
 
+
+  /**
+   * Application View Templates...
+   */
   getViewContainer() {
-    console.log(this.props.match)
-    let viewname = this.props.match.params.viewname;
-    console.log(viewname);
-    switch(viewname) {
-      case '0':
+
+    let viewid = this.props.match.params.viewid;
+
+    switch (viewid) {
+      case "0":
         // default
-        return <DefaultAppContainer/>;
+        return (
+          <React.Fragment>
+            <Route
+              exact
+              path={this.props.match.url}
+              component={DefaultAppContainer}
+            />
+            <Route
+              path={`${this.props.match.url}/:name`}
+              component={DefaultAppContainer}
+            />
+          </React.Fragment>
+        );
+
+      case "1":
+        // default
+        return (
+          <React.Fragment>
+            <Route
+              exact
+              path={this.props.match.url}
+              component={DefaultAppContainer}
+            />
+            <Route
+              path={`${this.props.match.url}/:name`}
+              component={DefaultAppContainer}
+            />
+          </React.Fragment>
+        );
       default:
         // default
-        return <NotFound/>;
-
+        return <NotFound />;
     }
   }
 

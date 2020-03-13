@@ -15,7 +15,7 @@ import {
 } from "../constants/module/Modules";
 
 // import factory
-import getModule from "./ModuleFactory";
+// import getModule from "./ModuleFactory";
 
 // import module classes
 import AIModules from "./modules/AI";

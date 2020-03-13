@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import "../assets/styles/Header.css";
 
 // test
@@ -32,7 +33,7 @@ const WelcomeHeader = props => {
 const LinkboardHeader = props => {
   return (
     <div className="header-area">
-      <div className="button">
+      <div className="button" onClick={props.handleClickBackBtn}>
         <img src={icBack} alt="" width="30" height="30" />
       </div>
       <div className="header-text-area">
@@ -60,7 +61,7 @@ const LinkboardHeader = props => {
 const AppViewHeader = props => {
   return (
     <div className="header-area bg-color-orange">
-      <div className="button">
+      <div className="button" onClick={props.handleClickBackBtn}>
         <img src={icBack} alt="" width="30" height="30" />
       </div>
       <div className="header-text-area">
@@ -92,27 +93,24 @@ class Header extends React.Component {
     let pipelineManager = new PipelineManager();
 
     // 파이프라인 사이클 한 번 돌았음을 알려줌
-    pipelineManager.addListener(
-      EVENT_TYPE.ONE_PIPELINE_CYCLE_IS_OVER,
-      flag => {
-        console.log("ONE_PIPELINE_CYCLE_IS_OVER");
-        if (flag) {
-          console.log("PIPELINE_RUN_OR_STOP");
-          let flag = this.state.isPipelineRunning;
-          this.setState(
-            {
-              isPipelineRunning: !flag
-            },
-            () => {
-              this.props.pipelineManager.setIsPipelineRunning(!flag);
-            }
-          );
-        }
-        if (!this.props.isPipelineDragging) {
-          this.props.onSetDummyNumber();
-        }
+    pipelineManager.addListener(EVENT_TYPE.ONE_PIPELINE_CYCLE_IS_OVER, flag => {
+      console.log("ONE_PIPELINE_CYCLE_IS_OVER");
+      if (flag) {
+        console.log("PIPELINE_RUN_OR_STOP");
+        let flag = this.state.isPipelineRunning;
+        this.setState(
+          {
+            isPipelineRunning: !flag
+          },
+          () => {
+            this.props.pipelineManager.setIsPipelineRunning(!flag);
+          }
+        );
       }
-    );
+      if (!this.props.isPipelineDragging) {
+        this.props.onSetDummyNumber();
+      }
+    });
 
     // Toast 띄우기
     pipelineManager.addListener(
@@ -137,6 +135,10 @@ class Header extends React.Component {
     this.props.onSetPipelineManager(pipelineManager);
   }
 
+  handleClickBackBtn = e => {
+    this.props.history.goBack();
+  }
+
   /**
    * Pipeline 실행
    */
@@ -153,29 +155,40 @@ class Header extends React.Component {
     );
   };
 
+  getHeader() {
+    const location = this.props.location.pathname;
+    console.log(location);
+    switch (location) {
+      case "/":
+        return <WelcomeHeader />;
+
+      case "/linkboard":
+        return (
+          <LinkboardHeader
+            name={"untitled"}
+            isPipelineRunning={this.state.isPipelineRunning}
+            handleClickRunBtn={this.handleClickRunBtn}
+            handleClickBackBtn={this.handleClickBackBtn}
+          />
+        );
+
+      case "/appview/0":
+        return (
+          <AppViewHeader
+            isPipelineRunning={this.state.isPipelineRunning}
+            handleClickRunBtn={this.handleClickRunBtn}
+            handleClickBackBtn={this.handleClickBackBtn}
+          />
+        );
+
+      default:
+        return null;
+    }
+  }
+
   render() {
-    return (
-      <LinkboardHeader
-        name={"untitled"}
-        isPipelineRunning={this.state.isPipelineRunning}
-        handleClickRunBtn={this.handleClickRunBtn}
-      />
-    )
-    // return this.props.location === "/" ? (
-    //   <WelcomeHeader />
-    // ) : this.props.location === "/linkboard" ? (
-    //   <LinkboardHeader
-    //     name={"untitled"}
-    //     isPipelineRunning={this.state.isPipelineRunning}
-    //     handleClickRunBtn={this.handleClickRunBtn}
-    //   />
-    // ) : this.props.location === "/app-view" ? (
-    //   <AppViewHeader 
-    //   isPipelineRunning={this.state.isPipelineRunning}
-    //   handleClickRunBtn={this.handleClickRunBtn}/>
-    // ) : (
-    //   <WelcomeHeader />
-    // );
+    // let header = this.getHeader();
+    return this.getHeader();
   }
 }
 
@@ -198,4 +211,4 @@ let mapDispatchToProps = dispatch => {
   };
 };
 Header = connect(mapStateToProps, mapDispatchToProps)(Header);
-export default Header;
+export default withRouter(Header);

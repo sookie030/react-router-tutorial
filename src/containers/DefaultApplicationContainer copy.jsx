@@ -598,7 +598,7 @@ class DefaultApplicationContainer extends React.Component {
         'options': [
           { key: 0, text: "White", value: "White" },
           { key: 1, text: "Red", value: "Red" },
-          { key: 2, text: "Green", 'value': "Green" },
+          { key: 2, text: "Green", value: "Green" },
           { key: 3, text: "Blue", value: "Blue" }
         ],
         value: this.state.roi.color

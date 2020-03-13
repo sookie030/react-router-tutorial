@@ -33,7 +33,7 @@ class TrainingContainer extends React.Component {
   };
 
   state = {
-    options: [],
+    'options': [],
     selectedDeviceID: null,
     imageSrc: null,
 
@@ -509,30 +509,30 @@ class TrainingContainer extends React.Component {
 
   setROIProperty = () => {
     let properties = {
-      Area: {
-        type: PROP_TYPE.GROUP,
+      'Area': {
+        'type': PROP_TYPE.GROUP,
         properties: {
-          x: {
-            type: PROP_TYPE.NUMBER_EDIT,
+          'x': {
+            'type': PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.x)
           },
-          y: {
-            type: PROP_TYPE.NUMBER_EDIT,
+          'y': {
+            'type': PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.y)
           },
-          Width: {
-            type: PROP_TYPE.NUMBER_EDIT,
+          'Width': {
+            'type': PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.width)
           },
-          Height: {
-            type: PROP_TYPE.NUMBER_EDIT,
+          'Height': {
+            'type': PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.height)
           }
         }
       },
       Color: {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
           { key: 0, text: "White", value: "White" },
           { key: 1, text: "Red", value: "Red" },
           { key: 2, text: "Green", value: "Green" },

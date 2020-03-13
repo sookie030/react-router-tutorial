@@ -31,7 +31,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/linkboard" component={LinkWorkspace} />
-                <Route path={["/appview/:viewname"]} component={AppView}/>
+                <Route path="/appview/:viewid" component={AppView}/>
                 {/* <Route path="/appview" component={AppView}/> */}
                 <Route component={NotFound} />
               </Switch>

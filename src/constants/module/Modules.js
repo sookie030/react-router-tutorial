@@ -1,8 +1,9 @@
-// source
+// Source
 export const CAMERA = 'Camera';
 export const FACE_CAMERA = 'Face Camera';
 export const FILE_LOADER = 'File Loader';
 
+// Filter
 export const ROI = 'Region Of Interest';
 export const BLUR_AVERAGE = 'Blur Average';
 export const BLUR_MEDIAN = 'Blur Median';
@@ -16,11 +17,19 @@ export const GRAYSCALE = 'Grayscale';
 export const RESIZE = 'Resize';
 export const CROP = 'Crop';
 export const GRID = 'Grid';
+
+// Detector
 export const FACE_DETECTOR = 'Face Detector';
+
+// Feature
 export const SUBSAMPLE = 'Subsample';
 export const HOG = 'HOG';
+
+// AI
 export const NM500 = 'NM500';
 export const DECISION_MAKER = 'Decision Maker';
+
+// Notifier
 export const SOUND = 'Sound';
 export const VIBRATION = 'Vibration';
 export const DISPLAY = 'Display';

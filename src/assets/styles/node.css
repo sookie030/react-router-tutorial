@@ -92,11 +92,11 @@
 }
 
 .port-outer {
-  fill: #777777;
+  fill: #8129f3;
 }
 
 .port-inner {
-  fill: #202020;
+  fill: rgb(221, 221, 221)
 }
 
 .port-label {
