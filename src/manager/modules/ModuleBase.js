@@ -4,10 +4,10 @@ import { plain2immutable } from '../../utils/plain2immutable';
 import * as MERGE_TYPE from '../../constants/MergeType';
 
 export default class ModuleBase {
-  constructor(id, name, group) {
-    let _id = id;
-    let _name = name;
-    let _group = group;
+  constructor() {
+    let _id;
+    let _name;
+    let _group;
     let _mergeType = MERGE_TYPE.NONE;
     let _properties = [];
     let _parentIds = [];

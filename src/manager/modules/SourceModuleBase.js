@@ -2,9 +2,8 @@
 import ModuleBase from './ModuleBase';
 
 export default class SourceModuleBase extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group)
-
+  constructor() {
+    super();
     this._stopPipelineFlag = false;
   }
 

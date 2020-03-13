@@ -11,18 +11,18 @@ import ModuleDataChunk from './ModuleDataChunk';
 var dispatcher = {};
 
 dispatcher[MODULES.FILE_SAVER] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     this.stream = null;
     this.track = null;
 
     // 초기화
     this.initialize({
-      Directory: {
-        type: PROP_TYPE.SELECT_DIRECTORY,
-        value: '-',
-        list: [],
+      'Directory': {
+        'type': PROP_TYPE.SELECT_DIRECTORY,
+        'value': '-',
+        'list': [],
       },
     });
 

@@ -13,21 +13,21 @@ import ModuleData from './ModuleData';
 var feature = {};
 
 feature[MODULES.SUBSAMPLE] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Grid Count': {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          Horizontal: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 16,
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'Horizontal': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 16,
           },
-          Vertical: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 16,
+          'Vertical': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 16,
           },
         },
       },
@@ -90,78 +90,78 @@ feature[MODULES.SUBSAMPLE] = class extends ModuleBase {
 };
 
 feature[MODULES.HOG] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Edge Type': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
           { key: 0, text: 'Sobel', value: 'Sobel' },
           { key: 1, text: 'Prewitt', value: 'Prewitt' },
           { key: 2, text: 'Roberts', value: 'Roberts' },
         ],
-        value: 'Sobel',
+        'value': 'Sobel',
       },
       'Use Math Function': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
           { key: 0, text: 'TRUE', value: 'TRUE' },
           { key: 1, text: 'FALSE', value: 'FALSE' },
         ],
-        value: 'TRUE',
+        'value': 'TRUE',
       },
       'Histogram Binning Count': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 16,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 16,
       },
       'Pixel Count Per Cell': {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          Horizontal: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 10,
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'Horizontal': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 10,
           },
-          Vertical: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 10,
+          'Vertical': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 10,
           },
         },
       },
       'Cell Count Per Block': {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          Horizontal: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 2,
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'Horizontal': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 2,
           },
-          Vertical: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 2,
+          'Vertical': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 2,
           },
         },
       },
       'Stride Distance': {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          Horizontal: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 12,
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'Horizontal': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 12,
           },
-          Vertical: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 12,
+          'Vertical': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 12,
           },
         },
       },
       'Use Magnitude Value': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
           { key: 0, text: 'TRUE', value: 'TRUE' },
           { key: 1, text: 'FALSE', value: 'FALSE' },
         ],
-        value: 'TRUE',
+        'value': 'TRUE',
       },
     });
   }

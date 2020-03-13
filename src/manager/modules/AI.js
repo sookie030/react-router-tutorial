@@ -13,61 +13,61 @@ import ModuleData from './ModuleData';
 var ai = {};
 
 ai[MODULES.NM500] = class extends ModuleBase {
-    constructor(id, name, group) {
-        super(id, name, group);
+    constructor() {
+        super();
 
         // default properties
         this.initialize({
             'Context': {
-                type: PROP_TYPE.GROUP,
-                properties: {
+                'type': PROP_TYPE.GROUP,
+                'properties': {
                     'Context ID': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: '-'
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': '-'
                     },
                     'Context Name': {
-                        type: PROP_TYPE.TEXT_EDIT,
-                        value: '-'
+                        'type': PROP_TYPE.TEXT_EDIT,
+                        'value': '-'
                     },
                     'Norm': {
-                        type: PROP_TYPE.DROPDOWN,
-                        options: [
-                            { key: 0, text: 'L1', value: 'L1' },
+                        'type': PROP_TYPE.DROPDOWN,
+                        'options': [
+                            { key: 0, text: 'L1', 'value': 'L1' },
                             { key: 1, text: 'Lsup', value: 'Lsup' },
                         ],
-                        value: 'L1'
+                        'value': 'L1'
                     },
                     'Minif': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: '2'
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': '2'
                     },
                     'Maxif': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: '2000'
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': '2000'
                     }
                 }
             },
 
             'Category': {
-                type: PROP_TYPE.GROUP,
-                properties: {
+                'type': PROP_TYPE.GROUP,
+                'properties': {
                     'Category ID': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: '-'
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': '-'
                     },
                     'Category Name': {
-                        type: PROP_TYPE.TEXT_EDIT,
-                        value: '-'
+                        'type': PROP_TYPE.TEXT_EDIT,
+                        'value': '-'
                     },
                 }
             },
 
             'Learning': {
-                type: PROP_TYPE.GROUP,
-                properties: {
+                'type': PROP_TYPE.GROUP,
+                'properties': {
                     'Learning Mode': {
-                        type: PROP_TYPE.DROPDOWN,
-                        options: [
+                        'type': PROP_TYPE.DROPDOWN,
+                        'options': [
                             { key: 0, text: 'Once', value: 'Once' },
                             { key: 1, text: 'Separate Auto', value: 'Separate Auto' },
                             { key: 2, text: 'Duplicate Auto', value: 'Duplicate Auto' }
@@ -75,42 +75,42 @@ ai[MODULES.NM500] = class extends ModuleBase {
                         value: 'Once'
                     },
                     'Auto Learning Mode': {
-                        type: PROP_TYPE.DROPDOWN,
-                        options: [
+                        'type': PROP_TYPE.DROPDOWN,
+                        'options': [
                             { key: 0, text: 'Count', value: 'Count' },
                             { key: 1, text: 'Time', value: 'Time' },
                             { key: 2, text: 'Novelty', value: 'Novelty' }
                         ],
-                        value: 'Count'
+                        'value': 'Count'
                     },
                     'Auto Learning Value': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: 5
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': 5
                     }
                 }
             },
 
             'Recognizing': {
-                type: PROP_TYPE.GROUP,
-                properties: {
+                'type': PROP_TYPE.GROUP,
+                'properties': {
                     'Recognizing Mode': {
-                        type: PROP_TYPE.DROPDOWN,
-                        options: [
-                            { key: 0, text: 'Best Matched', value: 'Best Matched' },
+                        'type': PROP_TYPE.DROPDOWN,
+                        'options': [
+                            { key: 0, text: 'Best Matched', 'value': 'Best Matched' },
                             { key: 1, text: 'K-NN', value: 'K-NN' }
                         ],
-                        value: 'Best Matched'
+                        'value': 'Best Matched'
                     },
                     'K': {
-                        type: PROP_TYPE.DROPDOWN,
-                        options: [
+                        'type': PROP_TYPE.DROPDOWN,
+                        'options': [
                             { key: 0, text: '1', value: '1' },
                             { key: 1, text: '3', value: '3' },
                             { key: 2, text: '5', value: '5' },
                             { key: 3, text: '7', value: '7' },
                             { key: 4, text: '9', value: '9' }
                         ],
-                        value: '1'
+                        'value': '1'
                     }
                 }
             }
@@ -162,18 +162,18 @@ ai[MODULES.NM500] = class extends ModuleBase {
 }
 
 ai[MODULES.DECISION_MAKER] = class extends ModuleBase {
-    constructor(id, name, group) {
-        super(id, name, group);
+    constructor() {
+        super();
 
         // default properties
         this.initialize({
             'Category': {
-                type: PROP_TYPE.DROPDOWN,
-                options: [
+                'type': PROP_TYPE.DROPDOWN,
+                'options': [
                     { key: 0, text: 'ALL', value: 'ALL' },
                     { key: 1, text: '1', value: '1' },
                 ],
-                value: 'ALL'
+                'value': 'ALL'
             }
         });
     }

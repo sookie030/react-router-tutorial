@@ -16,24 +16,23 @@ import * as DeviceManager from '../../utils/DeviceManager';
 var source = {};
 
 source[MODULES.CAMERA] = class extends SourceModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
-
+  constructor() {
+    super();
     this.stream = null;
     this.track = null;
 
     // 초기화
     this.initialize({
-      Camera: {
-        type: PROP_TYPE.DROPDOWN,
-        options: [],
-        value: '0',
+      'Camera': {
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [],
+        'value': '0',
       },
 
       'Preview Size': {
-        type: PROP_TYPE.DROPDOWN,
-        disabled: '',
-        options: [
+        'type': PROP_TYPE.DROPDOWN,
+        'disabled': '',
+        'options': [
           { key: 0, text: '800x450', value: '800x450' },
           { key: 1, text: '720x720', value: '720x720' },
           { key: 2, text: '720x480', value: '720x480' },
@@ -43,7 +42,7 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
           { key: 6, text: '256x144', value: '256x144' },
           { key: 7, text: '176x144', value: '176x144' },
         ],
-        value: '800x450',
+        'value': '800x450',
       },
     });
 
@@ -173,24 +172,24 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
 };
 
 source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     this.stream = null;
     this.track = null;
 
     // 초기화
     this.initialize({
-      Camera: {
-        type: PROP_TYPE.DROPDOWN,
-        options: [],
-        value: '0',
+      'Camera': {
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [],
+        'value': '0',
       },
 
       'Preview Size': {
-        type: PROP_TYPE.DROPDOWN,
-        disabled: '',
-        options: [
+        'type': PROP_TYPE.DROPDOWN,
+        'disabled': '',
+        'options': [
           { key: 0, text: '800x450', value: '800x450' },
           { key: 1, text: '720x720', value: '720x720' },
           { key: 2, text: '720x480', value: '720x480' },
@@ -200,7 +199,7 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
           { key: 6, text: '256x144', value: '256x144' },
           { key: 7, text: '176x144', value: '176x144' },
         ],
-        value: '800x450',
+        'value': '800x450',
       },
     });
 
@@ -330,8 +329,8 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
 };
 
 source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // 20.03.04 파일 리스트 중 어디까지 다음 모듈에 전달했는강
     this._index = 0;
@@ -341,23 +340,23 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
 
     // 초기화
     this.initialize({
-      Directory: {
-        type: PROP_TYPE.SELECT_DIRECTORY,
-        value: '-',
+      'Directory': {
+        'type': PROP_TYPE.SELECT_DIRECTORY,
+        'value': '-',
       },
-      Option: {
-        type: PROP_TYPE.DROPDOWN,
-        disabled: '',
-        options: [
+      'Option': {
+        'type': PROP_TYPE.DROPDOWN,
+        'disabled': '',
+        'options': [
           { key: 0, text: 'All', value: 'All' },
           { key: 1, text: 'Selected Only', value: 'Selected Only' },
         ],
-        value: 'All',
+        'value': 'All',
       },
       'File List': {
-        type: PROP_TYPE.LIST,
+        'type': PROP_TYPE.LIST,
         // 디렉토리 내 전체 리스트
-        value: [],
+        'value': [],
         // Option == Selected only인 경우, 선택된 파일 리스트
         // selected: []
       },

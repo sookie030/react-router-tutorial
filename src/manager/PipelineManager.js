@@ -1,23 +1,33 @@
 // test
-import { Map, List } from 'immutable';
+import { Map, List } from "immutable";
 
 // import constants
-import * as EVENT_TYPE from '../constants/EventType';
-import * as MESSAGE from '../constants/Message';
-import * as MESSAGE_TYPE from '../constants/MessageType';
-import { SOURCE } from '../constants/module/Groups';
+import * as EVENT_TYPE from "../constants/EventType";
+import * as MESSAGE from "../constants/Message";
+import * as MESSAGE_TYPE from "../constants/MessageType";
+import { SOURCE } from "../constants/module/Groups";
+import * as GROUPS from "../constants/module/Groups"; 
 import {
   CAMERA,
   FACE_CAMERA,
   FILE_LOADER,
-  FILE_SAVER,
-} from '../constants/module/Modules';
+  FILE_SAVER
+} from "../constants/module/Modules";
 
 // import factory
-import getModule from './ModuleFactory';
+import getModule from "./ModuleFactory";
+
+// import module classes
+import AIModules from "./modules/AI";
+import DetectorModules from "./modules/Detector";
+import FeatureModules from "./modules/Feature";
+import FilterModules from "./modules/Filter";
+import NotifierModules from "./modules/Notifier";
+import SourceModules from "./modules/Source";
+import DispatcherModules from "./modules/Dispatcher";
 
 // import event
-import events from 'events';
+import events from "events";
 
 class PipelineManager {
   constructor() {
@@ -67,7 +77,44 @@ class PipelineManager {
    * @param {Object} position
    */
   addNode(name, group, position) {
-    let newNode = getModule(this._nodeID++, name, group);
+    // let newNode = getModule(this._nodeID++, name, group);
+    // newNode.setPosition(position);
+    // this._nodes = this._nodes.push(newNode);
+    let newNode;
+    switch (group) {
+      case GROUPS.SOURCE:
+        newNode = new SourceModules[name]();
+        break;
+      case GROUPS.FILTER:
+        newNode = new FilterModules[name]();
+        break;
+
+      case GROUPS.DETECTOR:
+        newNode = new DetectorModules[name]();
+        break;
+
+      case GROUPS.FEATURE:
+        newNode = new FeatureModules[name]();
+        break;
+
+      case GROUPS.AI:
+        newNode = new AIModules[name]();
+        break;
+
+      case GROUPS.NOTIFIER:
+        newNode = new NotifierModules[name]();
+        break;
+
+      case GROUPS.DISPATCHER:
+        newNode = new DispatcherModules[name]();
+        break;
+
+      default:
+        newNode = null;
+    }
+    newNode.setID(this._nodeID++);
+    newNode.setName(name);
+    newNode.setGroup(group);
     newNode.setPosition(position);
     this._nodes = this._nodes.push(newNode);
   }
@@ -129,16 +176,16 @@ class PipelineManager {
           io: from.io,
           x: from.x,
           y: from.y,
-          port: from.port,
+          port: from.port
         }),
         to: Map({
           node: to.nodeID,
           io: to.io,
           x: to.x,
           y: to.y,
-          port: to.port,
-        }),
-      }),
+          port: to.port
+        })
+      })
     );
   }
 
@@ -147,7 +194,7 @@ class PipelineManager {
    * @param {Number} linkID
    */
   removeLink(linkID) {
-    this._links = this._links.filterNot(link => link.get('id') === linkID);
+    this._links = this._links.filterNot(link => link.get("id") === linkID);
   }
 
   /**
@@ -159,16 +206,16 @@ class PipelineManager {
     var affectedlinkID = [];
     this._links.forEach(link => {
       if (
-        link.getIn(['from', 'node']) === nodeID ||
-        link.getIn(['to', 'node']) === nodeID
+        link.getIn(["from", "node"]) === nodeID ||
+        link.getIn(["to", "node"]) === nodeID
       ) {
-        affectedlinkID.push(link.get('id'));
+        affectedlinkID.push(link.get("id"));
       }
     });
 
     // 삭제할 노드와 연결된 path를 동시에 삭제.
     this._links = this._links.filterNot(link =>
-      affectedlinkID.includes(link.get('id')),
+      affectedlinkID.includes(link.get("id"))
     );
   }
 
@@ -181,15 +228,15 @@ class PipelineManager {
     // 드래그중인 노드와 연결되어있는 Path 찾기
     var affectedLinks = [];
     this._links.forEach((link, idx) => {
-      if (link.getIn(['from', 'node']) === nodeID) {
+      if (link.getIn(["from", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
-          io: 'from',
+          io: "from"
         });
-      } else if (link.getIn(['to', 'node']) === nodeID) {
+      } else if (link.getIn(["to", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
-          io: 'to',
+          io: "to"
         });
       }
     });
@@ -199,12 +246,12 @@ class PipelineManager {
     affectedLinks.forEach(link => {
       this._links = this._links
         .setIn(
-          [link.id, link.io, 'x'],
-          this._links.getIn([link.id, link.io, 'x']) + deltaX,
+          [link.id, link.io, "x"],
+          this._links.getIn([link.id, link.io, "x"]) + deltaX
         )
         .setIn(
-          [link.id, link.io, 'y'],
-          this._links.getIn([link.id, link.io, 'y']) + deltaY,
+          [link.id, link.io, "y"],
+          this._links.getIn([link.id, link.io, "y"]) + deltaY
         );
     });
 
@@ -216,17 +263,17 @@ class PipelineManager {
     // 크기가 변경된 노드와 연결되어있는 Path 찾기
     let affectedLinks = [];
     this._links.forEach((link, idx) => {
-      if (link.getIn(['from', 'node']) === nodeID) {
+      if (link.getIn(["from", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
-          io: 'from',
-          port: link.getIn(['from', 'port']),
+          io: "from",
+          port: link.getIn(["from", "port"])
         });
-      } else if (link.getIn(['to', 'node']) === nodeID) {
+      } else if (link.getIn(["to", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
-          io: 'to',
-          port: link.getIn(['to', 'port']),
+          io: "to",
+          port: link.getIn(["to", "port"])
         });
       }
     });
@@ -234,27 +281,27 @@ class PipelineManager {
     // 연결된 Path들의 좌표값 변경해주기
     // var tmpLinks = state.get('links');
     affectedLinks.forEach(link => {
-      if (link.port === 'top') {
+      if (link.port === "top") {
         // do noting
-      } else if (link.port === 'left' || link.port === 'right') {
+      } else if (link.port === "left" || link.port === "right") {
         this._links = this._links
           .setIn(
-            [link.id, link.io, 'x'],
-            this._links.getIn([link.id, link.io, 'x']) + deltaX / 2,
+            [link.id, link.io, "x"],
+            this._links.getIn([link.id, link.io, "x"]) + deltaX / 2
           )
           .setIn(
-            [link.id, link.io, 'y'],
-            this._links.getIn([link.id, link.io, 'y']) + deltaY / 2,
+            [link.id, link.io, "y"],
+            this._links.getIn([link.id, link.io, "y"]) + deltaY / 2
           );
-      } else if (link.port === 'bottom') {
+      } else if (link.port === "bottom") {
         this._links = this._links
           .setIn(
-            [link.id, link.io, 'x'],
-            this._links.getIn([link.id, link.io, 'x']) + deltaX,
+            [link.id, link.io, "x"],
+            this._links.getIn([link.id, link.io, "x"]) + deltaX
           )
           .setIn(
-            [link.id, link.io, 'y'],
-            this._links.getIn([link.id, link.io, 'y']) + deltaY,
+            [link.id, link.io, "y"],
+            this._links.getIn([link.id, link.io, "y"]) + deltaY
           );
       }
     });
@@ -283,7 +330,7 @@ class PipelineManager {
     this.eventEmitter.on(eventName, handler);
   }
 
-    /**
+  /**
    * 이벤트를 제거한다.
    * @param {String} eventName
    * @param {Function} handler
@@ -315,7 +362,7 @@ class PipelineManager {
 
     // link가 있는지 확인.
     let linkList = this._links.filter(link => {
-      if (link.getIn(['from', 'node']) === nodeID) {
+      if (link.getIn(["from", "node"]) === nodeID) {
         return link;
       } else {
         return null;
@@ -329,7 +376,7 @@ class PipelineManager {
       // link가 있다는 것은 뒷 노드가 있다는 것. 계속해서 노드를 찾는다.
       linkList.every(link => {
         var nextNode = this._nodes.find(
-          node => node.getID() === link.getIn(['to', 'node']),
+          node => node.getID() === link.getIn(["to", "node"])
         );
 
         if (!nextNode.getParentIds().includes(nodeID)) {
@@ -358,17 +405,13 @@ class PipelineManager {
 
   // Interval마다 검증/모듈생성/실행을 새로 반복한다.
   run() {
-    console.log('run ', this.requestID);
+    console.log("run ", this.requestID);
     let isValid = this.validate();
 
     // 유효한 파이프라인인 경우에만 실행
     if (isValid) {
-
       // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
-      this.eventEmitter.emit(
-        EVENT_TYPE.SEND_PIPELINE_INFO,
-        this._pipeline
-      );
+      this.eventEmitter.emit(EVENT_TYPE.SEND_PIPELINE_INFO, this._pipeline);
 
       this.execute();
       this.requestID = requestAnimationFrame(() => this.run());
@@ -421,7 +464,7 @@ class PipelineManager {
       this.eventEmitter.emit(
         EVENT_TYPE.POP_UP_TOAST,
         MESSAGE.NO_SOURCE,
-        MESSAGE_TYPE.ERROR,
+        MESSAGE_TYPE.ERROR
       );
       return false;
     } else {
@@ -449,7 +492,7 @@ class PipelineManager {
    */
   getAnotherParentId(module, currentInputCount) {
     var nextIndex = this._pipeline.findIndex(
-      m => m.getID() === module.getParentIds()[currentInputCount],
+      m => m.getID() === module.getParentIds()[currentInputCount]
     );
     return nextIndex;
   }
@@ -458,7 +501,7 @@ class PipelineManager {
    * 파이프라인 실행
    */
   async execute() {
-    console.log('execute')
+    console.log("execute");
     // 부모 모듈의 결과값 (즉, 현재 모듈에서 input으로 사용할 값)을 가져오기 위한 reduce 콜백함수
     var reducer = (accumulator, parentId) => {
       var input = this._dataList[parentId];
@@ -479,7 +522,7 @@ class PipelineManager {
         console.log(module.getIndex(), module.getStopPipelineFlag());
 
         if (module.getStopPipelineFlag()) {
-          console.log('pipeline stop (예약)');
+          console.log("pipeline stop (예약)");
           tmpFlag = true;
         }
       }
@@ -492,7 +535,7 @@ class PipelineManager {
         // 이런 경우에는 그냥 loop를 빠져나온다.
         if (!this.isPipelineRunning) {
           console.log(
-            'Pipeline running flag === false임에도 execute 함수가 실행',
+            "Pipeline running flag === false임에도 execute 함수가 실행"
           );
           break;
         }
@@ -505,7 +548,7 @@ class PipelineManager {
           this.eventEmitter.emit(
             EVENT_TYPE.POP_UP_TOAST,
             MESSAGE.TRY_TO_GET_SOURCE_AGAIN,
-            MESSAGE_TYPE.WARNING,
+            MESSAGE_TYPE.WARNING
           );
 
           this.trying();
@@ -535,7 +578,7 @@ class PipelineManager {
           i = nextIndex > -1 ? nextIndex : i++;
         }
       } catch (e) {
-        console.log('PipelineManager run error: ', e);
+        console.log("PipelineManager run error: ", e);
         break;
       }
     }

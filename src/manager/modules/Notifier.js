@@ -13,20 +13,20 @@ import * as MODULES from '../../constants/module/Modules';
 var notifier = {};
 
 notifier[MODULES.SOUND] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
-      Alarm: {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
+      'Alarm': {
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
           { key: 0, text: 'Basic0', value: 'Basic0' },
           { key: 1, text: 'Basic1', value: 'Basic1' },
           { key: 2, text: 'Basic2', value: 'Basic2' },
           { key: 3, text: 'Basic3', value: 'Basic3' },
         ],
-        value: 'Basic0',
+        'value': 'Basic0',
       },
     });
   }
@@ -87,14 +87,14 @@ notifier[MODULES.SOUND] = class extends ModuleBase {
 };
 
 notifier[MODULES.VIBRATION] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Vibration length': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 1000,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 1000,
       },
     });
   }
@@ -155,14 +155,14 @@ notifier[MODULES.VIBRATION] = class extends ModuleBase {
 };
 
 notifier[MODULES.DISPLAY] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Display time': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 1000,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 1000,
       },
     });
   }
@@ -223,14 +223,14 @@ notifier[MODULES.DISPLAY] = class extends ModuleBase {
 };
 
 notifier[MODULES.GRID_MAKER] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Threshold': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 1,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 1,
       },
     });
   }

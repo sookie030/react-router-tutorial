@@ -13,41 +13,41 @@ import ModuleData from './ModuleData';
 var filter = {};
 
 filter[MODULES.ROI] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
-      Area: {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          x: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 140,
+      'Area': {
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'x': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 140,
           },
-          y: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 125,
+          'y': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 125,
           },
-          Width: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 220,
+          'Width': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 220,
           },
-          Height: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 220,
+          'Height': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 220,
           },
         },
       },
-      Color: {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'White', value: 'White' },
-          { key: 1, text: 'Red', value: 'Red' },
-          { key: 2, text: 'Green', value: 'Green' },
-          { key: 3, text: 'Blue', value: 'Blue' },
+      'Color': {
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'White', 'value': 'White' },
+          { key: 1, text: 'Red', 'value': 'Red' },
+          { key: 2, text: 'Green', 'value': 'Green' },
+          { key: 3, text: 'Blue', 'value': 'Blue' },
         ],
-        value: 'White',
+        'value': 'White',
       },
     });
   }
@@ -110,8 +110,8 @@ filter[MODULES.ROI] = class extends ModuleBase {
 };
 
 filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     this.initialize({});
   }
@@ -172,8 +172,8 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
 };
 
 filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
     this.initialize({});
   }
 
@@ -233,8 +233,8 @@ filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
 };
 
 filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
     this.initialize({});
   }
 
@@ -294,22 +294,22 @@ filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
 };
 
 filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Use Math Function': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'TRUE', value: 'TRUE' },
-          { key: 1, text: 'FALSE', value: 'FALSE' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'TRUE', 'value': 'TRUE' },
+          { key: 1, text: 'FALSE', 'value': 'FALSE' },
         ],
-        value: 'FALSE',
+        'value': 'FALSE',
       },
       'Threshold Ratio': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 80,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 80,
       },
     });
   }
@@ -370,22 +370,22 @@ filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
 };
 
 filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Use Math Function': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'TRUE', value: 'TRUE' },
-          { key: 1, text: 'FALSE', value: 'FALSE' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'TRUE', 'value': 'TRUE' },
+          { key: 1, text: 'FALSE', 'value': 'FALSE' },
         ],
-        value: 'FALSE',
+        'value': 'FALSE',
       },
       'Threshold Ratio': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 80,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 80,
       },
     });
   }
@@ -446,22 +446,22 @@ filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
 };
 
 filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Use Math Function': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'TRUE', value: 'TRUE' },
-          { key: 1, text: 'FALSE', value: 'FALSE' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'TRUE', 'value': 'TRUE' },
+          { key: 1, text: 'FALSE', 'value': 'FALSE' },
         ],
-        value: 'FALSE',
+        'value': 'FALSE',
       },
       'Threshold Ratio': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 80,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 80,
       },
     });
   }
@@ -522,38 +522,38 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
 };
 
 filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Edge Type': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'Sobel', value: 'Sobel' },
-          { key: 1, text: 'Prewitt', value: 'Prewitt' },
-          { key: 2, text: 'Roberts', value: 'Roberts' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'Sobel', 'value': 'Sobel' },
+          { key: 1, text: 'Prewitt', 'value': 'Prewitt' },
+          { key: 2, text: 'Roberts', 'value': 'Roberts' },
         ],
-        value: 'Sobel',
+        'value': 'Sobel',
       },
       'Use Math Function': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'TRUE', value: 'TRUE' },
-          { key: 1, text: 'FALSE', value: 'FALSE' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'TRUE', 'value': 'TRUE' },
+          { key: 1, text: 'FALSE', 'value': 'FALSE' },
         ],
-        value: 'FALSE',
+        'value': 'FALSE',
       },
       'Threshold Ratio': {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          High: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 50,
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'High': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 50,
           },
-          Low: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 80,
+          'Low': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 80,
           },
         },
       },
@@ -616,67 +616,67 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
 };
 
 filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
       'Search Target': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'Line', value: 'Line' },
-          { key: 1, text: 'Circle', value: 'Circle' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'Line', 'value': 'Line' },
+          { key: 1, text: 'Circle', 'value': 'Circle' },
         ],
-        value: 'Line',
+        'value': 'Line',
       },
       'Edge Type': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'Sobel', value: 'Sobel' },
-          { key: 1, text: 'Prewitt', value: 'Prewitt' },
-          { key: 2, text: 'Roberts', value: 'Roberts' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'Sobel', 'value': 'Sobel' },
+          { key: 1, text: 'Prewitt', 'value': 'Prewitt' },
+          { key: 2, text: 'Roberts', 'value': 'Roberts' },
         ],
-        value: 'Sobel',
+        'value': 'Sobel',
       },
       'Use Math Function': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'TRUE', value: 'TRUE' },
-          { key: 1, text: 'FALSE', value: 'FALSE' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'TRUE', 'value': 'TRUE' },
+          { key: 1, text: 'FALSE', 'value': 'FALSE' },
         ],
-        value: 'FALSE',
+        'value': 'FALSE',
       },
       'Threshold Ratio': {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          High: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 50,
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'High': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 50,
           },
-          Low: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 80,
+          'Low': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 80,
           },
         },
       },
       'Threshold Count': {
-        type: PROP_TYPE.NUMBER_EDIT,
-        value: 300,
+        'type': PROP_TYPE.NUMBER_EDIT,
+        'value': 300,
       },
-      Radius: {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          Min: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 16,
+      'Radius': {
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'Min': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 16,
           },
-          Max: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 200,
+          'Max': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 200,
           },
-          Step: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 2,
+          'Step': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 2,
           },
         },
       },
@@ -739,29 +739,29 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
 };
 
 filter[MODULES.GRAYSCALE] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
-      Area: {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          x: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+      'Area': {
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'x': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
-          y: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+          'y': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
-          Width: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+          'Width': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
-          Height: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+          'Height': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
         },
       },
@@ -824,31 +824,31 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
 };
 
 filter[MODULES.RESIZE] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
-      Size: {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          Width: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 32,
+      'Size': {
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'Width': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 32,
           },
-          Height: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 32,
+          'Height': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 32,
           },
         },
       },
       'Resize Type': {
-        type: PROP_TYPE.DROPDOWN,
-        options: [
-          { key: 0, text: 'Average', value: 'Average' },
-          { key: 1, text: 'Hop', value: 'Hop' },
+        'type': PROP_TYPE.DROPDOWN,
+        'options': [
+          { key: 0, text: 'Average', 'value': 'Average' },
+          { key: 1, text: 'Hop', 'value': 'Hop' },
         ],
-        value: 'Average',
+        'value': 'Average',
       },
     });
   }
@@ -909,29 +909,29 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
 };
 
 filter[MODULES.CROP] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
-      Size: {
-        type: PROP_TYPE.GROUP,
-        properties: {
-          x: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+      'Size': {
+        'type': PROP_TYPE.GROUP,
+        'properties': {
+          'x': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
-          y: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+          'y': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
-          Width: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+          'Width': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
-          Height: {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+          'Height': {
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 0,
           },
         },
       },
@@ -994,21 +994,21 @@ filter[MODULES.CROP] = class extends ModuleBase {
 };
 
 filter[MODULES.GRID] = class extends ModuleBase {
-  constructor(id, name, group) {
-    super(id, name, group);
+  constructor() {
+    super();
 
     // default properties
     this.initialize({
-      Size: {
-        type: PROP_TYPE.GROUP,
-        properties: {
+      'Size': {
+        'type': PROP_TYPE.GROUP,
+        'properties': {
           'Size Width': {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 10,
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 10,
           },
           'Size Height': {
-            type: PROP_TYPE.NUMBER_EDIT,
-            value: 10,
+            'type': PROP_TYPE.NUMBER_EDIT,
+            'value': 10,
           },
         },
       },

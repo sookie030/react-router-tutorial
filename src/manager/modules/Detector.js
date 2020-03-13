@@ -13,55 +13,55 @@ import ModuleData from './ModuleData';
 var detector = {};
 
 detector[MODULES.FACE_DETECTOR] = class extends ModuleBase {
-    constructor(id, name, group) {
-        super(id, name, group);
+    constructor() {
+        super();
 
         // default properties
         this.initialize({
             'Filter': {
-                type: PROP_TYPE.DROPDOWN,
-                options: [
+                'type': PROP_TYPE.DROPDOWN,
+                'options': [
                     { key: 0, text: 'Face', value: 'Face'}
                 ],
-                value: 'Face'
+                'value': 'Face'
             },
             'Minimum Size': {
-                type: PROP_TYPE.GROUP,
-                properties: {
+                'type': PROP_TYPE.GROUP,
+                'properties': {
                     'Width': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: 32
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': 32
                     },
                     'Height': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: 32
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': 32
                     }
                 }
             },
             'Maximum Size': {
-                type: PROP_TYPE.GROUP,
-                properties: {
+                'type': PROP_TYPE.GROUP,
+                'properties': {
                     'Width': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: 32
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': 32
                     },
                     'Height': {
-                        type: PROP_TYPE.NUMBER_EDIT,
-                        value: 32
+                        'type': PROP_TYPE.NUMBER_EDIT,
+                        'value': 32
                     }
                 }
             },
             'Scale Factor Ratio': {
-                type: PROP_TYPE.NUMBER_EDIT,
-                value: 1.1
+                'type': PROP_TYPE.NUMBER_EDIT,
+                'value': 1.1
             },
             'Threshold Ratio': {
-                type: PROP_TYPE.NUMBER_EDIT,
-                value: '-'
+                'type': PROP_TYPE.NUMBER_EDIT,
+                'value': '-'
             },
             'Minimum Neighbors': {
-                type: PROP_TYPE.NUMBER_EDIT,
-                value: 2
+                'type': PROP_TYPE.NUMBER_EDIT,
+                'value': 2
             }
         });
     }
