@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/training.css";
+import "../assets/styles/application.css";
 
 // import images
 import icModel from "../assets/images/ic_model.png";
@@ -21,8 +21,8 @@ import { MODIFY_LINK } from "../redux/actionTypes";
 
 import TrainingContainer from "./DefaultApplicationTrainingContainer";
 import RecognitionContainer from "./DefaultApplicationRecognitionContainer";
-import ModelViewContainer from "./DefaultApplicationModelContainer";
-import DefaultApplicationModelContainer from "./DefaultApplicationModelContainer";
+import ModelViewContainer from "./ModelContainer";
+import ModelContainer from "./ModelContainer";
 
 class DefaultApplicationContainer extends React.Component {
   // video source (camera, image files..)
@@ -92,6 +92,7 @@ class DefaultApplicationContainer extends React.Component {
 
   componentDidMount() {
     console.log(this.props.match);
+    console.log(this.childViewRef);
     // Pipeline에 이벤트 추가
     this.props.pipelineManager.addListener(
       EVENT_TYPE.SEND_PIPELINE_INFO,
@@ -102,6 +103,12 @@ class DefaultApplicationContainer extends React.Component {
       EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
       this.getResultFromPipelineManager
     );
+  }
+
+  componentDidUpdate() {
+    // Model View 진입 -> 빠져나왔을 때, 기존 Training/Recognition에 지정했던 ref = null이 되어 오류나던 이슈 수정
+    this.childViewRef =
+      this.childViewRef === null ? React.createRef() : this.childViewRef;
   }
 
   componentWillUnmount() {
@@ -599,25 +606,30 @@ class DefaultApplicationContainer extends React.Component {
     });
   };
 
+  handleOnClickCloseBtn = () => {
+    this.setState({
+      isModelViewShowing: false
+    });
+  };
+
   render() {
-    console.log(this.props.match);
     return (
       <React.Fragment>
         <div className="workspace bg-color-black">
           {this.state.isModelViewShowing ? (
-            <DefaultApplicationModelContainer />
-          ) :
-          
-          this.state.selectedIndex === 0 ? (
+            <ModelContainer
+              handleOnClickCloseBtn={this.handleOnClickCloseBtn}
+            />
+          ) : this.state.selectedIndex === 0 ? (
             <TrainingContainer
               hasROI={this.state.hasROI}
               nm500={this.state.nm500}
               sourceCanvasRef={this.childViewRef.sourceCanvasRef}
               previewCanvasRef={this.childViewRef.previewCanvasRef}
-              ref={r => (this.childViewRef = r)}
               handleROIMouseDown={this.handleROIMouseDown}
               handleROIMouseMove={this.handleROIMouseMove}
               handleROIMouseUp={this.handleROIMouseUp}
+              ref={r => (this.childViewRef = r)}
             />
           ) : (
             <RecognitionContainer
@@ -625,16 +637,21 @@ class DefaultApplicationContainer extends React.Component {
               nm500={this.state.nm500}
               sourceCanvasRef={this.childViewRef.sourceCanvasRef}
               previewCanvasRef={this.childViewRef.previewCanvasRef}
-              ref={r => (this.childViewRef = r)}
               handleROIMouseDown={this.handleROIMouseDown}
               handleROIMouseMove={this.handleROIMouseMove}
               handleROIMouseUp={this.handleROIMouseUp}
+              ref={r => (this.childViewRef = r)}
             />
           )}
 
-          <div className="model-view-btn" onClick={() => this.setState({
-            isModelViewShowing: true
-          })}>
+          <div
+            className="model-view-btn"
+            onClick={() =>
+              this.setState({
+                isModelViewShowing: true
+              })
+            }
+          >
             <img src={icModel} alt="" width="30" height="30" />
           </div>
 

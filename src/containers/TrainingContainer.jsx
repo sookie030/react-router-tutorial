@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/training.css";
+import "../assets/styles/application.css";
 
 import { plain2immutable } from "../utils/plain2immutable";
 import * as PROP_TYPE from "../constants/PropertyType";
