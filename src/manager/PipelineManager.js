@@ -1,4 +1,3 @@
-// test
 import { Map, List } from "immutable";
 
 // import constants
@@ -13,9 +12,6 @@ import {
   FILE_LOADER,
   FILE_SAVER
 } from "../constants/module/Modules";
-
-// import factory
-// import getModule from "./ModuleFactory";
 
 // import module classes
 import AIModules from "./modules/AI";
@@ -48,19 +44,14 @@ class PipelineManager {
     // EventEmitter 객체 생성
     this.eventEmitter = new events.EventEmitter();
 
-    // test
+    // Pipeline 반복 실행 관련
     this.requestID = null;
 
-    // test2 - 2020.1.7
-    this.changedNode = null;
-
-    // test3 - 2020.1.8
+    // Pipeline 작동 여부 플래그
     this.isPipelineRunning = false;
 
-    // test4 - 2020.1.10
+    // Pipeline 오류 발생 시, 재시작 시도 횟수
     this.tryingCount = 0;
-
-    // 2020.03.06 - 파이프라인 중단 Test
   }
 
   /**
@@ -77,9 +68,6 @@ class PipelineManager {
    * @param {Object} position
    */
   addNode(name, group, position) {
-    // let newNode = getModule(this._nodeID++, name, group);
-    // newNode.setPosition(position);
-    // this._nodes = this._nodes.push(newNode);
     let newNode;
     switch (group) {
       case GROUPS.SOURCE:
@@ -112,10 +100,14 @@ class PipelineManager {
       default:
         newNode = null;
     }
+
+    // Node 정보
     newNode.setID(this._nodeID++);
     newNode.setName(name);
     newNode.setGroup(group);
     newNode.setPosition(position);
+
+    // Node 추가
     this._nodes = this._nodes.push(newNode);
   }
 

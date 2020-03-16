@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import "../assets/styles/Header.css";
 
-// test
+// import images
 import icLogo from "../assets/images/ic_logo.png";
 import icBack from "../assets/images/ic_back.png";
 

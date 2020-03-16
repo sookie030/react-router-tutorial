@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { Map } from 'immutable';
 // redux modules
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import {
   setDummyNumber,
   isLinking,
@@ -12,28 +11,25 @@ import {
   setToast,
   setCtxMenuTarget,
   isPropertyNavigatorShowing
-} from '../redux/actions';
+} from "../redux/actions";
 
 // import presentational component
-import Node from '../components/pipeline/Node';
-import getPropertyComponent from '../manager/NodePropertyFactory';
+import Node from "../components/pipeline/Node";
+import getPropertyComponent from "../manager/NodePropertyFactory";
 
-import Link from '../components/pipeline/Link';
-import Linking from '../components/pipeline/Linking';
-import Pipeline from '../components/pipeline/Pipeline';
+import Link from "../components/pipeline/Link";
+import Linking from "../components/pipeline/Linking";
+import Pipeline from "../components/pipeline/Pipeline";
 
 // import constants
-import * as MESSAGE from '../constants/Message';
-import * as MESSAGE_TYPE from '../constants/MessageType';
-import * as DATA_TYPE from '../constants/DataType';
-import NOT_ALLOWED_TABLE from '../constants/NotAllowedTable';
-import MODULE_LIST from '../constants/module/ModuleList';
-import { FILE_LOADER, FILE_SAVER } from '../constants/module/Modules';
+import * as MESSAGE from "../constants/Message";
+import * as MESSAGE_TYPE from "../constants/MessageType";
+import * as DATA_TYPE from "../constants/DataType";
+import NOT_ALLOWED_TABLE from "../constants/NotAllowedTable";
 
 class PipelineContainer extends React.Component {
   state = {
-    linkStart: null,
-    previewNodeMap: Map({}),
+    linkStart: null
   };
 
   // Canvas size (for preview)
@@ -65,13 +61,13 @@ class PipelineContainer extends React.Component {
             prevProps.pipelineManager
               .getNodes()
               .find(node => node.getID() === toNodeID)
-              .getGroup() === 'Source'
+              .getGroup() === "Source"
           ) {
             isValidLink = false;
             prevProps.onSetToast(
               Date.now(),
               MESSAGE.LINK_TO_SOURCE,
-              MESSAGE_TYPE.ERROR,
+              MESSAGE_TYPE.ERROR
             );
           }
 
@@ -92,7 +88,7 @@ class PipelineContainer extends React.Component {
               prevProps.onSetToast(
                 Date.now(),
                 MESSAGE.LINK_TO_SAME_MODULE,
-                MESSAGE_TYPE.ERROR,
+                MESSAGE_TYPE.ERROR
               );
             }
             // NOT_ALLOWED_TABLE에 정의하지 않은 모듈은 null이 아니라 undefined를 리턴한다.
@@ -104,7 +100,7 @@ class PipelineContainer extends React.Component {
               prevProps.onSetToast(
                 Date.now(),
                 MESSAGE.INVALID_LINK,
-                MESSAGE_TYPE.ERROR,
+                MESSAGE_TYPE.ERROR
               );
             }
           }
@@ -115,17 +111,17 @@ class PipelineContainer extends React.Component {
               .getLinks()
               .findIndex(
                 c =>
-                  (c.getIn(['from', 'node']) === fromNodeID &&
-                    c.getIn(['to', 'node']) === toNodeID) ||
-                  (c.getIn(['from', 'node']) === toNodeID &&
-                    c.getIn(['to', 'node']) === fromNodeID),
+                  (c.getIn(["from", "node"]) === fromNodeID &&
+                    c.getIn(["to", "node"]) === toNodeID) ||
+                  (c.getIn(["from", "node"]) === toNodeID &&
+                    c.getIn(["to", "node"]) === fromNodeID)
               );
             if (idx >= 0) {
               isValidLink = false;
               prevProps.onSetToast(
                 Date.now(),
                 MESSAGE.LINK_ALREADY_EXIST,
-                MESSAGE_TYPE.ERROR,
+                MESSAGE_TYPE.ERROR
               );
             }
           }
@@ -134,10 +130,10 @@ class PipelineContainer extends React.Component {
           if (isValidLink) {
             prevProps.pipelineManager.addLink(prevState.linkStart, {
               nodeID: toNodeID,
-              io: 'input',
+              io: "input",
               x: prevProps.selectedPort.x,
               y: prevProps.selectedPort.y,
-              port: prevProps.selectedPort.port,
+              port: prevProps.selectedPort.port
             });
           }
         }
@@ -146,7 +142,7 @@ class PipelineContainer extends React.Component {
         this.setState({
           linkStart: null,
           selectedNodeID: null,
-          selectedPort: null,
+          selectedPort: null
         });
       }
     }
@@ -162,7 +158,7 @@ class PipelineContainer extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     // getSnapshotBeforeUpdate에서 항상 return null을 수행하므로 아래 조건문은 수행하지 않음
     if (snapshot) {
-      console.log('snapshot.. ');
+      console.log("snapshot.. ");
     }
   }
 
@@ -176,7 +172,7 @@ class PipelineContainer extends React.Component {
       this.props.pipelineManager.moveLinksByDraggingNode(
         id,
         data.deltaX,
-        data.deltaY,
+        data.deltaY
       );
 
       // 파이프라인이 동작 중일 땐 수행하지 않는 이유:
@@ -194,7 +190,7 @@ class PipelineContainer extends React.Component {
       // drag 끝난 지점으로 좌표값 업데이트
       node.setPosition({
         x: data.x,
-        y: data.y,
+        y: data.y
       });
     }
   };
@@ -203,7 +199,7 @@ class PipelineContainer extends React.Component {
     // 링킹중 아닐 때만 이벤트 활성화
     if (!this.props.isLinking) {
       e.stopPropagation();
-      this.props.onSetCtxMenuTarget(id, 'node');
+      this.props.onSetCtxMenuTarget(id, "node");
     }
   };
 
@@ -212,7 +208,7 @@ class PipelineContainer extends React.Component {
     if (!this.props.isLinking) {
       e.stopPropagation();
       this.setState({
-        selectedNodeID: null,
+        selectedNodeID: null
       });
     }
   };
@@ -228,16 +224,16 @@ class PipelineContainer extends React.Component {
       this.setState({
         linkStart: {
           nodeID: this.props.selectedNodeID,
-          io: 'output',
+          io: "output",
           x: this.props.selectedPort.x,
           y: this.props.selectedPort.y,
-          port: this.props.selectedPort.port,
-        },
+          port: this.props.selectedPort.port
+        }
       });
       this.props.onIsLinking(true);
       this.props.onSetLinkingPosition(
         this.props.selectedPort.x,
-        this.props.selectedPort.y,
+        this.props.selectedPort.y
       );
     }
   };
@@ -262,13 +258,13 @@ class PipelineContainer extends React.Component {
         this.props.translate.y;
 
       // Number: String to Number
-      let nodeID = Number(e.target.parentNode.id.split('-')[0]);
+      let nodeID = Number(e.target.parentNode.id.split("-")[0]);
 
       // Port 위치정보. (top, bottom, left, right)
-      let port = e.target.parentNode.id.split('-')[1];
+      let port = e.target.parentNode.id.split("-")[1];
 
       this.setState({
-        linkStart: { nodeID: nodeID, io: 'output', x: x, y: y, port: port },
+        linkStart: { nodeID: nodeID, io: "output", x: x, y: y, port: port }
       });
       this.props.onIsLinking(true);
       this.props.onSetLinkingPosition(x, y);
@@ -280,7 +276,7 @@ class PipelineContainer extends React.Component {
    */
   handleLinkMouseOver = (id, e) => {
     e.stopPropagation();
-    this.props.onSetCtxMenuTarget(id, 'link');
+    this.props.onSetCtxMenuTarget(id, "link");
   };
 
   /**
@@ -300,7 +296,7 @@ class PipelineContainer extends React.Component {
       // 여기서는 pipeline의 translate를 고려할 필요가 없다.
       this.props.onSetCtxmenuPosition(
         e.clientX - this.props.linkBoardPosition.x,
-        e.clientY - this.props.linkBoardPosition.y,
+        e.clientY - this.props.linkBoardPosition.y
       );
       this.props.onIsCtxmenuShowing(true);
     } else if (e.button === 0 && this.props.isCtxMenuShowing === true) {
@@ -314,64 +310,55 @@ class PipelineContainer extends React.Component {
   handlePreviewMouseDown = (node, e) => {
     e.stopPropagation();
     if (e.button === 0) {
-      const selectedNodeID = this.state.previewNodeMap.get(node.getID());
+      const selectedNodeID = node.getIsPreviewing();
 
-      if (selectedNodeID === undefined) {
-        this.setState({
-          previewNodeMap: this.state.previewNodeMap.set(node.getID(), true),
-        });
+      if (!node.getIsPreviewing()) {
+        node.setIsPreviewing(true);
+        console.log(node.getIsPreviewing());
 
         // Node height 늘이기
         node.setSize({
-          width: node.getSize()['width'],
-          height: node.getSize()['height'] + this.PREVIEW_SIZE,
+          width: node.getSize()["width"],
+          height: node.getSize()["height"] + this.PREVIEW_SIZE
         });
 
         // 연결된 Path들의 좌표값 변경
         this.props.pipelineManager.moveLinksByResizingNode(
           node.getID(),
           0,
-          this.PREVIEW_SIZE,
+          this.PREVIEW_SIZE
         );
       } else {
-        this.setState({
-          previewNodeMap: this.state.previewNodeMap.delete(node.getID()),
-        });
+        node.setIsPreviewing(false);
 
         // Node height 줄이기
         node.setSize({
-          width: node.getSize()['width'],
-          height: node.getSize()['height'] - this.PREVIEW_SIZE,
+          width: node.getSize()["width"],
+          height: node.getSize()["height"] - this.PREVIEW_SIZE
         });
 
         // 연결된 Path들의 좌표값 변경
         this.props.pipelineManager.moveLinksByResizingNode(
           node.getID(),
           0,
-          -this.PREVIEW_SIZE,
+          -this.PREVIEW_SIZE
         );
+      }
+
+      // 파이프라인이 동작 중일 땐 수행하지 않는 이유:
+      // 파이프라인 한 사이클 완료 시, onSetDummyNumber 함수를 호출하는 것이 중복됨.
+      // preview (output)이 버벅거리는 이슈가 생김.
+      if (!this.props.isPipelingRunning) {
+        this.props.onSetDummyNumber();
       }
     }
   };
 
   handleNodeClick = (node, e) => {
     e.stopPropagation();
-    // if (node.getName() === FILE_LOADER || node.getName() === FILE_SAVER) {
-    //   console.log('show/hide file navigator');
-    //   this.props.onIsFileNavigatorShowing(node)
-    // } else {
-      console.log('show node property navigator');
-      this.props.onIsPropertyNavigatorShowing(true, node);
-    // }
+    console.log("show node property navigator");
+    this.props.onIsPropertyNavigatorShowing(true, node);
   };
-
-  // handleNodeDoubleClick = (node, e) => {
-  //   e.stopPropagation();
-  //   if (node.getName() === FILE_LOADER || node.getName() === FILE_SAVER) {
-  //     console.log('show/hide file navigator');
-  //     this.props.onIsFileNavigatorShowing(node)
-  //   }
-  // };
 
   getOutput = node => {
     let moduleDataChunk = node.getOutput();
@@ -405,11 +392,11 @@ class PipelineContainer extends React.Component {
 
     let list = this.props.pipelineManager.getNodes().map(node => {
       const propertyCompopent = getPropertyComponent(node);
-
+      
       if (propertyCompopent.length > 0) {
         // true면 preview 하고있다는 의미.
-        const isShowingPreview = this.state.previewNodeMap.get(node.getID());
-        const nodeHeight = node.getSize()['height'];
+        const isShowingPreview = node.getIsPreviewing();
+        const nodeHeight = node.getSize()["height"];
         const lastPropertyHeight =
           propertyCompopent[propertyCompopent.length - 1].y +
           propertyCompopent[propertyCompopent.length - 1].height;
@@ -417,8 +404,8 @@ class PipelineContainer extends React.Component {
         if (lastPropertyHeight + PROP_SPACE_Y > nodeHeight) {
           // Node height 늘이기
           node.setSize({
-            width: node.getSize()['width'],
-            height: lastPropertyHeight + PROP_SPACE_Y,
+            width: node.getSize()["width"],
+            height: lastPropertyHeight + PROP_SPACE_Y
           });
         } else {
           // Pipeline 진행과정 보여주기. Height 크게, 모듈에 맞는 Output 뿌리기
@@ -429,11 +416,11 @@ class PipelineContainer extends React.Component {
             ) {
               // Node height 줄이기
               node.setSize({
-                width: node.getSize()['width'],
+                width: node.getSize()["width"],
                 height: Math.max(
                   lastPropertyHeight + PROP_SPACE_Y,
-                  INIT_NODE_HEIGHT,
-                ),
+                  INIT_NODE_HEIGHT
+                )
               });
             }
           } else {
@@ -443,21 +430,17 @@ class PipelineContainer extends React.Component {
             ) {
               // Node height 줄이기
               node.setSize({
-                width: node.getSize()['width'],
+                width: node.getSize()["width"],
                 height: Math.max(
                   lastPropertyHeight + PROP_SPACE_Y,
-                  INIT_NODE_HEIGHT,
-                ),
+                  INIT_NODE_HEIGHT
+                )
               });
             }
           }
         }
       }
-
-      let preview =
-        this.state.previewNodeMap.get(node.getID()) === undefined
-          ? false
-          : this.state.previewNodeMap.get(node.getID());
+      let preview = node.getIsPreviewing();
       let output = preview ? this.getOutput(node) : null;
       return (
         <Node
@@ -502,11 +485,11 @@ class PipelineContainer extends React.Component {
           key={i}
           link={link}
           handleMouseDown={e => this.handleMouseDown(e)}
-          handleLinkMouseOver={e => this.handleLinkMouseOver(link.get('id'), e)}
+          handleLinkMouseOver={e => this.handleLinkMouseOver(link.get("id"), e)}
           handleLinkMouseLeave={e => this.handleLinkMouseLeave(e)}
           selectedlinkID={
-            this.props.ctxMenuTarget.get('type') === 'link'
-              ? this.props.ctxMenuTarget.get('id')
+            this.props.ctxMenuTarget.get("type") === "link"
+              ? this.props.ctxMenuTarget.get("id")
               : null
           }
           handleLinkMouseDown={e => this.handleLinkMouseDown(e)}
@@ -553,14 +536,14 @@ class PipelineContainer extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    pipelineManager: state.pipelineManager.get('pipelineManager'),
-    isPipelingRunning: state.pipelineManager.get('isRunning'),
-    dummyNumber: state.pipelineManager.get('dummyNumber'),
-    isLinking: state.linksManager.get('isLinking'),
-    linkingPosition: state.linksManager.get('linkingPosition'),
-    isCtxMenuShowing: state.ctxMenuManager.get('isShowing'),
-    selectedNode: state.nodesManager.get('selectedNode'),
-    ctxMenuTarget: state.ctxMenuManager.get('target'),
+    pipelineManager: state.pipelineManager.get("pipelineManager"),
+    isPipelingRunning: state.pipelineManager.get("isRunning"),
+    dummyNumber: state.pipelineManager.get("dummyNumber"),
+    selectedNode: state.nodesManager.get("selectedNode"),
+    isLinking: state.linksManager.get("isLinking"),
+    linkingPosition: state.linksManager.get("linkingPosition"),
+    isCtxMenuShowing: state.ctxMenuManager.get("isShowing"),
+    ctxMenuTarget: state.ctxMenuManager.get("target")
   };
 };
 
@@ -571,18 +554,16 @@ let mapDispatchToProps = dispatch => {
     onSetLinkingPosition: (x, y) => dispatch(setLinkingPosition(x, y)),
     onIsCtxmenuShowing: isShowing => dispatch(isCtxmenuShowing(isShowing)),
     onSetCtxmenuPosition: (x, y) => dispatch(setCtxmenuPosition(x, y)),
-    onSetToast: (timeStamp, message, messageType) =>
-      dispatch(setToast(timeStamp, message, messageType)),
     onSetCtxMenuTarget: (targetID, menuType) =>
       dispatch(setCtxMenuTarget(targetID, menuType)),
-
-    // 20.02.11
+    onSetToast: (timeStamp, message, messageType) =>
+      dispatch(setToast(timeStamp, message, messageType)),
     onIsPropertyNavigatorShowing: (isShowing, selectedNode) =>
-      dispatch(isPropertyNavigatorShowing(isShowing, selectedNode)),
+      dispatch(isPropertyNavigatorShowing(isShowing, selectedNode))
   };
 };
 
 PipelineContainer = connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
+  forwardRef: true
 })(PipelineContainer);
 export default PipelineContainer;

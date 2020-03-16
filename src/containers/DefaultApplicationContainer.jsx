@@ -1,6 +1,9 @@
 import React from "react";
 import "../assets/styles/training.css";
 
+// import images
+import icModel from "../assets/images/ic_model.png";
+
 import { plain2immutable } from "../utils/plain2immutable";
 import * as PROP_TYPE from "../constants/PropertyType";
 
@@ -18,7 +21,8 @@ import { MODIFY_LINK } from "../redux/actionTypes";
 
 import TrainingContainer from "./DefaultApplicationTrainingContainer";
 import RecognitionContainer from "./DefaultApplicationRecognitionContainer";
-// import RecognitionContainer from "./RecognitionContainer";
+import ModelViewContainer from "./DefaultApplicationModelContainer";
+import DefaultApplicationModelContainer from "./DefaultApplicationModelContainer";
 
 class DefaultApplicationContainer extends React.Component {
   // video source (camera, image files..)
@@ -41,7 +45,7 @@ class DefaultApplicationContainer extends React.Component {
   };
 
   state = {
-    'options': [],
+    options: [],
     selectedDeviceID: null,
     imageSrc: null,
 
@@ -81,7 +85,9 @@ class DefaultApplicationContainer extends React.Component {
     },
 
     // training || recognition
-    selectedIndex: 0
+    selectedIndex: 0,
+
+    isModelViewShowing: false
   };
 
   componentDidMount() {
@@ -132,30 +138,6 @@ class DefaultApplicationContainer extends React.Component {
           break;
       }
     });
-
-    // switch (true) {
-    //   case !this.modulesInPipeline:
-    //     break;
-    //   case MODULES.ROI:
-    //     this.modulesInPipeline.roi = true;
-    //     break;
-    //   case MODULES.NM500:
-    //     this.setState({
-    //       nm500: {
-    //         context: {
-    //           id: "-",
-    //           name: "-"
-    //         },
-    //         category: {
-    //           id: "-",
-    //           name: "-"
-    //         }
-    //       }
-    //     })
-    //     break;
-    //   default:
-    //     break;
-    // }
   };
 
   /**
@@ -572,33 +554,33 @@ class DefaultApplicationContainer extends React.Component {
 
   setROIProperty = () => {
     let properties = {
-      'Area': {
-        'type': PROP_TYPE.GROUP,
+      Area: {
+        type: PROP_TYPE.GROUP,
         properties: {
-          'x': {
-            'type': PROP_TYPE.NUMBER_EDIT,
+          x: {
+            type: PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.x)
           },
-          'y': {
-            'type': PROP_TYPE.NUMBER_EDIT,
+          y: {
+            type: PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.y)
           },
-          'Width': {
-            'type': PROP_TYPE.NUMBER_EDIT,
+          Width: {
+            type: PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.width)
           },
-          'Height': {
-            'type': PROP_TYPE.NUMBER_EDIT,
+          Height: {
+            type: PROP_TYPE.NUMBER_EDIT,
             value: Math.round(this.state.roi.height)
           }
         }
       },
       Color: {
-        'type': PROP_TYPE.DROPDOWN,
-        'options': [
+        type: PROP_TYPE.DROPDOWN,
+        options: [
           { key: 0, text: "White", value: "White" },
           { key: 1, text: "Red", value: "Red" },
-          { key: 2, text: "Green", 'value': "Green" },
+          { key: 2, text: "Green", value: "Green" },
           { key: 3, text: "Blue", value: "Blue" }
         ],
         value: this.state.roi.color
@@ -614,15 +596,19 @@ class DefaultApplicationContainer extends React.Component {
   handleOnClickFooter = (index, e) => {
     this.setState({
       selectedIndex: index
-    })
-  }
+    });
+  };
 
   render() {
     console.log(this.props.match);
     return (
       <React.Fragment>
         <div className="workspace bg-color-black">
-          {this.state.selectedIndex === 0 ? (
+          {this.state.isModelViewShowing ? (
+            <DefaultApplicationModelContainer />
+          ) :
+          
+          this.state.selectedIndex === 0 ? (
             <TrainingContainer
               hasROI={this.state.hasROI}
               nm500={this.state.nm500}
@@ -646,59 +632,18 @@ class DefaultApplicationContainer extends React.Component {
             />
           )}
 
-          {/* <div className="module-area">
-            <div className="preview-area">
-              <canvas
-                className="preview-canvas"
-                ref={r => (this.childViewRef.previewCanvasRef = r)}
-                width="210"
-                height="210"
-              />
-            </div>
-            <div className="context-area">
-              <div className="nm500-area-title">
-                <p>Context</p>
-              </div>
-              <div className="nm500-area-id">
-                <p>{this.state.nm500.context.id}</p>
-              </div>
-              <div className="nm500-area-name">
-                <p>{this.state.nm500.context.name}</p>
-              </div>
-            </div>
-
-            <div className="category-area">
-              <div className="nm500-area-title">
-                <p>Category</p>
-              </div>
-              <div className="nm500-area-id">
-                <p>{this.state.nm500.category.id}</p>
-              </div>
-              <div className="nm500-area-name">
-                <p>{this.state.nm500.category.name}</p>
-              </div>
-            </div>
+          <div className="model-view-btn" onClick={() => this.setState({
+            isModelViewShowing: true
+          })}>
+            <img src={icModel} alt="" width="30" height="30" />
           </div>
-          <div className="module-area">
-            <div className="source-area">
-              <canvas
-                className="source-canvas"
-                ref={r => (this.childViewRef.sourceCanvasRef = r)}
-              />
-              <canvas
-                className="roi-canvas"
-                ref={r => (this.childViewRef.roiCanvasRef = r)}
-                onMouseDown={this.state.hasROI ? this.handleROIMouseDown : null}
-                onMouseMove={this.state.hasROI ? this.handleROIMouseMove : null}
-                onMouseUp={this.state.hasROI ? this.handleROIMouseUp : null}
-              />
-            </div>
-          </div> */}
 
           {/** footer */}
           <div className="footer">
-            <div 
-            className="footer-button" onClick={e => this.handleOnClickFooter(0, e)}>
+            <div
+              className="footer-button"
+              onClick={e => this.handleOnClickFooter(0, e)}
+            >
               <div
                 className={`footer-indicator${
                   this.state.selectedIndex === 0 ? ` selected` : null
@@ -706,7 +651,10 @@ class DefaultApplicationContainer extends React.Component {
               />
               <p>Training (d)</p>
             </div>
-            <div className="footer-button" onClick={e => this.handleOnClickFooter(1, e)}>
+            <div
+              className="footer-button"
+              onClick={e => this.handleOnClickFooter(1, e)}
+            >
               <div
                 className={`footer-indicator${
                   this.state.selectedIndex === 1 ? ` selected` : null

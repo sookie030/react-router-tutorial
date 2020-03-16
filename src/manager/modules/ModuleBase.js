@@ -23,6 +23,9 @@ export default class ModuleBase {
     // test
     let _output = null;
 
+    // UI용 - 20.03.16 test
+    let _isPreviewing = false;
+
     // ============================================
 
     this.setID = id => {
@@ -102,6 +105,14 @@ export default class ModuleBase {
     this.getOutput = () => {
       return _output;
     };
+
+    this.setIsPreviewing = (isPreviewing) => {
+      _isPreviewing = isPreviewing;
+    }
+
+    this.getIsPreviewing = () => {
+      return _isPreviewing;
+    }
 
     // ============================================
 
