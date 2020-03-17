@@ -87,17 +87,17 @@ class WelcomeContainer extends React.Component {
       default:
         break;
     }
+    this.props.history.push("/linkboard");
   };
 
   render() {
     return (
       <div className="content-area">
         <div className="global-content-area">
-          <Link to="/linkboard">
-            <button id="btn-new-link" onClick={e => this.createLinkboard(0, e)}>
-              Create new link
-            </button>
-          </Link>
+          <button id="btn-new-link" onClick={e => this.createLinkboard(0, e)}>
+            Create new link
+          </button>
+
           <div>
             <div className="welcome-process-area">
               <h1>Welcome</h1>
@@ -122,46 +122,40 @@ class WelcomeContainer extends React.Component {
             </div>
 
             <div className="welcome-table">
-              <Link to="/linkboard">
-                <div
-                  className="welcome-table-cell welcome-border-button"
-                  onClick={e => this.createLinkboard(0, e)}
-                >
-                  <p>New Link</p>
-                </div>
-              </Link>
-              <Link to="/linkboard">
-                <div
-                  className="welcome-table-cell welcome-border-button"
-                  onClick={e => this.createLinkboard(1, e)}
-                >
-                  <p>Face recognition</p>
-                </div>
-              </Link>
-              <Link to="/linkboard">
-                <div
-                  className="welcome-table-cell welcome-border-button"
-                  onClick={e => this.createLinkboard(2, e)}
-                >
-                  <p>Object recognition</p>
-                </div>
-              </Link>
-              <Link to="/linkboard">
-                <div
-                  className="welcome-table-cell welcome-border-button"
-                  onClick={e => this.createLinkboard(3, e)}
-                >
-                  <p>Grid Detection</p>
-                </div>
-              </Link>
-              <Link to="/linkboard">
-                <div
-                  className="welcome-table-cell welcome-border-button"
-                  onClick={e => this.createLinkboard(4, e)}
-                >
-                  <p>Data processing (Pro)</p>
-                </div>
-              </Link>
+              <div
+                className="welcome-table-cell welcome-border-button"
+                onClick={e => this.createLinkboard(0, e)}
+              >
+                <p>New Link</p>
+              </div>
+
+              <div
+                className="welcome-table-cell welcome-border-button"
+                onClick={e => this.createLinkboard(1, e)}
+              >
+                <p>Face recognition</p>
+              </div>
+
+              <div
+                className="welcome-table-cell welcome-border-button"
+                onClick={e => this.createLinkboard(2, e)}
+              >
+                <p>Object recognition</p>
+              </div>
+
+              <div
+                className="welcome-table-cell welcome-border-button"
+                onClick={e => this.createLinkboard(3, e)}
+              >
+                <p>Grid Detection</p>
+              </div>
+
+              <div
+                className="welcome-table-cell welcome-border-button"
+                onClick={e => this.createLinkboard(4, e)}
+              >
+                <p>Data processing (Pro)</p>
+              </div>
             </div>
           </div>
 

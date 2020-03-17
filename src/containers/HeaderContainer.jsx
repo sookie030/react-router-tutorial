@@ -20,9 +20,7 @@ import PipelineManager from "../manager/PipelineManager";
 const WelcomeHeader = props => {
   return (
     <div className="header-area">
-      <Link to="/">
-        <img src={icLogo} alt="" width="30" height="30" />
-      </Link>
+      <img src={icLogo} alt="" width="30" height="30" />
       <div className="header-text-area">
         <p className="header-text">Knowledge Studio 2.0</p>
       </div>
@@ -46,13 +44,11 @@ const LinkboardHeader = props => {
         >
           {props.isPipelineRunning === true ? "STOP" : "RUN"}
         </div>
-        <Link
-          to="/appview/0"
-          className="header-button bg-color-orange disabled"
-          // onMouseUp={props.handleClickAppViewBtn}
-        >
-          Application View
-        </Link>
+        <div className="header-button bg-color-orange disabled" onClick={() => {
+          props.history.push('/appview/0');
+        }}>
+            Application View
+        </div>
       </div>
     </div>
   );
@@ -137,7 +133,7 @@ class Header extends React.Component {
 
   handleClickBackBtn = e => {
     this.props.history.goBack();
-  }
+  };
 
   /**
    * Pipeline 실행
@@ -169,6 +165,7 @@ class Header extends React.Component {
             isPipelineRunning={this.state.isPipelineRunning}
             handleClickRunBtn={this.handleClickRunBtn}
             handleClickBackBtn={this.handleClickBackBtn}
+            history={this.props.history}
           />
         );
 
@@ -178,6 +175,7 @@ class Header extends React.Component {
             isPipelineRunning={this.state.isPipelineRunning}
             handleClickRunBtn={this.handleClickRunBtn}
             handleClickBackBtn={this.handleClickBackBtn}
+            history={this.props.history}
           />
         );
 
