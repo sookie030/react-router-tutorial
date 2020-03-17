@@ -58,18 +58,6 @@ property[MODULES.EDGE_HOUGH] = node => {
   return [`Search ${node.getProperties().getIn(['Search Target', 'value'])}`];
 };
 
-property[MODULES.GRAYSCALE] = node => {
-  return [
-    `Area ${
-      node.getProperties().getIn(['Area', 'properties', 'x', 'value'])
-    }, ${node.getProperties().getIn(['Area', 'properties', 'y', 'value'])} (${
-      node.getProperties().getIn(['Area', 'properties', 'Width', 'value'])
-    }x${
-      node.getProperties().getIn(['Area', 'properties', 'Height', 'value'])
-    })`,
-  ];
-};
-
 property[MODULES.RESIZE] = node => {
   return [
     `Size ${

@@ -12,6 +12,8 @@ import ModuleData from './ModuleData';
 
 var filter = {};
 
+
+// 19년도 언젠가.. 완료
 filter[MODULES.ROI] = class extends ModuleBase {
   constructor() {
     super();
@@ -743,29 +745,7 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
     super();
 
     // default properties
-    this.initialize({
-      'Area': {
-        'type': PROP_TYPE.GROUP,
-        'properties': {
-          'x': {
-            'type': PROP_TYPE.NUMBER_EDIT,
-            'value': 0,
-          },
-          'y': {
-            'type': PROP_TYPE.NUMBER_EDIT,
-            'value': 0,
-          },
-          'Width': {
-            'type': PROP_TYPE.NUMBER_EDIT,
-            'value': 0,
-          },
-          'Height': {
-            'type': PROP_TYPE.NUMBER_EDIT,
-            'value': 0,
-          },
-        },
-      },
-    });
+    this.initialize({});
   }
 
   /**
@@ -823,6 +803,7 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
   }
 };
 
+// 20.03.17 완료 (Average/Hop 옵션 무시)
 filter[MODULES.RESIZE] = class extends ModuleBase {
   constructor() {
     super();
@@ -857,57 +838,44 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
    */
-  process(inputs) {
+  async process(inputs) {
     // 입력받아야되는 input의 개수
-    var mustInputSize = this.getParentIds().length;
+    let mustInputSize = this.getParentIds().length;
 
-    console.log(
-      `[PL Process] ${this.getName()} (input: ${
-        inputs.length
-      }/${mustInputSize})`,
-    );
-
-    // input data 찍어보기
-    // console.log(inputs);
-
-    var output;
+    let output;
     if (mustInputSize !== inputs.length) {
-      console.log(
-        `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`,
-      );
+      console.log(`${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`);
       return null;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`,
-      );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      const props = this.getProperties();
+      const width = Number(props.getIn(['Size', 'properties', 'Width', 'value']));
+      const height = Number(props.getIn(['Size', 'properties', 'Height', 'value']));
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getRawData();
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // Resize 적용
+      let resizedImageBitmap = await createImageBitmap (mergeInputData, {
+        resizeWidth: width,
+        resizeHeight: height,
+        resizeQuality: 'high',
+      });
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, resizedImageBitmap);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
+      this.setOutput(output);
       return output;
     }
   }
 };
 
+// 20.03.17 완료
 filter[MODULES.CROP] = class extends ModuleBase {
   constructor() {
     super();
@@ -942,52 +910,54 @@ filter[MODULES.CROP] = class extends ModuleBase {
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
    */
-  process(inputs) {
+  async process(inputs) {
     // 입력받아야되는 input의 개수
-    var mustInputSize = this.getParentIds().length;
+    let mustInputSize = this.getParentIds().length;
 
-    console.log(
-      `[PL Process] ${this.getName()} (input: ${
-        inputs.length
-      }/${mustInputSize})`,
-    );
+    // console.log(`[PL Process] ${this.getName()} (input: ${inputs.length}/${mustInputSize})`);
 
     // input data 찍어보기
     // console.log(inputs);
 
-    var output;
+    let output;
     if (mustInputSize !== inputs.length) {
-      console.log(
-        `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`,
-      );
+      console.log(`${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`);
       return null;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`,
-      );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // input 출력해보기
+      //   if (inputs.length > 0) {
+      //     console.log(inputs);
+      //     console.log(inputs[0]);
+      //   }
 
       // merge data
       // var mergeInputData = this.mergeInputData(inputs);
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      const props = this.getProperties();
+      const x = Number(props.getIn(['Size', 'properties', 'x', 'value']));
+      const y = Number(props.getIn(['Size', 'properties', 'y', 'value']));
+      const width = Number(
+        props.getIn(['Size', 'properties', 'Width', 'value']),
+      );
+      const height = Number(
+        props.getIn(['Size', 'properties', 'Height', 'value']),
+      );
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getRawData();
+
+      // ROI 적용
+      let croppedImageBitmap = await createImageBitmap (mergeInputData, x, y, width, height);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, croppedImageBitmap);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
+      this.setOutput(output);
       return output;
     }
   }
