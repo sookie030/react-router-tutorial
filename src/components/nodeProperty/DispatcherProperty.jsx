@@ -1,4 +1,4 @@
-import * as MODULES from '../../constants/module/Modules';
+import { MODULES } from '../../constants/ModuleInfo';
 
 var property = {};
 property[MODULES.FILE_SAVER] = node => {

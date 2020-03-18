@@ -8,7 +8,8 @@ import { selectModule } from '../redux/actions';
 import Sidebar from '../components/Sidebar';
 
 // import constants
-import MODULE_LIST from '../constants/module/ModuleList';
+// import MODULE_MANAGER.MODULE_LIST from '../constants/module/ModuleList';
+import * as MODULE_MANAGER from '../constants/ModuleInfo';
 
 class SidebarContainer extends React.Component {
   state = {
@@ -72,8 +73,8 @@ class SidebarContainer extends React.Component {
       this.setState({
         selectedModuleId: id,
       });
-      var group = Object.keys(MODULE_LIST)[this.state.selectedGroupId];
-      this.props.onSelectModule({ group: group, name: MODULE_LIST[group][id] });
+      var group = Object.keys(MODULE_MANAGER.MODULE_LIST)[this.state.selectedGroupId];
+      this.props.onSelectModule({ group: group, name: MODULE_MANAGER.MODULE_LIST[group][id] });
 
       // 그 외 사이드바 여백 클릭 시, 모듈 선택 초기화
     } else {
@@ -87,8 +88,8 @@ class SidebarContainer extends React.Component {
   handleDragStart = (moduleId, e) => {
     // 기존에 클릭을 통해 선택한 모듈이 있고, 그것과 다른 모듈을 드래그하려 할 때
     // 드래그하려는 모듈을 selectedModule로 설정한다.
-    var group = Object.keys(MODULE_LIST)[this.state.selectedGroupId];
-    var module = MODULE_LIST[group][moduleId];
+    var group = Object.keys(MODULE_MANAGER.MODULE_LIST)[this.state.selectedGroupId];
+    var module = MODULE_MANAGER.MODULE_LIST[group][moduleId];
 
     if (this.state.selectedModuleId !== moduleId) {
       this.props.onSelectModule({ group: group, name: module });
@@ -106,8 +107,8 @@ class SidebarContainer extends React.Component {
   getModuleList = () => {
     // var modules = [];
     if (this.state.selectedGroupId !== null) {
-      var group = Object.keys(MODULE_LIST)[this.state.selectedGroupId];
-      var modules = MODULE_LIST[group].map((module, i) => {
+      var group = Object.keys(MODULE_MANAGER.MODULE_LIST)[this.state.selectedGroupId];
+      var modules = MODULE_MANAGER.MODULE_LIST[group].map((module, i) => {
         return (
           <div
             key={i}
@@ -132,7 +133,7 @@ class SidebarContainer extends React.Component {
   };
 
   getGroups = () => {
-    var groups = Object.keys(MODULE_LIST).map((group, i) => {
+    var groups = Object.keys(MODULE_MANAGER.MODULE_LIST).map((group, i) => {
       return (
         <div
           key={i}

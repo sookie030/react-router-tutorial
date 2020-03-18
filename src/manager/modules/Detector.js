@@ -4,7 +4,7 @@ import * as PROP_TYPE from '../../constants/PropertyType';
 
 // import constants
 import * as DATA_TYPE from '../../constants/DataType';
-import * as MODULES from '../../constants/module/Modules';
+import { MODULES } from '../../constants/ModuleInfo';
 
 // import components
 import ModuleDataChunk from './ModuleDataChunk';

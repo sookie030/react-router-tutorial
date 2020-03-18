@@ -42,12 +42,20 @@ const LinkboardHeader = props => {
           className="header-button bg-color-green"
           onMouseUp={props.handleClickRunBtn}
         >
-          {props.isPipelineRunning === true ? "STOP" : "RUN"}
+          {props.isPipelineRunning ? "STOP" : "RUN"}
         </div>
-        <div className="header-button bg-color-orange disabled" onClick={() => {
-          props.history.push('/appview/0');
-        }}>
-            Application View
+        <div
+          className={`header-button bg-color-orange ${
+            props.isPipelineRunning ? "disabled" : ""
+          }`}
+          onClick={() => {
+            if (!props.isPipelineRunning) {
+              props.handleClickRunBtn();
+              props.history.push("/appview/0");
+            }
+          }}
+        >
+          Application View
         </div>
       </div>
     </div>

@@ -9,9 +9,8 @@ import { connect } from "react-redux";
 import { setPropertiesOfNode } from "../redux/actions";
 
 // import constants
-import * as MODULES from "../constants/module/Modules";
+import { MODULES } from "../constants/ModuleInfo";
 import * as EVENT_TYPE from "../constants/EventType";
-import { MODIFY_LINK } from "../redux/actionTypes";
 
 class TrainingContainer extends React.Component {
   // video source (camera, image files..)

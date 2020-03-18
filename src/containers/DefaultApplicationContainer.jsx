@@ -15,7 +15,7 @@ import { setPropertiesOfNode } from "../redux/actions";
 import { Link } from "react-router-dom";
 
 // import constants
-import * as MODULES from "../constants/module/Modules";
+import { MODULES } from "../constants/ModuleInfo";
 import * as EVENT_TYPE from "../constants/EventType";
 import { MODIFY_LINK } from "../redux/actionTypes";
 

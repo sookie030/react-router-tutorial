@@ -1,4 +1,4 @@
-import * as GROUPS from '../constants/module/Groups';
+import { GROUPS } from '../constants/ModuleInfo';
 
 import SourceProperty from '../components/nodeProperty/SourceProperty';
 import FilterProperty from '../components/nodeProperty/FilterProperty';

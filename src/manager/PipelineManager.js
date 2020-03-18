@@ -4,14 +4,7 @@ import { Map, List } from "immutable";
 import * as EVENT_TYPE from "../constants/EventType";
 import * as MESSAGE from "../constants/Message";
 import * as MESSAGE_TYPE from "../constants/MessageType";
-import { SOURCE } from "../constants/module/Groups";
-import * as GROUPS from "../constants/module/Groups"; 
-import {
-  CAMERA,
-  FACE_CAMERA,
-  FILE_LOADER,
-  FILE_SAVER
-} from "../constants/module/Modules";
+import { MODULES, GROUPS } from "../constants/ModuleInfo"; 
 
 // import module classes
 import AIModules from "./modules/AI";
@@ -129,14 +122,14 @@ class PipelineManager {
     this._nodes.update(index, node => {
       node.setProperties(newProperty);
 
-      if (node.getName() === CAMERA || node.getName() === FACE_CAMERA) {
+      if (node.getName() === MODULES.CAMERA || node.getName() === MODULES.FACE_CAMERA) {
         // Camera || Face Camera인 경우, Stream을 다시 가져온다.
         node.updateStream();
       }
 
       // else if (
       //   // File Loader || Saver인 경우, File list를 다시 가져온다.
-      //   node.getName() === FILE_LOADER ||
+      //   node.getName() === MODULES. FILE_LOADER ||
       //   node.getName() === FILE_SAVER
       // ) {
       //   node.setList();
@@ -407,14 +400,6 @@ class PipelineManager {
 
       this.execute();
       this.requestID = requestAnimationFrame(() => this.run());
-
-      // // 첫 번째 source가 camera / face camera인지 확인
-      // if (
-      //   this._pipeline[0].getName() === CAMERA ||
-      //   this._pipeline[0].getName() === FACE_CAMERA
-      // ) {
-      //   this.requestID = requestAnimationFrame(() => this.run());
-      // }
     }
   }
 
@@ -423,11 +408,11 @@ class PipelineManager {
     cancelAnimationFrame(this.requestID);
 
     // Source인 node들을 모두 찾는다.
-    let sourceList = this._pipeline.filter(node => node.getGroup() === SOURCE);
+    let sourceList = this._pipeline.filter(node => node.getGroup() === GROUPS.SOURCE);
 
     if (sourceList.length > 0) {
       sourceList.forEach(source => {
-        if (source.getName() === CAMERA || source.getName() === FACE_CAMERA) {
+        if (source.getName() === MODULES.CAMERA || source.getName() === MODULES.FACE_CAMERA) {
           source.stopStream();
         }
       });
@@ -447,7 +432,7 @@ class PipelineManager {
     let validPipelines = [];
 
     // Source인 node들을 모두 찾는다.
-    let sourceList = this._nodes.filter(node => node.getGroup() === SOURCE);
+    let sourceList = this._nodes.filter(node => node.getGroup() === GROUPS.SOURCE);
     // console.log(sourceList.size, sourceList.length);
     // console.log(sourceList);
 
@@ -510,7 +495,7 @@ class PipelineManager {
       // module 가져오기
       var module = this._pipeline[i];
 
-      if (module.getName() === FILE_LOADER) {
+      if (module.getName() === MODULES. FILE_LOADER) {
         console.log(module.getIndex(), module.getStopPipelineFlag());
 
         if (module.getStopPipelineFlag()) {

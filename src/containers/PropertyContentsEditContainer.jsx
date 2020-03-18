@@ -7,7 +7,7 @@ import PropertyComponent from '../components/settingDialog/Property';
 
 // import constants
 import * as PROP_TYPE from '../constants/PropertyType';
-import { FILE_LOADER, FILE_SAVER } from '../constants/module/Modules';
+import { MODULES } from "../constants/ModuleInfo";
 
 const fs = window.fs;
 const dialog = window.dialog;
@@ -55,7 +55,7 @@ class PropertyContentsEditContainer extends React.Component {
 
     switch (true) {
       // 디렉토리 경로 변경 - File List 변경
-      case this.props.node.getName() === FILE_LOADER && key === 'Directory':
+      case this.props.node.getName() === MODULES. FILE_LOADER && key === 'Directory':
         fs.exists(value, isExist => {
           if (isExist) {
             fs.readdir(value, (err, files) => {
@@ -103,7 +103,7 @@ class PropertyContentsEditContainer extends React.Component {
         break;
 
       // File Click - 선택/선택 해제
-      case this.props.node.getName() === FILE_LOADER && key === 'File List':
+      case this.props.node.getName() === MODULES. FILE_LOADER && key === 'File List':
         newProperties = newProperties
           // .setIn(['Option', 'value'], option)
           .setIn(['File List', 'value'], value);
@@ -115,7 +115,7 @@ class PropertyContentsEditContainer extends React.Component {
         break;
 
       // Option 변경 - All로 변경하면 모든 파일 selected === true
-      case this.props.node.getName() === FILE_LOADER &&
+      case this.props.node.getName() === MODULES. FILE_LOADER &&
         key === 'Option' &&
         value === 'All':
         console.log('hello, option all');
@@ -141,7 +141,7 @@ class PropertyContentsEditContainer extends React.Component {
 
         break;
 
-      case this.props.node.getName() === FILE_LOADER &&
+      case this.props.node.getName() === MODULES. FILE_LOADER &&
         key === 'Option' &&
         value === 'Selected Only':
         console.log('hello, option Selected Only');

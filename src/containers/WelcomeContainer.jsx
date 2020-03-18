@@ -8,8 +8,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 // import constants
-import * as MODULES from "../constants/module/Modules";
-import * as GROUPS from "../constants/module/Groups";
+import { MODULES, GROUPS } from "../constants/ModuleInfo";
 
 class WelcomeContainer extends React.Component {
   createLinkboard = (templateID, e) => {

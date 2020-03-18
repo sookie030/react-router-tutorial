@@ -3,7 +3,7 @@ import ModuleBase from "./ModuleBase";
 import * as PROP_TYPE from "../../constants/PropertyType";
 
 // import constants
-import * as MODULES from "../../constants/module/Modules";
+import { MODULES } from '../../constants/ModuleInfo';
 import * as DATA_TYPE from "../../constants/DataType";
 
 // import components

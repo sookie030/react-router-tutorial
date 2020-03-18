@@ -8,7 +8,7 @@ import * as DATA_TYPE from '../../constants/DataType';
 // import components
 import ModuleDataChunk from './ModuleDataChunk';
 import ModuleData from './ModuleData';
-import * as MODULES from '../../constants/module/Modules';
+import { MODULES } from '../../constants/ModuleInfo';
 
 var notifier = {};
 
