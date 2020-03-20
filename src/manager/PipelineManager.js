@@ -304,8 +304,6 @@ class PipelineManager {
     this._links = List([]);
   }
 
-  // test end
-
   /**
    * 이벤트를 추가한다.
    * @param {String} eventName
@@ -322,21 +320,6 @@ class PipelineManager {
    */
   removeListener(eventName, handler) {
     this.eventEmitter.off(eventName, handler);
-  }
-
-  /**
-   * Pipeline이 변경될 때마다 다시 설정해준다.
-   * @param {List<Object>} nodes
-   * @param {List<Object>} links
-   */
-  setPipelineData(nodes, links) {
-    this._nodes = nodes;
-    this._links = links;
-  }
-
-  // 191211 test
-  setLinks(links) {
-    this._links = links;
   }
 
   /**
@@ -378,17 +361,34 @@ class PipelineManager {
     return isValid;
   };
 
+  /**
+   * Pipeline 동작 flag 설정 
+   * @param {Boolean} isPipelineRunning 
+   */
   setIsPipelineRunning(isPipelineRunning) {
     this.isPipelineRunning = isPipelineRunning;
 
     if (this.isPipelineRunning) {
+      // 파이프라인 시작
       this.run();
     } else {
+
+      // 파이프라인 중단
       this.stop();
+
+      // 파이프라인 결과 데이터 초기화
+      this._dataList = Map({});
+
+      // 부모 모듈 정보 초기화
+      this._nodes.forEach(node => {
+        node.setParentIds([]);
+      })
     }
   }
 
-  // Interval마다 검증/모듈생성/실행을 새로 반복한다.
+  /**
+   * Interval마다 검증/모듈생성/실행을 새로 반복한다.
+   */
   run() {
     console.log("run ", this.requestID);
     let isValid = this.validate();
@@ -403,7 +403,9 @@ class PipelineManager {
     }
   }
 
-  // pipeline 중단
+  /**
+   * pipeline 중단 
+   */
   stop() {
     cancelAnimationFrame(this.requestID);
 
@@ -419,6 +421,9 @@ class PipelineManager {
     }
   }
 
+  /**
+   * 파이프라인 오류 발생 시, 파이프라인 재시작을 시도한다.
+   */
   trying() {
     this.stop();
     this.run();
@@ -475,23 +480,36 @@ class PipelineManager {
   }
 
   /**
-   * 파이프라인 실행
+   * 이전(부모) 모듈의 결과값, 즉 현재 모듈의 input으로 사용될 데이터를 가져온다.
+   * @param {List<Number>} parentIds 부모 모듈의 ID
    */
-  async execute() {
-    console.log("execute");
+  getInputs(parentIds) {
+    console.log(parentIds);
+    console.log(this._dataList);
     // 부모 모듈의 결과값 (즉, 현재 모듈에서 input으로 사용할 값)을 가져오기 위한 reduce 콜백함수
-    var reducer = (accumulator, parentId) => {
-      var input = this._dataList[parentId];
+    let reducer = (accumulator, parentId) => {
+      // let input = this._dataList[parentId];
+      let input = this._dataList.get(parentId);
       if (input !== undefined) {
         accumulator.push(input);
       }
       return accumulator;
     };
 
+    return parentIds.reduce(reducer, []);
+  }
+
+  /**
+   * 파이프라인 실행
+   */
+  async execute() {
+    console.log("execute");
+
     let tmpFlag = false;
 
     // 파이프라인을 실행한다. 각 노드 순차 실행.
     for (let i = 0; i < this._pipeline.length; ) {
+
       // module 가져오기
       var module = this._pipeline[i];
 
@@ -505,7 +523,7 @@ class PipelineManager {
       }
 
       // 부모 모듈의 output을 현재 모듈의 input으로 사용하기 위해 가져온다.
-      var inputs = module.getParentIds().reduce(reducer, []);
+      var inputs = this.getInputs(module.getParentIds());
 
       try {
         // Pipeline running flag === false임에도 execute 함수가 실행됨.
@@ -514,6 +532,7 @@ class PipelineManager {
           console.log(
             "Pipeline running flag === false임에도 execute 함수가 실행"
           );
+          console.log(this._dataList);
           break;
         }
         // module 실행
@@ -533,7 +552,8 @@ class PipelineManager {
           break;
         } else if (result !== null && result !== undefined) {
           // module 실행 후 결과값을 저장한다.
-          this._dataList[module.getID()] = result;
+          // this._dataList[module.getID()] = result;
+          this._dataList = this._dataList.set(module.getID(), result);
 
           // console.log(
           //   `[PL Execution] ${module.getName()} 실행 결과값을 저장합니다.`,
@@ -541,7 +561,7 @@ class PipelineManager {
 
           // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
           this.eventEmitter.emit(
-            EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
+            EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
             module
           );
           i++;
