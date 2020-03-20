@@ -4,7 +4,7 @@ import { Map, List } from "immutable";
 import * as EVENT_TYPE from "../constants/EventType";
 import * as MESSAGE from "../constants/Message";
 import * as MESSAGE_TYPE from "../constants/MessageType";
-import { MODULES, GROUPS } from "../constants/ModuleInfo"; 
+import { MODULES, GROUPS } from "../constants/ModuleInfo";
 
 // import module classes
 import AIModules from "./modules/AI";
@@ -122,7 +122,10 @@ class PipelineManager {
     this._nodes.update(index, node => {
       node.setProperties(newProperty);
 
-      if (node.getName() === MODULES.CAMERA || node.getName() === MODULES.FACE_CAMERA) {
+      if (
+        node.getName() === MODULES.CAMERA ||
+        node.getName() === MODULES.FACE_CAMERA
+      ) {
         // Camera || Face Camera인 경우, Stream을 다시 가져온다.
         node.updateStream();
       }
@@ -362,8 +365,8 @@ class PipelineManager {
   };
 
   /**
-   * Pipeline 동작 flag 설정 
-   * @param {Boolean} isPipelineRunning 
+   * Pipeline 동작 flag 설정
+   * @param {Boolean} isPipelineRunning
    */
   setIsPipelineRunning(isPipelineRunning) {
     this.isPipelineRunning = isPipelineRunning;
@@ -372,17 +375,8 @@ class PipelineManager {
       // 파이프라인 시작
       this.run();
     } else {
-
       // 파이프라인 중단
       this.stop();
-
-      // 파이프라인 결과 데이터 초기화
-      this._dataList = Map({});
-
-      // 부모 모듈 정보 초기화
-      this._nodes.forEach(node => {
-        node.setParentIds([]);
-      })
     }
   }
 
@@ -391,6 +385,15 @@ class PipelineManager {
    */
   run() {
     console.log("run ", this.requestID);
+
+    // 파이프라인 결과 데이터 초기화
+    this._dataList = Map({});
+
+    // 부모 모듈 정보 초기화
+    this._nodes.forEach(node => {
+      node.setParentIds([]);
+    });
+
     let isValid = this.validate();
 
     // 유효한 파이프라인인 경우에만 실행
@@ -404,17 +407,22 @@ class PipelineManager {
   }
 
   /**
-   * pipeline 중단 
+   * pipeline 중단
    */
   stop() {
     cancelAnimationFrame(this.requestID);
 
     // Source인 node들을 모두 찾는다.
-    let sourceList = this._pipeline.filter(node => node.getGroup() === GROUPS.SOURCE);
+    let sourceList = this._pipeline.filter(
+      node => node.getGroup() === GROUPS.SOURCE
+    );
 
     if (sourceList.length > 0) {
       sourceList.forEach(source => {
-        if (source.getName() === MODULES.CAMERA || source.getName() === MODULES.FACE_CAMERA) {
+        if (
+          source.getName() === MODULES.CAMERA ||
+          source.getName() === MODULES.FACE_CAMERA
+        ) {
           source.stopStream();
         }
       });
@@ -437,7 +445,9 @@ class PipelineManager {
     let validPipelines = [];
 
     // Source인 node들을 모두 찾는다.
-    let sourceList = this._nodes.filter(node => node.getGroup() === GROUPS.SOURCE);
+    let sourceList = this._nodes.filter(
+      node => node.getGroup() === GROUPS.SOURCE
+    );
     // console.log(sourceList.size, sourceList.length);
     // console.log(sourceList);
 
@@ -509,11 +519,10 @@ class PipelineManager {
 
     // 파이프라인을 실행한다. 각 노드 순차 실행.
     for (let i = 0; i < this._pipeline.length; ) {
-
       // module 가져오기
       var module = this._pipeline[i];
 
-      if (module.getName() === MODULES. FILE_LOADER) {
+      if (module.getName() === MODULES.FILE_LOADER) {
         console.log(module.getIndex(), module.getStopPipelineFlag());
 
         if (module.getStopPipelineFlag()) {
