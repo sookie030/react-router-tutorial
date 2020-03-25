@@ -100,7 +100,7 @@ class DefaultApplicationContainer extends React.Component {
     );
 
     this.props.pipelineManager.addListener(
-      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
+      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
       this.getResultFromPipelineManager
     );
   }
@@ -119,7 +119,7 @@ class DefaultApplicationContainer extends React.Component {
     );
 
     this.props.pipelineManager.removeListener(
-      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
+      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
       this.getResultFromPipelineManager
     );
   }
