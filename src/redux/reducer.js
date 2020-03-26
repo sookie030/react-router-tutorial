@@ -80,19 +80,17 @@ const ctxMenuManager = (state = ctxMenuInitState, action) => {
 };
 
 /**
- * ContextMenu
+ * Sidebar
  */
-const settingDialogInitState = Map({
-  isShowing: false,
-  selectedNodeID: null
+const sidebarInitState = Map({
+  isShowing: false
 });
 
-const settingDialogManager = (state = settingDialogInitState, action) => {
+const sidebarManager = (state = sidebarInitState, action) => {
   switch (action.type) {
-    case types.IS_PROPS_SETTING_SHOWING:
+    case types.IS_SIDEBAR_SHOWING:
       return state
         .set("isShowing", action.isShowing)
-        .set("selectedNodeID", action.id);
 
     default:
       return state;
@@ -201,7 +199,7 @@ const Reducer = combineReducers({
   nodesManager,
   linksManager,
   ctxMenuManager,
-  settingDialogManager,
+  sidebarManager,
   toastManager,
   pipelineManager,
   propertyNavigatorManager

@@ -3,9 +3,7 @@ import React from 'react';
 // redux module
 import { connect } from 'react-redux';
 import {
-  // removeNode,
   removeLink,
-  isPropsSettingDialogShowing,
   isCtxmenuShowing,
 } from '../redux/actions';
 
@@ -128,9 +126,6 @@ let mapDispatchToProps = dispatch => {
   return {
     onRemoveLink: (deletedElement, id) =>
       dispatch(removeLink(deletedElement, id)),
-
-    onIsShowing: (isShowing, id) =>
-      dispatch(isPropsSettingDialogShowing(isShowing, id)),
 
     onIsCtxmenuShowing: isShowing => dispatch(isCtxmenuShowing(isShowing)),
   };

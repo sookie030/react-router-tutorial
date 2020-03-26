@@ -1,14 +1,13 @@
-#sidebar {
-  position: fixed;
-  /* top: 56px; */
-  /* left: 50px; */
-  width: 250px;
-  height: 100%;
-  /* background-color: #111; */
-  background-color: #38466c;
-  overflow-x: hidden;
-  transition: 0.5s;
+.sidebar {
+  float: left;
   display: flex;
+  width: 250px;
+  height: 100vh;
+
+  overflow-x: hidden;
+  background-color: #38466c;
+  
+  transition: 0.5s;
 }
 
 .group-item {

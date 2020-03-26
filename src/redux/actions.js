@@ -96,10 +96,10 @@ export function setCtxMenuTarget(targetID, menuType) {
 /**
  * Etc
  */
-export function isPropsSettingDialogShowing(isShowing, id) {
+export function isSidebarShowing(isShowing) {
     return {
-        'type': types.IS_PROPS_SETTING_SHOWING,
-        isShowing, id
+        'type': types.IS_SIDEBAR_SHOWING,
+        isShowing
     }
 }
 

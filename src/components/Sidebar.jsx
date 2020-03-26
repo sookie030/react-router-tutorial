@@ -4,7 +4,7 @@ import '../assets/styles/sidebar.css';
 const Sidebar = props => (
   <React.Fragment>
     <div
-      id="sidebar"
+      className="sidebar"
       style={{ width: props.sidebarWidth }}
       onMouseUp={props.onMouseUp}
     >

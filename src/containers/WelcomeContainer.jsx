@@ -4,17 +4,15 @@ import "../assets/styles/welcome.css";
 // redux module
 import { connect } from "react-redux";
 
-// import external component
-import { Link } from "react-router-dom";
-
 // import constants
+import * as TEMPLATES from "../constants/TemplateType";
 import { MODULES, GROUPS } from "../constants/ModuleInfo";
 
 class WelcomeContainer extends React.Component {
-  createLinkboard = (templateID, e) => {
+  createLinkboard = (template, e) => {
     this.props.pipelineManager.clearPipeline();
-    switch (templateID) {
-      case 1:
+    switch (template) {
+      case TEMPLATES.FACE_RECOGNITION:
         // Face Recognition
         this.props.pipelineManager.addNode(MODULES.FACE_CAMERA, GROUPS.SOURCE, {
           x: 600,
@@ -30,7 +28,7 @@ class WelcomeContainer extends React.Component {
         });
 
         break;
-      case 2:
+      case TEMPLATES.OBJECT_RECOGNITION:
         // Object Recognition
         this.props.pipelineManager.addNode(MODULES.CAMERA, GROUPS.SOURCE, {
           x: 600,
@@ -50,7 +48,7 @@ class WelcomeContainer extends React.Component {
         });
 
         break;
-      case 3:
+      case TEMPLATES.GRID_RECOGNITION:
         // Grid Recognition
         this.props.pipelineManager.addNode(MODULES.CAMERA, GROUPS.SOURCE, {
           x: 600,
@@ -79,7 +77,7 @@ class WelcomeContainer extends React.Component {
         });
 
         break;
-      case 4:
+      case TEMPLATES.DATA_PROCESSING_PRO:
         // Data Processing Pro
 
         break;
@@ -89,89 +87,48 @@ class WelcomeContainer extends React.Component {
     this.props.history.push("/linkboard");
   };
 
+  getTemplateList() {
+    const templates = Object.values(TEMPLATES);
+    let templateList = templates.map((template, index) => {
+      return (
+        <p
+          key={index}
+          className="worklinks"
+          onClick={e => this.createLinkboard(template, e)}
+        >
+          {template}
+        </p>
+      );
+    });
+
+    return templateList;
+  }
+
   render() {
+    const templateList = this.getTemplateList();
     return (
       <div className="content-area">
-        <div className="global-content-area">
-          <button id="btn-new-link" onClick={e => this.createLinkboard(0, e)}>
-            Create new link
-          </button>
-
+        <div className="welcome-view">
           <div>
-            <div className="welcome-process-area">
-              <h1>Welcome</h1>
-              <h3>Create your own link</h3>
-              <div className="welcome-table">
-                <div className="welcome-table-cell welcome-process-oval">
-                  <p>1. Make a link</p>
-                </div>
-                <div className="welcome-table-cell welcome-process-oval">
-                  <p>2. Training</p>
-                </div>
-                <div className="welcome-table-cell welcome-process-oval">
-                  <p>3. Classification</p>
-                </div>
-              </div>
+            <div className="start-area">
+              <h1>Start</h1>
+              <p className="worklinks" onClick={e => this.createLinkboard(e)}>
+                New Data Pipeline
+              </p>
+              <p className="worklinks">Knowledge Model Analysis</p>
+            </div>
+
+            <div className="recent-area">
+              <h1>Recent</h1>
+              <p className="worklinks">Test</p>
+              <p className="worklinks">hi</p>
+              <p className="worklinks">Knowledge Model Analysis</p>
             </div>
           </div>
-
           <div>
-            <div className="welcome-title-area">
-              <h1>Create New Link</h1>
-            </div>
-
-            <div className="welcome-table">
-              <div
-                className="welcome-table-cell welcome-border-button"
-                onClick={e => this.createLinkboard(0, e)}
-              >
-                <p>New Link</p>
-              </div>
-
-              <div
-                className="welcome-table-cell welcome-border-button"
-                onClick={e => this.createLinkboard(1, e)}
-              >
-                <p>Face recognition</p>
-              </div>
-
-              <div
-                className="welcome-table-cell welcome-border-button"
-                onClick={e => this.createLinkboard(2, e)}
-              >
-                <p>Object recognition</p>
-              </div>
-
-              <div
-                className="welcome-table-cell welcome-border-button"
-                onClick={e => this.createLinkboard(3, e)}
-              >
-                <p>Grid Detection</p>
-              </div>
-
-              <div
-                className="welcome-table-cell welcome-border-button"
-                onClick={e => this.createLinkboard(4, e)}
-              >
-                <p>Data processing (Pro)</p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="welcome-title-area">
-              <h1>Popular Templates</h1>
-            </div>
-            <div className="welcome-table">
-              <div className="welcome-table-cell welcome-border-button">
-                <p>Face recognition</p>
-              </div>
-              <div className="welcome-table-cell welcome-border-button">
-                <p>Object recognition</p>
-              </div>
-              <div className="welcome-table-cell welcome-border-button">
-                <p>Data processing (Pro)</p>
-              </div>
+            <div className="tutorial-area">
+              <h1>Tutorials</h1>
+              {templateList}
             </div>
           </div>
         </div>

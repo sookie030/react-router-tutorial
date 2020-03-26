@@ -1,118 +1,14 @@
-.global-content-area {
-  padding: 43px;
+.welcome-view {
+  display: table;
+  width: 100vh;
 }
 
-#btn-new-link {
-  width: 235px;
-  height: 50px;
-  border-radius: 8.5px;
-  background-image: linear-gradient(to right, #5b9af8, #567de9 107%);
+.welcome-view > div {
+  display: table-cell;
+  width: 50%;
+}
 
-  font-family: AppleSDGothicNeo;
-  font-size: 24px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #ffffff;
-
+.worklinks {
+  color: rgb(0, 140, 255);
   cursor: pointer;
-  border: 0px;
-  outline: 0px;
-}
-
-#btn-new-link:hover {
-  background-image: linear-gradient(to right, #8d9db4, #3f5daf 107%);
-}
-
-.welcome-process-area {
-  margin-top: 30px;
-  padding: 30px;
-  border-radius: 8.5px;
-  border: solid 1px #1e1e1e;
-  background-color: #ffffff;
-}
-
-.welcome-process-area h1 {
-  font-family: AppleSDGothicNeo;
-  font-size: 32px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #1e1e1e;
-}
-
-.welcome-process-area h3 {
-  font-family: AppleSDGothicNeo;
-  font-size: 16px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #1e1e1e;
-}
-
-.welcome-table {
-  display: table;
-  width: 100%;
-}
-
-.welcome-table-cell {
-  display: table-cell;
-  margin: 0px 20px 20px 0px;
-}
-
-.welcome-process-oval {
-  display: table;
-  float: left;
-  width: 142px;
-  height: 142px;
-  border-radius: 50%;
-  background-color: #e9ecef;
-  text-align: center;
-}
-
-.welcome-process-oval p {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.welcome-title-area {
-  margin: 40px 0px 10px 0px;
-}
-
-.welcome-border-button {
-  display: table;
-  float: left;
-  width: 205px;
-  height: 205px;
-  border-radius: 8.5px;
-  border: solid 1px #1e1e1e;
-  background-color: #ffffff;
-  text-align: center;
-  cursor: pointer;
-}
-
-.welcome-border-button:hover {
-  background-color: #dde3f1;
-}
-
-.welcome-border-button p {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-
-  font-family: AppleSDGothicNeo;
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #1e1e1e;
 }

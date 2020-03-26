@@ -23,8 +23,8 @@ export const IS_CTXMENU_SHOWING = 'IS_CTXMENU_SHOWING';
 export const SET_CTXMENU_POSITION = 'SET_CTXMENU_POSITION';
 export const SET_CTXMENU_TYPE = 'SET_CTXMENU_TYPE'
 
-// Property Setting
-export const IS_PROPS_SETTING_SHOWING = 'IS_PROPS_SETTING_SHOWING';
+// Sidebar
+export const IS_SIDEBAR_SHOWING = 'IS_SIDEBAR_SHOWING';
 
 // Common
 export const SET_TOAST = 'SET_TOAST';

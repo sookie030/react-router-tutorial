@@ -1,60 +1,59 @@
-import React from 'react';
-import '../assets/styles/tab.css';
-
-// import constants
-import * as EVENT_TYPE from '../constants/EventType';
+import React from "react";
+import "../assets/styles/Tab.css";
 
 // redux modules
-import { connect } from 'react-redux';
-import {
-  setToast,
-} from '../redux/actions';
-
-// import presentation
-import Tabs from '../components/tabPane/Tabs';
-import TabPane from '../components/tabPane/TabPanes';
+import { connect } from "react-redux";
+import { setToast } from "../redux/actions";
 
 class TabContainer extends React.Component {
-  state = {
-    selectedIndex: 0,
+
+  openTab = e => {
+    console.log(e);
   };
 
-  /**
-   * 탭 선택
-   */
-  handleTabSelected = (index, e) => {
-    this.setState({
-      selectedIndex: index,
-    });
+  closeTab = e => {
+    console.log(e);
   };
-
+  
   render() {
-    const selectedIndex = this.state.selectedIndex;
-    const onHandleTabSelected = this.handleTabSelected;
-
     return (
-      <React.Fragment>
-        <Tabs
-          selectedIndex={selectedIndex}
-          handleTabSelected={onHandleTabSelected}
-        />
-        <TabPane selectedIndex={selectedIndex} />
-      </React.Fragment>
+      <div className="tab-area">
+        <div className="tabs">
+          <div className="tab selected" onClick={e => this.openTab(e)}>
+            <span className="tabname">First</span>
+            <button className="tabclose" onClick={e => this.closeTab(e)}>
+              X
+            </button>
+          </div>
+          <div className="tab" onClick={e => this.openTab(e)}>
+            <span className="tabname">B</span>
+            <button className="tabclose" onClick={e => this.closeTab(e)}>
+              X
+            </button>
+          </div>
+          <div className="tab" onClick={e => this.openTab(e)}>
+            <span className="tabname">Hi</span>
+            <button className="tabclose" onClick={e => this.closeTab(e)}>
+              X
+            </button>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
 let mapStateToProps = state => {
   return {
-    links: state.linksManager.get('links'),
-    pipelineManager: state.pipelineManager.get('pipelineManager'),
+    links: state.linksManager.get("links"),
+    pipelineManager: state.pipelineManager.get("pipelineManager")
   };
 };
 
 let mapDispatchToProps = dispatch => {
   return {
     onSetToast: (timeStamp, message, messageType) =>
-      dispatch(setToast(timeStamp, message, messageType)),
+      dispatch(setToast(timeStamp, message, messageType))
   };
 };
 
