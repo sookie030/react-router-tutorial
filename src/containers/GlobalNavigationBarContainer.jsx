@@ -85,14 +85,17 @@ class GlobalNavigationBar extends React.Component {
 
   render() {
     const pathname = this.props.location.pathname;
+    console.log(this.props.match);
+    console.log(this.props.location);
+    console.log(this.props.history);
     return pathname === "/" ? (
       <div></div>
     ) : (
       <div>
-        <div className="gnb-button" onClick={e => this.handleOpenView(e)}>
+        <div className={`gnb-button${pathname !== "model" ? ` selected` : ``}`} onClick={e => this.handleOpenView(e)}>
           <img src={icLogo} alt="" width="30" height="30" />
         </div>
-        <div className="gnb-button" onClick={e => this.handleOpenView(e)}>
+        <div className={`gnb-button${pathname == "model" ? ` selected` : ``}`} onClick={e => this.handleOpenView(e)}>
           <img src={icLogo} alt="" width="30" height="30" />
         </div>
       </div>

@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.gnb-button.selected {
+  background-color: dodgerblue;
+}
+
 .gnb-button:hover {
   background-color: rgb(75, 75, 75);
 }
