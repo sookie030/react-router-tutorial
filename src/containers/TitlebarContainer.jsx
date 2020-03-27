@@ -20,17 +20,21 @@ const TITLEBAR_BUTTONS = {
 
 class TitlebarContainer extends React.Component {
   handleClickButton = (button, e) => {
-    let theWindow = BrowserWindow.getFocusedWindow();
+    let window = BrowserWindow.getFocusedWindow();
 
     switch (button) {
       case TITLEBAR_BUTTONS.MINIMIZE:
-        theWindow.minimize();
+        window.minimize();
         break;
       case TITLEBAR_BUTTONS.MAXIMAZE:
-        theWindow.maximize();
+        if(window.isMaximized()){
+          window.unmaximize();
+      }else{
+          window.maximize();
+      }
         break;
       case TITLEBAR_BUTTONS.CLOSE:
-        theWindow.close();
+        window.close();
         break;
       default:
         break;

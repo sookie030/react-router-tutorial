@@ -13,4 +13,5 @@
 
 .button-area {
     float: right;
+    -webkit-app-region: no-drag;
 }
