@@ -1,72 +1,16 @@
-#titlebar {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    height: 65px;
-    width: 100%;
-    background-color: rgb(0, 0, 0);
-    border-bottom: 2px solid rgb(40, 40, 40);
-    
-    overflow-x: hidden;
-    align-items: center;
+.titlebar-content > div {
+    display: table-cell;
+    vertical-align: middle;
+}
 
-    display: inline-flex;
-    padding: 10px;
+.icon-area {
+    float: left;
 }
 
 .title-area {
-    margin: 10px;
-    display: block;
-}
-
-#title {
-    /* position: absolute; */
-    font-family: Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,Sans-Serif;
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff;
-    /* top: 3px;
-    left: 50px; */
-}
-
-#sub-title {
-    /* position: absolute; */
-    font-size: 12px;
-    color: #cccccc;
-    /* top: 25px;
-    left: 50px; */
+    float: left;
 }
 
 .button-area {
-    position: fixed;
-    right: 15px;
-    margin-left: 10px;
-    align-items: center;
-    display: inline-flex;
-}
-
-#btn-run {
-    width: 88px;
-    height: 45px;
-    color: rgb(0, 0, 0);
-    background-color: #47cf73;
-    border: 3px solid transparent;
-    border-radius: 4px;
-
-    text-align: center;
-    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
-    font-size: 16px;
-
-    pointer-events: auto;
-    cursor: pointer;
-
-    /* text 가운데정렬 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
-}
-
-#btn-run:hover {
-    background-color: #3aad5e;
+    float: right;
 }

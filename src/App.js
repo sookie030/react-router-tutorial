@@ -13,6 +13,7 @@ import Reducer from "./redux/reducer";
 import Tab from "./containers/TabContainer";
 import Sidebar from "./containers/SidebarContainer";
 
+import Titlebar from "./containers/TitlebarContainer";
 import Welcome from "./containers/WelcomeContainer";
 import LinkWorkspace from "./containers/LinkWorkspaceContainer";
 import AppView from "./containers/AppViewContainer";
@@ -29,6 +30,9 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div>
+            <div className="titlebar-area">
+              <Titlebar />
+            </div>
             <div className="gnb-area">
               <GlobalNavigationBar />
             </div>
