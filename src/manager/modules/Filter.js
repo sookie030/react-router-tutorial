@@ -75,10 +75,10 @@ filter[MODULES.ROI] = class extends ModuleBase {
       // process 시작
 
       // input 출력해보기
-        // if (inputs.length > 0) {
-        //   console.log(inputs);
-        //   console.log(inputs[0]);
-        // }
+        if (inputs.length > 0) {
+          console.log(inputs);
+          console.log(inputs[0]);
+        }
 
       // merge data
       // var mergeInputData = this.mergeInputData(inputs);

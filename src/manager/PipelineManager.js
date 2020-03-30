@@ -384,6 +384,7 @@ class PipelineManager {
    * Interval마다 검증/모듈생성/실행을 새로 반복한다.
    */
   run() {
+    console.log("run ", this.requestID);
 
     // 파이프라인 결과 데이터 초기화
     this._dataList = Map({});
@@ -493,6 +494,8 @@ class PipelineManager {
    * @param {List<Number>} parentIds 부모 모듈의 ID
    */
   getInputs(parentIds) {
+    console.log(parentIds);
+    console.log(this._dataList);
     // 부모 모듈의 결과값 (즉, 현재 모듈에서 input으로 사용할 값)을 가져오기 위한 reduce 콜백함수
     let reducer = (accumulator, parentId) => {
       // let input = this._dataList[parentId];
@@ -510,6 +513,7 @@ class PipelineManager {
    * 파이프라인 실행
    */
   async execute() {
+    console.log("execute");
 
     let tmpFlag = false;
 
@@ -537,6 +541,7 @@ class PipelineManager {
           console.log(
             "Pipeline running flag === false임에도 execute 함수가 실행"
           );
+          console.log(this._dataList);
           break;
         }
         // module 실행

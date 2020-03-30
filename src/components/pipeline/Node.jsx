@@ -25,19 +25,18 @@ class Node extends React.Component {
    */
   updateCanvas() {
     const canvasCtx = this.canvasRef.getContext("2d");
-    // canvasCtx.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height);
-    console.log(this.props.output);
-
-    // imageData resize
-    createImageBitmap(
-      this.props.output, {
-        resizeWidth: this.canvasRef.width,
-        resizeHeight: this.canvasRef.height,
-        resizeQuality: "high"
-      }
-    ).then(image => {
-      canvasCtx.drawImage(image, 0, 0, image.width, image.height);
-    })
+    canvasCtx.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height);
+    canvasCtx.drawImage(
+      this.props.output,
+      0,
+      0,
+      this.props.output.width,
+      this.props.output.height,
+      0,
+      0,
+      this.canvasRef.width,
+      this.canvasRef.height
+    );
   }
 
   render() {
@@ -123,11 +122,7 @@ class Node extends React.Component {
             >
               {/* Node stroke when mouse over */}
               <rect
-                className={
-                  this.props.node.getID() === this.props.selectedNodeID
-                    ? "node-selector selected"
-                    : "node-selector"
-                }
+                className={this.props.node.getID() === this.props.selectedNodeID ? 'node-selector selected' : 'node-selector'}
                 x="0"
                 y="0"
                 rx="6"
