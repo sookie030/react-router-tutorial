@@ -133,11 +133,10 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
       this.stream = await DeviceManager.getStream(constraints);
       this.track = this.stream.getVideoTracks()[0];
     }
-
+    
     try {
       let imageCapture = new ImageCapture(this.track);
       let image = await imageCapture.grabFrame();
-
       if (
         image.width !== this.track.getSettings().width ||
         image.height !== this.track.getSettings().height
@@ -149,8 +148,15 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
         });
       }
 
+      // 20.03.23 test
+      let canvas = new OffscreenCanvas(image.width, image.height);
+      let context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0);
+      let myData = context.getImageData(0, 0, image.width, image.height);
+      console.log(myData);
+
       // ImageBitmap을 Output으로 내보내고, PNG로 만드는 과정은 PipelineManager > getOutput에서 수행한다.
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, image);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, myData);
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
@@ -168,6 +174,41 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
       this.setOutput(null);
       return e;
     }
+
+    // try {
+    //   let imageCapture = new ImageCapture(this.track);
+    //   let image = await imageCapture.grabFrame();
+
+    //   if (
+    //     image.width !== this.track.getSettings().width ||
+    //     image.height !== this.track.getSettings().height
+    //   ) {
+    //     image = await createImageBitmap(image, {
+    //       resizeWidth: this.track.getConstraints().width,
+    //       resizeHeight: this.track.getConstraints().height,
+    //       resizeQuality: "high"
+    //     });
+    //   }
+
+    //   // ImageBitmap을 Output으로 내보내고, PNG로 만드는 과정은 PipelineManager > getOutput에서 수행한다.
+    //   var output1 = new ModuleData(DATA_TYPE.IMAGE, image);
+    //   output = new ModuleDataChunk();
+    //   output.addModuleData(output1);
+
+    //   // Output으로 저장
+    //   this.setOutput(output);
+
+    //   return output;
+    // } catch (e) {
+    //   // Stream 재시작 혹은 Source의 속성값을 변경한 경우, 일시적으로 track이 비어있을 수 있음.
+    //   if (this.track === null) {
+    //     this.setOutput(this.getOutput());
+    //     return this.getOutput();
+    //   }
+
+    //   this.setOutput(null);
+    //   return e;
+    // }
   };
 };
 

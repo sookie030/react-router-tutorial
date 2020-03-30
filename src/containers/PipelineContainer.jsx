@@ -372,8 +372,9 @@ class PipelineContainer extends React.Component {
       let outputRawData = output.getRawData();
 
       switch (output.getType()) {
-        case DATA_TYPE.IMAGE:
-          // createImageBitmap 반환
+        case DATA_TYPE.IMAGE:          // imageData 반환
+        console.log(outputRawData);
+        console.log(outputRawData.data);
           return outputRawData;
         default:
           return null;
