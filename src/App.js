@@ -24,7 +24,6 @@ import GlobalNavigationBar from "./containers/GlobalNavigationBarContainer";
 const store = createStore(Reducer);
 
 class App extends Component {
-
   render() {
     return (
       <Provider store={store}>
@@ -33,21 +32,18 @@ class App extends Component {
             <div className="titlebar-area">
               <Titlebar />
             </div>
-            <div className="gnb-area">
-              <GlobalNavigationBar />
-            </div>
-
-            {/* <div className="sidebar-area">
-              <Sidebar />
-            </div> */}
-
-            <div className="view-area">
-              <Switch>
-                <Route exact path="/" component={Welcome} />
-                <Route exact path="/linkboard" component={LinkWorkspace} />
-                <Route path="/appview/:viewid" component={AppView} />
-                <Route component={NotFound} />
-              </Switch>
+            <div className="content-area">
+              <div className="gnb-area">
+                <GlobalNavigationBar />
+              </div>
+              <div className="view-area">
+                <Switch>
+                  <Route exact path="/" component={Welcome} />
+                  <Route exact path="/linkboard" component={LinkWorkspace} />
+                  <Route path="/appview/:viewid" component={AppView} />
+                  <Route component={NotFound} />
+                </Switch>
+              </div>
             </div>
           </div>
         </Router>

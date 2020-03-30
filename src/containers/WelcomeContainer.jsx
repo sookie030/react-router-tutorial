@@ -107,7 +107,7 @@ class WelcomeContainer extends React.Component {
   render() {
     const templateList = this.getTemplateList();
     return (
-      <div className="content-area">
+      <div>
         <div className="welcome-view">
           <div>
             <div className="start-area">

@@ -8,8 +8,7 @@ import Toast from "./ToastContainer";
 import PropertyNavigator from "./PropertyNavigatorContainer";
 
 const LinkWorkspaceContainer = props => (
-  <div className="content-area">
-
+  <div>
     <Linkboard />
     <Sidebar />
     <Tab />

@@ -14,6 +14,10 @@
   -webkit-app-region: drag;
 }
 
+.content-area {
+  margin-top: 50px;
+}
+
 .gnb-area {
   /* position: fixed; */
   float: left;
@@ -36,8 +40,4 @@
   float: left;
   min-height: 100vh;
   background-color: rgb(36, 36, 36);
-}
-
-.content-area {
-  color: white;
 }
