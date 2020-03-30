@@ -310,6 +310,7 @@ class PipelineContainer extends React.Component {
   handlePreviewMouseDown = (node, e) => {
     e.stopPropagation();
     if (e.button === 0) {
+      const selectedNodeID = node.getIsPreviewing();
 
       if (!node.getIsPreviewing()) {
         node.setIsPreviewing(true);
@@ -372,9 +373,7 @@ class PipelineContainer extends React.Component {
 
       switch (output.getType()) {
         case DATA_TYPE.IMAGE:
-          // imageData 반환
-          console.log(outputRawData);
-          console.log(outputRawData.data);
+          // createImageBitmap 반환
           return outputRawData;
         default:
           return null;
@@ -403,7 +402,6 @@ class PipelineContainer extends React.Component {
           propertyCompopent[propertyCompopent.length - 1].height;
 
         if (lastPropertyHeight + PROP_SPACE_Y > nodeHeight) {
-          console.log('hi');
           // Node height 늘이기
           node.setSize({
             width: node.getSize()["width"],

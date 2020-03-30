@@ -88,7 +88,7 @@ class LinkboardContainer extends React.Component {
       }
 
       // 현재 마우스커서 위치가 노드 위에 있는지 확인 (겹쳐져있다면 더 상위에 있는 노드 선택)
-      var selectedNode = this.props.pipelineManager
+      var selectedNode = this.props.pipelineManager // .nodes
         .getNodes()
         .reverse()
         .find(

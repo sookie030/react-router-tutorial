@@ -69,7 +69,7 @@ class TrainingContainer extends React.Component {
     );
 
     this.props.pipelineManager.addListener(
-      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
+      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
       this.getResultFromPipelineManager
     );
   }
@@ -82,7 +82,7 @@ class TrainingContainer extends React.Component {
     );
 
     this.props.pipelineManager.removeListener(
-      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
+      EVENT_TYPE.SEND_PIPELINE_RESULT_TO_JSX,
       this.getResultFromPipelineManager
     );
   }

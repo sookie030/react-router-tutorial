@@ -26,10 +26,6 @@ export default class ModuleBase {
     // UI용 - 20.03.16 test
     let _isPreviewing = false;
 
-    // UI용 - 20.03.24 test
-    let _canvas = new OffscreenCanvas(180, 180);
-    let _context = _canvas.getContext('2d');
-
     // ============================================
 
     this.setID = id => {
