@@ -45,3 +45,5 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+require('../server/index');

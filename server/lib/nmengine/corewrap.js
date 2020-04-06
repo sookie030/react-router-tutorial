@@ -83,7 +83,7 @@ if (platform === 'Windows') {
     libnmengine = './lib/libnmengine.so'
 
 } else {
-    libnmengine = './lib/macos/libnmengine.dylib'
+    libnmengine = './server/lib/nmengine/libnmengine.dylib'
 }
 
 const nmengine = ffi.Library(libnmengine, {
