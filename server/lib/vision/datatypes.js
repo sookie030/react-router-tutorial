@@ -14,25 +14,25 @@ const StructType = require('ref-struct-di')(ref);
  * Pixel info
  */
 exports.ColorInfo = StructType({
-  red: "uint8",
-  green: "uint8",
-  blue: "uint8"
+  red: 'uint8',
+  green: 'uint8',
+  blue: 'uint8'
 });
 
 /**
  * Position info
  */
 exports.PointInfo = StructType({
-  x: "int32",
-  y: "int32"
+  x: 'int32',
+  y: 'int32'
 });
 
 /**
  * Size info
  */
 exports.SizeInfo = StructType({
-  width: "int32",
-  height: "int32"
+  width: 'int32',
+  height: 'int32'
 });
 
 /**
@@ -47,16 +47,16 @@ exports.RectInfo = StructType({
  * Vector info
  */
 exports.VectorInfo = StructType({
-  vector: "uint8",
-  length: "uint32"
+  vector: 'uint8',
+  length: 'uint32'
 });
 
 /**
  * 32bit Vector info
  */
 exports.Vector32Info = StructType({
-  vector: "uint32",
-  length: "uint32"
+  vector: 'uint32',
+  length: 'uint32'
 });
 
 /**
@@ -70,9 +70,9 @@ exports.Vector32Info = StructType({
 exports.ImageInfo = StructType({
   data: ref.refType('uint8'),
   size: this.SizeInfo,
-  color: "uint8",
-  bytes_per_pixel: "uint8",
-  coordinate: "uint8"
+  color: 'uint8',
+  bytes_per_pixel: 'uint8',
+  coordinate: 'uint8'
 });
 
 /**************************************************
@@ -80,7 +80,7 @@ exports.ImageInfo = StructType({
  **************************************************/
 
 exports.ListNode = StructType({
-  data: ref.refType("void"),
+  data: ref.refType('void'),
 
   // struct _list_node *previous;    // Previous node
   // struct _list_node *next;        // Next node
@@ -88,28 +88,28 @@ exports.ListNode = StructType({
   // next: ref.refType(this.ListNode)
 
   // 우선 void pointer로 지정해보쟈
-  previous: ref.refType("void"),
-  next: ref.refType("void")
+  previous: ref.refType('void'),
+  next: ref.refType('void')
 });
 
 exports.ListInfo = StructType({
   head: ref.refType(this.ListNode),
   tail: ref.refType(this.ListNode),
-  count: "uint32"
+  count: 'uint32'
 });
 
 /**************************************************
  * edge/sobel.h
  **************************************************/
-let calculateGradientFuncPtr = ffi.Function("uint16", [
-  "int16",
-  "int16",
-  "bool"
+let calculateGradientFuncPtr = ffi.Function('uint16', [
+  'int16',
+  'int16',
+  'bool'
 ]);
 
 exports.SobelOptions = StructType({
-  use_math: "bool",
-  threshold_ratio: "int8",
+  use_math: 'bool',
+  threshold_ratio: 'int8',
   calculate_gradient: calculateGradientFuncPtr
 });
 
@@ -117,8 +117,8 @@ exports.SobelOptions = StructType({
  * edge/prewitt.h
  **************************************************/
 exports.PrewittOptions = StructType({
-  use_math: "bool",
-  threshold_ratio: "int8",
+  use_math: 'bool',
+  threshold_ratio: 'int8',
   calculate_gradient: calculateGradientFuncPtr
 });
 
@@ -126,8 +126,8 @@ exports.PrewittOptions = StructType({
  * edge/roberts.h
  **************************************************/
 exports.RobertsOptions = StructType({
-  use_math: "bool",
-  threshold_ratio: "int8",
+  use_math: 'bool',
+  threshold_ratio: 'int8',
   calculate_gradient: calculateGradientFuncPtr
 });
 
@@ -136,9 +136,9 @@ exports.RobertsOptions = StructType({
  **************************************************/
 exports.CannyOptions = StructType({
   // High threshold ratio for edge as upper criteria (%)
-  threshold_high_ratio: "int8",
+  threshold_high_ratio: 'int8',
   // Lower threshold ratio for edge as upper criteria (%)
-  threshold_low_ratio: "int8"
+  threshold_low_ratio: 'int8'
 });
 
 /**************************************************
@@ -150,20 +150,20 @@ exports.HoughLineResult = StructType({
 });
 
 exports.HoughLineOptions = StructType({
-  threshold: "uint16"
+  threshold: 'uint16'
 });
 
 exports.HoughCircleResult = StructType({
   // Center point of result
   center: this.PointInfo,
-  radius: "uint16"
+  radius: 'uint16'
 });
 
 exports.HoughCircleOptions = StructType({
-  threshold: "uint16",
-  min_radius: "uint16",
-  max_radius: "uint16",
-  redius_stride: "uint16"
+  threshold: 'uint16',
+  min_radius: 'uint16',
+  max_radius: 'uint16',
+  redius_stride: 'uint16'
 });
 
 /**************************************************
@@ -171,7 +171,7 @@ exports.HoughCircleOptions = StructType({
  **************************************************/
 exports.HogOptions = StructType({
   // Binning count of histogram
-  histogram_bin_num: "uint16",
+  histogram_bin_num: 'uint16',
   // Pixel count per cell
   pixel_per_cell: this.SizeInfo,
   // Cell count per block
@@ -179,15 +179,15 @@ exports.HogOptions = StructType({
   // Stride distance of block
   stride_distance: this.SizeInfo,
   // Whether to use magnitude info for calculate histogram index
-  use_magnitude: "bool"
+  use_magnitude: 'bool'
 });
 
 /**************************************************
  * detect/detect.h
  **************************************************/
-exports.functionClassifyFuncPtr = ffi.Function("bool", [
+exports.functionClassifyFuncPtr = ffi.Function('bool', [
   ref.refType(this.VectorInfo),
-  ref.refType("uint32")
+  ref.refType('uint32')
 ]);
 
 /**************************************************
@@ -201,57 +201,57 @@ exports.HaarOptions = StructType({
   max_size: this.SizeInfo,
 
   // Increase rate of window size (%)
-  scale_factor_ratio: "uint16",
+  scale_factor_ratio: 'uint16',
 
   // Threshold ratio to pass the stage
-  threshold_ratio: "uint8",
+  threshold_ratio: 'uint8',
 
   // Minimum count of neighbor
-  min_neighbors: "uint8",
+  min_neighbors: 'uint8',
 
   // Window size of the HAAR model
   window_size: this.SizeInfo,
 
   // Stage count of the HAAR model
-  stage_count: "uint8",
+  stage_count: 'uint8',
 
   // Tree count of each stage
-  tree_counts: ref.refType("uint8"),
+  tree_counts: ref.refType('uint8'),
 
   // Threshold of each stage
-  stage_threshold: ref.refType("int16"),
+  stage_threshold: ref.refType('int16'),
 
   // Threshold of each tree
-  tree_threshold: ref.refType("int16"),
+  tree_threshold: ref.refType('int16'),
 
   // Left value of each tree
-  tree_left_value: ref.refType("int16"),
+  tree_left_value: ref.refType('int16'),
 
   // Right value of each tree
-  tree_right_value: ref.refType("int16"),
+  tree_right_value: ref.refType('int16'),
 
   // Rectangle count of each tree
-  tree_rect_count: ref.refType("int8"),
+  tree_rect_count: ref.refType('int8'),
 
   // Relative coordinates of the rectangle of each tree
-  tree_rects: ref.refType("int8"),
+  tree_rects: ref.refType('int8'),
 
   // Weight of rectangle
-  tree_rect_weights: ref.refType("int8")
+  tree_rect_weights: ref.refType('int8')
 });
 
 /**
  * Definition of data type for device connection
  */
 exports.Device = StructType({
-  dev: "void *",
-  handle: "void *",
-  lock: "void *",
-  type: "uint16",
-  id: "uint16",
-  vid: "uint16",
-  pid: "uint16",
-  is_open: "uint8"
+  dev: 'void *',
+  handle: 'void *',
+  lock: 'void *',
+  type: 'uint16',
+  id: 'uint16',
+  vid: 'uint16',
+  pid: 'uint16',
+  is_open: 'uint8'
 });
 
 /**
@@ -261,9 +261,9 @@ exports.Device = StructType({
  * version: version of device firmware
  */
 exports.NetworkInfo = StructType({
-  neuron_count: "uint32",
-  neuron_memory_size: "uint16",
-  version: "uint16"
+  neuron_count: 'uint32',
+  neuron_memory_size: 'uint16',
+  version: 'uint16'
 });
 
 /**
@@ -274,10 +274,10 @@ exports.NetworkInfo = StructType({
  * norm: current norm type
  */
 exports.NetworkStatus = StructType({
-  network_used: "uint32",
-  context: "uint16",
-  network_type: "uint8",
-  norm: "uint8"
+  network_used: 'uint32',
+  context: 'uint16',
+  network_type: 'uint8',
+  norm: 'uint8'
 });
 
 /**
@@ -288,10 +288,10 @@ exports.NetworkStatus = StructType({
  * maxif: maximum influence field
  */
 exports.Context = StructType({
-  context: "uint16",
-  norm: "uint16",
-  minif: "uint16",
-  maxif: "uint16"
+  context: 'uint16',
+  norm: 'uint16',
+  minif: 'uint16',
+  maxif: 'uint16'
 });
 
 /**
@@ -304,13 +304,13 @@ exports.Context = StructType({
  * model: prototype (stored weight memory)
  */
 const Neuron = StructType({
-  nid: "uint32",
-  size: "uint16",
-  ncr: "uint16",
-  aif: "uint16",
-  minif: "uint16",
-  cat: "uint16",
-  model: ArrayType("uint8", 256)
+  nid: 'uint32',
+  size: 'uint16',
+  ncr: 'uint16',
+  aif: 'uint16',
+  minif: 'uint16',
+  cat: 'uint16',
+  model: ArrayType('uint8', 256)
 });
 exports.Neuron = Neuron;
 
@@ -330,15 +330,15 @@ exports.Neuron = Neuron;
  * @return distance[n]: distance between input data and prototype of neuron matched
  */
 exports.ClassifyReq = StructType({
-  status: "uint32",
-  size: "uint16",
-  k: "uint16",
-  matched_count: "uint16",
-  nid: ArrayType("uint32", constants.CLASSIFY_MAX_K),
-  degenerated: ArrayType("uint16", constants.CLASSIFY_MAX_K),
-  distance: ArrayType("uint16", constants.CLASSIFY_MAX_K),
-  category: ArrayType("uint16", constants.CLASSIFY_MAX_K),
-  vector: ArrayType("uint8", 256)
+  status: 'uint32',
+  size: 'uint16',
+  k: 'uint16',
+  matched_count: 'uint16',
+  nid: ArrayType('uint32', constants.CLASSIFY_MAX_K),
+  degenerated: ArrayType('uint16', constants.CLASSIFY_MAX_K),
+  distance: ArrayType('uint16', constants.CLASSIFY_MAX_K),
+  category: ArrayType('uint16', constants.CLASSIFY_MAX_K),
+  vector: ArrayType('uint8', 256)
 });
 
 /**
@@ -356,13 +356,13 @@ exports.ClassifyReq = StructType({
  * @return affected_neurons[affected_count]: list of affected neurons
  */
 exports.LearnReq = StructType({
-  status: "uint32",
+  status: 'uint32',
   affected_neurons: ArrayType(Neuron, 10),
-  affected_count: "uint16",
-  category: "uint16",
-  size: "uint16",
-  vector: ArrayType("uint8", 256),
-  query_affected: "uint8"
+  affected_count: 'uint16',
+  category: 'uint16',
+  size: 'uint16',
+  vector: ArrayType('uint8', 256),
+  query_affected: 'uint8'
 });
 
 /**
@@ -378,13 +378,13 @@ exports.LearnReq = StructType({
  * <<output>>
  */
 exports.LearnBatchReq = StructType({
-  vector_count: "uint32",
-  iter_result: ref.refType("uint32"),
-  iter_count: "uint16",
-  iterable: "uint16",
-  vector_size: "uint16",
-  categories: ref.refType("uint16"),
-  vectors: ref.refType("uint8")
+  vector_count: 'uint32',
+  iter_result: ref.refType('uint32'),
+  iter_count: 'uint16',
+  iterable: 'uint16',
+  vector_size: 'uint16',
+  categories: ref.refType('uint16'),
+  vectors: ref.refType('uint8')
 });
 
 /**
@@ -399,11 +399,11 @@ exports.LearnBatchReq = StructType({
  * <<output>>
  */
 exports.ClusterizeReq = StructType({
-  vector_count: "uint32",
-  vector_size: "uint16",
-  initial_category: "uint16",
-  incrementof: "uint16",
-  vectors: "uint8*"
+  vector_count: 'uint32',
+  vector_size: 'uint16',
+  initial_category: 'uint16',
+  incrementof: 'uint16',
+  vectors: 'uint8*'
 });
 
 /**
@@ -413,9 +413,9 @@ exports.ClusterizeReq = StructType({
  * max_category: the largest category id (1~32766)
  */
 exports.ModelInfo = StructType({
-  count: "uint32",
-  max_context: "uint16",
-  max_category: "uint16"
+  count: 'uint32',
+  max_context: 'uint16',
+  max_category: 'uint16'
 });
 
 /**
@@ -430,8 +430,8 @@ exports.ModelInfo = StructType({
  * @return histo_deg[the largest category id + 1]: nember of degenerated neuron per category
  */
 exports.ModelStat = StructType({
-  context: "uint16",
-  count: "uint32",
-  histo_cat: ref.refType("uint16"),
-  histo_deg: ref.refType("uint16")
+  context: 'uint16',
+  count: 'uint32',
+  histo_cat: ref.refType('uint16'),
+  histo_deg: ref.refType('uint16')
 });
