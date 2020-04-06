@@ -13,6 +13,8 @@ import ModuleData from "./ModuleData";
 // import utils
 import * as DeviceManager from "../../utils/DeviceManager";
 
+const ipcRenderer = window.electron.ipcRenderer;
+
 var source = {};
 
 source[MODULES.CAMERA] = class extends SourceModuleBase {
@@ -427,6 +429,11 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
       .getIn(["File List", "value"])
       .filter(file => file.selected === true);
 
+    ipcRenderer.send('test', 'hi', 'hello');
+    ipcRenderer.on('test-reply', args => {
+      console.log(args);
+    })
+
     // imageBitmap 만들기
     let imgElement = new Image();
     imgElement.src = inputList[this._index].thumbnail;
@@ -459,6 +466,7 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
     return output;
   };
 };
+
 source[MODULES.MIC] = class extends SourceModuleBase {
   constructor() {
     super();

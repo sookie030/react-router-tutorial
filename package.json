@@ -10,6 +10,7 @@
     "wait-on": "^3.3.0"
   },
   "dependencies": {
+    "bindings": "TooTallNate/node-bindings#pull/20/head",
     "electron-is-dev": "^1.1.0",
     "electron-rebuild": "^1.10.1",
     "express": "^4.17.1",

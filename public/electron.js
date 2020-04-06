@@ -1,9 +1,16 @@
-const electron = require("electron");
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+// const electron = require("electron");
+// const app = electron.app;
+// const BrowserWindow = electron.BrowserWindow;
+
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 const path = require("path");
 const isDev = require("electron-is-dev");
+
+// Load modules about ffi
+const ffi = require('ffi-napi');
+const ref = require('ref-napi');
+const visionlib = require('../lib/vision/corewrap');
 
 let mainWindow;
 
@@ -46,4 +53,9 @@ app.on("activate", () => {
   }
 });
 
-require('../server/index');
+ipcMain.on('test', (event, arg) => {
+  console.log(arg);
+  event.sender.send('test-reply', '하이', '헬로우');
+})
+
+// require('../server/index');

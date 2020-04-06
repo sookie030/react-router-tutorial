@@ -10,8 +10,10 @@ import { MODULES } from '../../constants/ModuleInfo';
 import ModuleDataChunk from './ModuleDataChunk';
 import ModuleData from './ModuleData';
 
-var filter = {};
+// const electron = window.electron;
+// const ipcRenderer = window.electron.ipcRenderer;
 
+var filter = {};
 
 // 19년도 언젠가.. 완료
 filter[MODULES.ROI] = class extends ModuleBase {
