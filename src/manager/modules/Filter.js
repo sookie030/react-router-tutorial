@@ -125,18 +125,10 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
    * @param {List<ModuleDataChunk>} inputs
    */
   process(inputs) {
+
     // 입력받아야되는 input의 개수
     var mustInputSize = this.getParentIds().length;
-
-    console.log(
-      `[PL Process] ${this.getName()} (input: ${
-        inputs.length
-      }/${mustInputSize})`,
-    );
-
-    // input data 찍어보기
-    // console.log(inputs);
-
+    
     var output;
     if (mustInputSize !== inputs.length) {
       console.log(
