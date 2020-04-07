@@ -1,4 +1,4 @@
-const constants = require('./constants');
+const constants = require("./constants");
 const ffi = window.ffi;
 const ref = window.ref;
 const ArrayType = window.ArrayType;
@@ -14,7 +14,7 @@ const StructType = window.StructType;
 exports.ColorInfo = StructType({
   red: "uint8",
   green: "uint8",
-  blue: "uint8"
+  blue: "uint8",
 });
 
 /**
@@ -22,7 +22,7 @@ exports.ColorInfo = StructType({
  */
 exports.PointInfo = StructType({
   x: "int32",
-  y: "int32"
+  y: "int32",
 });
 
 /**
@@ -30,7 +30,7 @@ exports.PointInfo = StructType({
  */
 exports.SizeInfo = StructType({
   width: "int32",
-  height: "int32"
+  height: "int32",
 });
 
 /**
@@ -38,7 +38,7 @@ exports.SizeInfo = StructType({
  */
 exports.RectInfo = StructType({
   point: this.PointInfo,
-  size: this.SizeInfo
+  size: this.SizeInfo,
 });
 
 /**
@@ -46,7 +46,7 @@ exports.RectInfo = StructType({
  */
 exports.VectorInfo = StructType({
   vector: "uint8",
-  length: "uint32"
+  length: "uint32",
 });
 
 /**
@@ -54,7 +54,7 @@ exports.VectorInfo = StructType({
  */
 exports.Vector32Info = StructType({
   vector: "uint32",
-  length: "uint32"
+  length: "uint32",
 });
 
 /**
@@ -66,11 +66,11 @@ exports.Vector32Info = StructType({
  * @param {uint8} coordinate
  */
 exports.ImageInfo = StructType({
-  data: ref.refType('uint8'),
+  data: ref.refType("uint8"),
   size: this.SizeInfo,
   color: "uint8",
   bytes_per_pixel: "uint8",
-  coordinate: "uint8"
+  coordinate: "uint8",
 });
 
 /**************************************************
@@ -87,13 +87,13 @@ exports.ListNode = StructType({
 
   // 우선 void pointer로 지정해보쟈
   previous: ref.refType("void"),
-  next: ref.refType("void")
+  next: ref.refType("void"),
 });
 
 exports.ListInfo = StructType({
   head: ref.refType(this.ListNode),
   tail: ref.refType(this.ListNode),
-  count: "uint32"
+  count: "uint32",
 });
 
 /**************************************************
@@ -102,13 +102,13 @@ exports.ListInfo = StructType({
 let calculateGradientFuncPtr = ffi.Function("uint16", [
   "int16",
   "int16",
-  "bool"
+  "bool",
 ]);
 
 exports.SobelOptions = StructType({
   use_math: "bool",
   threshold_ratio: "int8",
-  calculate_gradient: calculateGradientFuncPtr
+  calculate_gradient: calculateGradientFuncPtr,
 });
 
 /**************************************************
@@ -117,7 +117,7 @@ exports.SobelOptions = StructType({
 exports.PrewittOptions = StructType({
   use_math: "bool",
   threshold_ratio: "int8",
-  calculate_gradient: calculateGradientFuncPtr
+  calculate_gradient: calculateGradientFuncPtr,
 });
 
 /**************************************************
@@ -126,7 +126,7 @@ exports.PrewittOptions = StructType({
 exports.RobertsOptions = StructType({
   use_math: "bool",
   threshold_ratio: "int8",
-  calculate_gradient: calculateGradientFuncPtr
+  calculate_gradient: calculateGradientFuncPtr,
 });
 
 /**************************************************
@@ -136,7 +136,7 @@ exports.CannyOptions = StructType({
   // High threshold ratio for edge as upper criteria (%)
   threshold_high_ratio: "int8",
   // Lower threshold ratio for edge as upper criteria (%)
-  threshold_low_ratio: "int8"
+  threshold_low_ratio: "int8",
 });
 
 /**************************************************
@@ -144,24 +144,24 @@ exports.CannyOptions = StructType({
  **************************************************/
 exports.HoughLineResult = StructType({
   start: this.PointInfo,
-  end: this.PointInfo
+  end: this.PointInfo,
 });
 
 exports.HoughLineOptions = StructType({
-  threshold: "uint16"
+  threshold: "uint16",
 });
 
 exports.HoughCircleResult = StructType({
   // Center point of result
   center: this.PointInfo,
-  radius: "uint16"
+  radius: "uint16",
 });
 
 exports.HoughCircleOptions = StructType({
   threshold: "uint16",
   min_radius: "uint16",
   max_radius: "uint16",
-  redius_stride: "uint16"
+  redius_stride: "uint16",
 });
 
 /**************************************************
@@ -177,7 +177,7 @@ exports.HogOptions = StructType({
   // Stride distance of block
   stride_distance: this.SizeInfo,
   // Whether to use magnitude info for calculate histogram index
-  use_magnitude: "bool"
+  use_magnitude: "bool",
 });
 
 /**************************************************
@@ -185,7 +185,7 @@ exports.HogOptions = StructType({
  **************************************************/
 exports.functionClassifyFuncPtr = ffi.Function("bool", [
   ref.refType(this.VectorInfo),
-  ref.refType("uint32")
+  ref.refType("uint32"),
 ]);
 
 /**************************************************
@@ -235,7 +235,7 @@ exports.HaarOptions = StructType({
   tree_rects: ref.refType("int8"),
 
   // Weight of rectangle
-  tree_rect_weights: ref.refType("int8")
+  tree_rect_weights: ref.refType("int8"),
 });
 
 /**
@@ -249,7 +249,7 @@ exports.Device = StructType({
   id: "uint16",
   vid: "uint16",
   pid: "uint16",
-  is_open: "uint8"
+  is_open: "uint8",
 });
 
 /**
@@ -261,7 +261,7 @@ exports.Device = StructType({
 exports.NetworkInfo = StructType({
   neuron_count: "uint32",
   neuron_memory_size: "uint16",
-  version: "uint16"
+  version: "uint16",
 });
 
 /**
@@ -275,7 +275,7 @@ exports.NetworkStatus = StructType({
   network_used: "uint32",
   context: "uint16",
   network_type: "uint8",
-  norm: "uint8"
+  norm: "uint8",
 });
 
 /**
@@ -289,7 +289,7 @@ exports.Context = StructType({
   context: "uint16",
   norm: "uint16",
   minif: "uint16",
-  maxif: "uint16"
+  maxif: "uint16",
 });
 
 /**
@@ -308,7 +308,7 @@ const Neuron = StructType({
   aif: "uint16",
   minif: "uint16",
   cat: "uint16",
-  model: ArrayType("uint8", 256)
+  model: ArrayType("uint8", 256),
 });
 exports.Neuron = Neuron;
 
@@ -336,7 +336,7 @@ exports.ClassifyReq = StructType({
   degenerated: ArrayType("uint16", constants.CLASSIFY_MAX_K),
   distance: ArrayType("uint16", constants.CLASSIFY_MAX_K),
   category: ArrayType("uint16", constants.CLASSIFY_MAX_K),
-  vector: ArrayType("uint8", 256)
+  vector: ArrayType("uint8", 256),
 });
 
 /**
@@ -360,7 +360,7 @@ exports.LearnReq = StructType({
   category: "uint16",
   size: "uint16",
   vector: ArrayType("uint8", 256),
-  query_affected: "uint8"
+  query_affected: "uint8",
 });
 
 /**
@@ -382,7 +382,7 @@ exports.LearnBatchReq = StructType({
   iterable: "uint16",
   vector_size: "uint16",
   categories: ref.refType("uint16"),
-  vectors: ref.refType("uint8")
+  vectors: ref.refType("uint8"),
 });
 
 /**
@@ -401,7 +401,7 @@ exports.ClusterizeReq = StructType({
   vector_size: "uint16",
   initial_category: "uint16",
   incrementof: "uint16",
-  vectors: "uint8*"
+  vectors: "uint8*",
 });
 
 /**
@@ -413,7 +413,7 @@ exports.ClusterizeReq = StructType({
 exports.ModelInfo = StructType({
   count: "uint32",
   max_context: "uint16",
-  max_category: "uint16"
+  max_category: "uint16",
 });
 
 /**
@@ -431,5 +431,5 @@ exports.ModelStat = StructType({
   context: "uint16",
   count: "uint32",
   histo_cat: ref.refType("uint16"),
-  histo_deg: ref.refType("uint16")
+  histo_deg: ref.refType("uint16"),
 });

@@ -1,17 +1,14 @@
 module.exports = Object.freeze({
-  // 20.03.25
 
-  // c: define -> js: const
-
-  /**
+  /***********************************************************
    * subsample.h, edgegap.h
-   */
+   ***********************************************************/
   MAX_VECTOR_LENGTH: 256,
   DEFAULT_FEATURE_NUM_PER_LINE: 16,
 
-  /**
+  /***********************************************************
    * hog.h
-   */
+   ***********************************************************/
   // each 40 degrees
   DEFAULT_HISTOGRAM_BIN_NUM: 9,
 
@@ -24,9 +21,14 @@ module.exports = Object.freeze({
   // 1 cell
   DEFAULT_PIXEL_NUM_FOR_STRIDE: 8,
 
-  // c: enum -> js: const
+  /***********************************************************
+   * define.h
+   ***********************************************************/
 
-  // define.h
+  /**
+   * #define
+   */
+  LITTLE_ENDIAN: 1,
 
   /**
    * color_format
@@ -96,6 +98,4 @@ module.exports = Object.freeze({
     // Roberts edge
     EDGE_ROBERTS,
   },
-
-  
 });

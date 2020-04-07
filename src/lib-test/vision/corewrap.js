@@ -438,16 +438,28 @@ const visionlib = ffi.Library(libvision, {
   resize_image: [imageInfoPtr, [imageInfoPtr, datatypes.SizeInfo]],
 
   // image_info* resize_to_grayscale_image(image_info *image, size_info target_size, resize_type type);
-  resize_to_grayscale_image: [imageInfoPtr, [imageInfoPtr, datatypes.SizeInfo, uint8]],
+  resize_to_grayscale_image: [
+    imageInfoPtr,
+    [imageInfoPtr, datatypes.SizeInfo, uint8],
+  ],
 
   // void resize_to_grayscale_image_raw(image_info *image, size_info target_size, resize_type type, uint8_t *resized_image);
-  resize_to_grayscale_image_raw: ['void', [imageInfoPtr, datatypes.SizeInfo, uint8, uint8Ptr]],
+  resize_to_grayscale_image_raw: [
+    "void",
+    [imageInfoPtr, datatypes.SizeInfo, uint8, uint8Ptr],
+  ],
 
   // image_info* resize_to_grayscale_image2(image_info *image, rect_info sub_area, size_info target_size, resize_type type);
-  resize_to_grayscale_image2: [imageInfoPtr, [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo, uint8]],
+  resize_to_grayscale_image2: [
+    imageInfoPtr,
+    [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo, uint8],
+  ],
 
-  // void resize_to_grayscale_image_raw2(image_info *image, rect_info sub_area, size_info target_size, resize_type type, uint8_t *resized_image);  
-  resize_to_grayscale_image_raw2: ['void', [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo, uint8, uint8Ptr]],
+  // void resize_to_grayscale_image_raw2(image_info *image, rect_info sub_area, size_info target_size, resize_type type, uint8_t *resized_image);
+  resize_to_grayscale_image_raw2: [
+    "void",
+    [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo, uint8, uint8Ptr],
+  ],
 
   /***********************************************************
    *  utils/squareroot.h
@@ -463,7 +475,7 @@ const visionlib = ffi.Library(libvision, {
     datatypes.RectInfo,
     [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo],
   ],
-  
+
   /**********************************************************
    * utils/vector.h
    **********************************************************/
