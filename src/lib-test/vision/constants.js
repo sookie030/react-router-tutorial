@@ -66,9 +66,9 @@ module.exports = Object.freeze({
    */
   RESIZE_TYPE: {
     // average of area
-    RESIZE_AVERAGE,
+    RESIZE_AVERAGE: 0,
     // center position of area
-    RESIZE_HOP,
+    RESIZE_HOP: 1,
   },
 
   /**
@@ -76,15 +76,15 @@ module.exports = Object.freeze({
    */
   BLUR_TYPE: {
     // None
-    BLUR_NONE,
+    BLUR_NONE: 0,
     // Average blur
-    BLUR_AVERAGE,
+    BLUR_AVERAGE: 1,
     // Median blur
-    BLUR_MEDIAN,
+    BLUR_MEDIAN: 2,
     // Bilateral blur
-    BLUR_BILATERAL,
+    BLUR_BILATERAL: 3,
     // Gaussian blur
-    BLUR_GAUSSIAN,
+    BLUR_GAUSSIAN: 4,
   },
 
   /**
@@ -92,10 +92,10 @@ module.exports = Object.freeze({
    */
   EDGE_TYPE: {
     // Sobel edge
-    EDGE_SOBEL,
+    EDGE_SOBEL: 0,
     // Prewitt edge
-    EDGE_PREWITT,
+    EDGE_PREWITT: 1,
     // Roberts edge
-    EDGE_ROBERTS,
+    EDGE_ROBERTS: 2,
   },
 });
