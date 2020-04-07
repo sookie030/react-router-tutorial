@@ -39,7 +39,7 @@ module.exports = Object.freeze({
     COLOR_RGB_565: 1,
 
     // 3byte RGB (8bit Blue, 8bit Green, 8bit Red)
-    COLOR_RGB_888: 2
+    COLOR_RGB_888: 2,
   },
 
   /**
@@ -56,6 +56,46 @@ module.exports = Object.freeze({
     COORDINATE_RIGHT_TOP: 2,
 
     // Right-bottom
-    COORDINATE_RIGHT_BOTTOM: 3
-  }
+    COORDINATE_RIGHT_BOTTOM: 3,
+  },
+
+  /**
+   * Kind of resize calculation
+   */
+  RESIZE_TYPE: {
+    // average of area
+    RESIZE_AVERAGE,
+    // center position of area
+    RESIZE_HOP,
+  },
+
+  /**
+   * Kind of blur algorithm
+   */
+  BLUR_TYPE: {
+    // None
+    BLUR_NONE,
+    // Average blur
+    BLUR_AVERAGE,
+    // Median blur
+    BLUR_MEDIAN,
+    // Bilateral blur
+    BLUR_BILATERAL,
+    // Gaussian blur
+    BLUR_GAUSSIAN,
+  },
+
+  /**
+   * Kind of edge algorithm
+   */
+  EDGE_TYPE: {
+    // Sobel edge
+    EDGE_SOBEL,
+    // Prewitt edge
+    EDGE_PREWITT,
+    // Roberts edge
+    EDGE_ROBERTS,
+  },
+
+  
 });
