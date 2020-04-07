@@ -1,9 +1,9 @@
-const electron = require("electron");
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, ipcMain } = require("electron");
 
 const path = require("path");
 const isDev = require("electron-is-dev");
+
+const visionlib = require('../lib/vision/corewrap');
 
 let mainWindow;
 
@@ -43,4 +43,22 @@ app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg)  // "ping" 출력
+  event.sender.send('asynchronous-reply', 'pong');
+})
+
+ipcMain.on('synchronous-message', (event, args) => {
+  // console.log(args)  // "ping" 출력
+  // console.log(args.data)  // "ping" 출력
+  // console.log(args['data'])  // "ping" 출력
+  // event.returnValue = [ 'pong', 'test' ]
+  visionlib.cropImage(args);
+  event.returnValue = 'pong';
+})
+
+ipcMain.on('crop-image', (event, ...args) => {
+  visionlib.cropImage(args);
 });

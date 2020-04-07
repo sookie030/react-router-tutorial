@@ -4,7 +4,7 @@ import * as PROP_TYPE from "../../constants/PropertyType";
 
 // import constants
 import * as DATA_TYPE from "../../constants/DataType";
-import { MODULES } from '../../constants/ModuleInfo';
+import { MODULES } from "../../constants/ModuleInfo";
 
 // import components
 import ModuleDataChunk from "./ModuleDataChunk";
@@ -13,6 +13,7 @@ import ModuleData from "./ModuleData";
 // import utils
 import * as DeviceManager from "../../utils/DeviceManager";
 
+const fs = window.fs;
 var source = {};
 
 source[MODULES.CAMERA] = class extends SourceModuleBase {
@@ -26,7 +27,7 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
       Camera: {
         type: PROP_TYPE.DROPDOWN,
         options: [],
-        value: "0"
+        value: "0",
       },
 
       "Preview Size": {
@@ -40,10 +41,10 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
           { key: 4, text: "352x288", value: "352x288" },
           { key: 5, text: "320x240", value: "320x240" },
           { key: 6, text: "256x144", value: "256x144" },
-          { key: 7, text: "176x144", value: "176x144" }
+          { key: 7, text: "176x144", value: "176x144" },
         ],
-        value: "800x450"
-      }
+        value: "800x450",
+      },
     });
 
     // Dropdown 옵션 설정
@@ -53,8 +54,8 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
   /**
    * 카메라 디바이스 탐색하여 Droopdown 옵션으로 설정
    */
-  setCameraOptions = selectedIndex => {
-    DeviceManager.createDeviceOptions("videoinput").then(options => {
+  setCameraOptions = (selectedIndex) => {
+    DeviceManager.createDeviceOptions("videoinput").then((options) => {
       let newProperties = this.getProperties()
         .setIn(["Camera", "options"], options)
         .setIn(["Camera", "value"], selectedIndex);
@@ -81,7 +82,7 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
     const selectedDeviceID = props.getIn([
       "Camera",
       "options",
-      selectedDeviceIndex
+      selectedDeviceIndex,
     ]).key;
 
     const selectedPreviewSize = props.getIn(["Preview Size", "value"]);
@@ -92,8 +93,8 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
       video: {
         deviceId: selectedDeviceID,
         width: selectedPreviewSizeArray[0],
-        height: selectedPreviewSizeArray[1]
-      }
+        height: selectedPreviewSizeArray[1],
+      },
     };
 
     // Video Stream 얻어오기
@@ -105,7 +106,7 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
    */
-  process = async inputs => {
+  process = async (inputs) => {
     let output;
 
     if (this.stream === null || this.isPropChanged) {
@@ -114,7 +115,7 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
       const selectedDeviceID = props.getIn([
         "Camera",
         "options",
-        selectedDeviceIndex
+        selectedDeviceIndex,
       ]).key;
 
       const selectedPreviewSize = props.getIn(["Preview Size", "value"]);
@@ -125,15 +126,15 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
         video: {
           deviceId: selectedDeviceID,
           width: selectedPreviewSizeArray[0],
-          height: selectedPreviewSizeArray[1]
-        }
+          height: selectedPreviewSizeArray[1],
+        },
       };
 
       // Video Stream 얻어오기
       this.stream = await DeviceManager.getStream(constraints);
       this.track = this.stream.getVideoTracks()[0];
     }
-    
+
     try {
       let imageCapture = new ImageCapture(this.track);
       let image = await imageCapture.grabFrame();
@@ -144,13 +145,13 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
         image = await createImageBitmap(image, {
           resizeWidth: this.track.getConstraints().width,
           resizeHeight: this.track.getConstraints().height,
-          resizeQuality: "high"
+          resizeQuality: "high",
         });
       }
 
       // 20.03.23 test
       let canvas = new OffscreenCanvas(image.width, image.height);
-      let context = canvas.getContext('2d');
+      let context = canvas.getContext("2d");
       context.drawImage(image, 0, 0);
       let myData = context.getImageData(0, 0, image.width, image.height);
       console.log(myData);
@@ -224,7 +225,7 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
       Camera: {
         type: PROP_TYPE.DROPDOWN,
         options: [],
-        value: "0"
+        value: "0",
       },
 
       "Preview Size": {
@@ -238,10 +239,10 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
           { key: 4, text: "352x288", value: "352x288" },
           { key: 5, text: "320x240", value: "320x240" },
           { key: 6, text: "256x144", value: "256x144" },
-          { key: 7, text: "176x144", value: "176x144" }
+          { key: 7, text: "176x144", value: "176x144" },
         ],
-        value: "800x450"
-      }
+        value: "800x450",
+      },
     });
 
     // Dropdown 옵션 설정
@@ -251,8 +252,8 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
   /**
    * 카메라 디바이스 탐색하여 Droopdown 옵션으로 설정
    */
-  setCameraOptions = selectedIndex => {
-    DeviceManager.createDeviceOptions("videoinput").then(options => {
+  setCameraOptions = (selectedIndex) => {
+    DeviceManager.createDeviceOptions("videoinput").then((options) => {
       let newProperties = this.getProperties()
         .setIn(["Camera", "options"], options)
         .setIn(["Camera", "value"], selectedIndex);
@@ -264,7 +265,7 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
    */
-  process = async inputs => {
+  process = async (inputs) => {
     let output;
 
     if (this.stream === null || this.isPropChanged) {
@@ -273,7 +274,7 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
       const selectedDeviceID = props.getIn([
         "Camera",
         "options",
-        selectedDeviceIndex
+        selectedDeviceIndex,
       ]).key;
 
       const selectedPreviewSize = props.getIn(["Preview Size", "value"]);
@@ -284,8 +285,8 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
         video: {
           deviceId: selectedDeviceID,
           width: selectedPreviewSizeArray[0],
-          height: selectedPreviewSizeArray[1]
-        }
+          height: selectedPreviewSizeArray[1],
+        },
       };
 
       // Video Stream 얻어오기
@@ -304,7 +305,7 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
         image = await createImageBitmap(image, {
           resizeWidth: this.track.getConstraints().width,
           resizeHeight: this.track.getConstraints().height,
-          resizeQuality: "high"
+          resizeQuality: "high",
         });
       }
 
@@ -348,7 +349,7 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
     const selectedDeviceID = props.getIn([
       "Camera",
       "options",
-      selectedDeviceIndex
+      selectedDeviceIndex,
     ]).key;
 
     const selectedPreviewSize = props.getIn(["Preview Size", "value"]);
@@ -359,8 +360,8 @@ source[MODULES.FACE_CAMERA] = class extends SourceModuleBase {
       video: {
         deviceId: selectedDeviceID,
         width: selectedPreviewSizeArray[0],
-        height: selectedPreviewSizeArray[1]
-      }
+        height: selectedPreviewSizeArray[1],
+      },
     };
 
     // Video Stream 얻어오기
@@ -383,24 +384,24 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
     this.initialize({
       Directory: {
         type: PROP_TYPE.SELECT_DIRECTORY,
-        value: "-"
+        value: "-",
       },
       Option: {
         type: PROP_TYPE.DROPDOWN,
         disabled: "",
         options: [
           { key: 0, text: "All", value: "All" },
-          { key: 1, text: "Selected Only", value: "Selected Only" }
+          { key: 1, text: "Selected Only", value: "Selected Only" },
         ],
-        value: "All"
+        value: "All",
       },
       "File List": {
         type: PROP_TYPE.LIST,
         // 디렉토리 내 전체 리스트
-        value: []
+        value: [],
         // Option == Selected only인 경우, 선택된 파일 리스트
         // selected: []
-      }
+      },
     });
   }
 
@@ -412,18 +413,41 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
    */
-  process = async inputs => {
+  process = async (inputs) => {
     let output;
 
     // 파일 리스트
     let inputList = this.getProperties()
       .getIn(["File List", "value"])
-      .filter(file => file.selected === true);
+      .filter((file) => file.selected === true);
 
     // imageBitmap 만들기
     let imgElement = new Image();
     imgElement.src = inputList[this._index].thumbnail;
     let image = await createImageBitmap(imgElement);
+
+    // 20.04.06 test
+    let canvas = new OffscreenCanvas(image.width, image.height);
+    let context = canvas.getContext("2d");
+    context.drawImage(image, 0, 0);
+    let myData = context.getImageData(0, 0, image.width, image.height);
+
+    // RGBA -> RGB (Alpha 제외)
+    let noAlpha = myData.data.filter((elem, index) => {
+      return index === 0 || (index + 1) % 4 !== 0 ? elem : null;
+    });
+
+    fs.writeFile(
+      `/Users/minsook/Desktop/text${this._index}.txt`,
+      noAlpha.toString(),
+      "utf8",
+      (err) => {
+        if (err) throw err;
+        console.log(myData.data.length);
+        console.log(noAlpha.length);
+        console.log("save file");
+      }
+    );
 
     // output 만들기
     var output1 = new ModuleData(DATA_TYPE.IMAGE, image);
@@ -452,6 +476,7 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
     return output;
   };
 };
+
 source[MODULES.MIC] = class extends SourceModuleBase {
   constructor() {
     super();
@@ -463,8 +488,8 @@ source[MODULES.MIC] = class extends SourceModuleBase {
       Microphone: {
         type: PROP_TYPE.DROPDOWN,
         options: [],
-        value: "0"
-      }
+        value: "0",
+      },
     });
 
     // Dropdown 옵션 설정
@@ -474,8 +499,8 @@ source[MODULES.MIC] = class extends SourceModuleBase {
   /**
    * 카메라 디바이스 탐색하여 Droopdown 옵션으로 설정
    */
-  setOptions = selectedIndex => {
-    DeviceManager.createDeviceOptions("audioinput").then(options => {
+  setOptions = (selectedIndex) => {
+    DeviceManager.createDeviceOptions("audioinput").then((options) => {
       let newProperties = this.getProperties()
         .setIn(["Microphone", "options"], options)
         .setIn(["Microphone", "value"], selectedIndex);
@@ -502,7 +527,7 @@ source[MODULES.MIC] = class extends SourceModuleBase {
     const selectedDeviceID = props.getIn([
       "Microphone",
       "options",
-      selectedDeviceIndex
+      selectedDeviceIndex,
     ]).key;
 
     // const selectedPreviewSize = props.getIn(['Preview Size', 'value']);
@@ -522,8 +547,8 @@ source[MODULES.MIC] = class extends SourceModuleBase {
     const constraints = {
       audio: true,
       video: {
-        deviceId: selectedDeviceID
-      }
+        deviceId: selectedDeviceID,
+      },
     };
 
     // Audio Stream 얻어오기
@@ -535,7 +560,7 @@ source[MODULES.MIC] = class extends SourceModuleBase {
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
    */
-  process = async inputs => {
+  process = async (inputs) => {
     let output;
 
     if (this.stream === null || this.isPropChanged) {
@@ -544,14 +569,14 @@ source[MODULES.MIC] = class extends SourceModuleBase {
       const selectedDeviceID = props.getIn([
         "Microphone",
         "options",
-        selectedDeviceIndex
+        selectedDeviceIndex,
       ]).key;
 
       const constraints = {
         audio: true,
         video: {
-          deviceId: selectedDeviceID
-        }
+          deviceId: selectedDeviceID,
+        },
       };
 
       // Stream 얻어오기
@@ -570,7 +595,7 @@ source[MODULES.MIC] = class extends SourceModuleBase {
         image = await createImageBitmap(image, {
           resizeWidth: this.track.getConstraints().width,
           resizeHeight: this.track.getConstraints().height,
-          resizeQuality: "high"
+          resizeQuality: "high",
         });
       }
 
