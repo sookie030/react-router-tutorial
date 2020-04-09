@@ -1,8 +1,8 @@
 const constants = require("./constants");
-const ffi = window.ffi;
-const ref = window.ref;
-const ArrayType = window.ArrayType;
-const StructType = window.StructType;
+const ffi = require('ffi-napi');
+const ref = require('ref-napi');
+const ArrayType = require("ref-array-di")(ref);
+const StructType = require("ref-struct-di")(ref);
 
 /**************************************************
  * define.h - Struct
@@ -10,6 +10,9 @@ const StructType = window.StructType;
 
 /**
  * Pixel info
+ * @param {number} red
+ * @param {number} green
+ * @param {number} blue
  */
 exports.ColorInfo = StructType({
   red: "uint8",
@@ -19,6 +22,8 @@ exports.ColorInfo = StructType({
 
 /**
  * Position info
+ * @param {number} x
+ * @param {number} y
  */
 exports.PointInfo = StructType({
   x: "int32",
@@ -27,6 +32,8 @@ exports.PointInfo = StructType({
 
 /**
  * Size info
+ * @param {number} width
+ * @param {number} height
  */
 exports.SizeInfo = StructType({
   width: "int32",
@@ -43,6 +50,8 @@ exports.RectInfo = StructType({
 
 /**
  * Vector info
+ * @param {number} vector
+ * @param {number} length
  */
 exports.VectorInfo = StructType({
   vector: "uint8",
@@ -51,6 +60,8 @@ exports.VectorInfo = StructType({
 
 /**
  * 32bit Vector info
+ * @param {number} vector
+ * @param {number} length
  */
 exports.Vector32Info = StructType({
   vector: "uint32",
@@ -66,7 +77,8 @@ exports.Vector32Info = StructType({
  * @param {uint8} coordinate
  */
 exports.ImageInfo = StructType({
-  data: ref.refType("uint8"),
+  // data: ref.refType("uint8"),
+  data: "uint8*",
   size: this.SizeInfo,
   color: "uint8",
   bytes_per_pixel: "uint8",

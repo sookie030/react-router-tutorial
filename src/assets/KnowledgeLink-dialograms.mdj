@@ -2213,7 +2213,7 @@
 											"top": 77,
 											"width": 144.87255859375,
 											"height": 13,
-											"text": "+rawData: List<Number>",
+											"text": "+data: List<Number>",
 											"horizontalAlignment": 0
 										}
 									],
@@ -3752,7 +3752,7 @@
 											"top": 925,
 											"width": 144.87255859375,
 											"height": 13,
-											"text": "+rawData: List<Number>",
+											"text": "+data: List<Number>",
 											"horizontalAlignment": 0
 										}
 									],
@@ -5072,7 +5072,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuJJWTKzksV/U="
 							},
-							"name": "rawData",
+							"name": "data",
 							"type": "List<Number>"
 						}
 					]

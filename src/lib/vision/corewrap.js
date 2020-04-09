@@ -1452,3 +1452,16 @@ exports.freeVector32 = (targetPtr) => {
 exports.functionVector32FreeListData = (targetPtr) => {
   visionlib.function_vector32_free_list_data(targetPtr);
 };
+
+// typedef
+
+
+/**
+ * @typedef ImageInfoPtr
+ * @type {Object}
+ * @property {uint8} data
+ * @property {SizeInfo} size
+ * @property {uint8} color
+ * @property {uint8} bytes_per_pixel
+ * @property {uint8} coordinate
+ */

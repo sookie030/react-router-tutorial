@@ -127,7 +127,7 @@ class TrainingContainer extends React.Component {
         let image = module
           .getOutput()
           .getModuleDataList()[0]
-          .getRawData();
+          .getData();
 
         // Camera Preview Size에 맞추어 Canvas Size 설정
         this.sourceCanvasRef.width = image.width;
@@ -282,7 +282,7 @@ class TrainingContainer extends React.Component {
     let previewImage = module
       .getOutput()
       .getModuleDataList()[0]
-      .getRawData();
+      .getData();
 
     // Canvas에 캡쳐 이미지 뿌리기
     this.previewCanvasRef

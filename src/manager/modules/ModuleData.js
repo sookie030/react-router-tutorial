@@ -2,9 +2,9 @@ import * as DATA_TYPE from '../../constants/DataType';
 
 export default class ModuleData {
 
-    constructor(type, rawData) {
+    constructor(type, data) {
         this._type = type;
-        this._rawData = rawData;
+        this._data = data;
     }
 
     /**
@@ -12,7 +12,7 @@ export default class ModuleData {
      */
     init() {
         this._type = DATA_TYPE.IMAGE;
-        this._rawData = [];
+        this._data = [];
     }
 
     getType() {
@@ -23,12 +23,12 @@ export default class ModuleData {
         this._type = type;
     }
 
-    getRawData() {
-        return this._rawData;
+    getData() {
+        return this._data;
     }
 
-    setRawData(rawData) {
-        this._rawData = rawData;
+    setData(data) {
+        this._data = data;
     }
 
     // 191029 test

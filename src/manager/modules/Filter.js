@@ -10,8 +10,13 @@ import { MODULES } from '../../constants/ModuleInfo';
 import ModuleDataChunk from './ModuleDataChunk';
 import ModuleData from './ModuleData';
 
-const vision = require("../../lib-test/vision/corewrap");
-const constants = require("../../lib-test/vision/constants");
+const vision = require("../../lib/vision/corewrap");
+const constants = require("../../lib/vision/constants");
+const datatypes = require("../../lib/vision/datatypes");
+
+const ref = window.ref;
+const ArrayType = window.ArrayType;
+const Buffer = require("buffer").Buffer;
 
 var filter = {};
 
@@ -96,7 +101,7 @@ filter[MODULES.ROI] = class extends ModuleBase {
       );
 
       // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
-      let mergeInputData = inputs[0].getModuleDataList()[0].getRawData();
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // ROI 적용
       let croppedImageBitmap = await createImageBitmap (mergeInputData, x, y, width, height);
@@ -202,15 +207,42 @@ filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
         `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`,
       );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // 20.04.08 test
+      let inputData = inputs[0].getModuleDataList()[0].getData().data;
+      let rgb888Data = inputData.filter((elem, index) => {
+        if ((index + 1) % 4 !== 0) {
+          return elem;
+        }
+      })
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      rgb888Data = new Uint8Array(rgb888Data);
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // to use vision lib
+      let sizeInfo = new datatypes.SizeInfo();
+      sizeInfo.width = inputData.width;
+      sizeInfo.height = inputData.height;
+
+      let bytesPerPixel = vision.getBytesPerPixel(constants.COLOR_FORMAT.COLOR_RGB_888);
+
+      let imageInfoStr = new datatypes.ImageInfo();
+      imageInfoStr.data = Buffer.from(rgb888Data);
+      imageInfoStr.size = sizeInfo;
+      imageInfoStr.color = constants.COLOR_FORMAT.COLOR_RGB_888;
+      imageInfoStr.bytes_per_pixel = bytesPerPixel;
+      imageInfoStr.coordinate = constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP;
+
+      console.log(imageInfoStr.data);
+
+      // let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+      // let resultPtr = new Uint8Array(imageInfoStr.data.length).buffer;
+      // console.log(resultPtr);
+
+      // // vision 연결
+      // vision.getMedianBlur(imageInfoPtr, resultPtr);
+
+      // console.log(resultPtr);
+
 
       // output 저장공간
       var output1 = new ModuleData(DATA_TYPE.IMAGE, [
@@ -848,7 +880,7 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
       const height = Number(props.getIn(['Size', 'properties', 'Height', 'value']));
 
       // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
-      let mergeInputData = inputs[0].getModuleDataList()[0].getRawData();
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // Resize 적용
       let resizedImageBitmap = await createImageBitmap (mergeInputData, {
@@ -940,7 +972,7 @@ filter[MODULES.CROP] = class extends ModuleBase {
       );
 
       // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
-      let mergeInputData = inputs[0].getModuleDataList()[0].getRawData();
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // ROI 적용
       let croppedImageBitmap = await createImageBitmap (mergeInputData, x, y, width, height);

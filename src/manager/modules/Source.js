@@ -384,7 +384,7 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
     this.initialize({
       Directory: {
         type: PROP_TYPE.SELECT_DIRECTORY,
-        value: "-",
+        value: "/Users/minsook/Desktop/dtest",
       },
       Option: {
         type: PROP_TYPE.DROPDOWN,
@@ -430,27 +430,36 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
     let canvas = new OffscreenCanvas(image.width, image.height);
     let context = canvas.getContext("2d");
     context.drawImage(image, 0, 0);
-    let myData = context.getImageData(0, 0, image.width, image.height);
+    let imageData = context.getImageData(0, 0, image.width, image.height);
 
     // RGBA -> RGB (Alpha 제외)
-    let noAlpha = myData.data.filter((elem, index) => {
-      return index === 0 || (index + 1) % 4 !== 0 ? elem : null;
+    // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨..
+    let noAlpha = [];
+    imageData.data.forEach((elem, index) => {
+      if ((index + 1) % 4 > 0) {
+        noAlpha.push(elem);
+      }
     });
 
+    let uint8Data = Uint8Array.from(noAlpha);
+
+    console.log(imageData.data.length);
+    console.log(uint8Data.length);
+
     fs.writeFile(
-      `/Users/minsook/Desktop/text${this._index}.txt`,
+      `/Users/minsook/Desktop/text_${image.width}_${image.height}_2.txt`,
       noAlpha.toString(),
       "utf8",
       (err) => {
         if (err) throw err;
-        console.log(myData.data.length);
+        console.log(imageData.data.length);
         console.log(noAlpha.length);
         console.log("save file");
       }
     );
 
     // output 만들기
-    var output1 = new ModuleData(DATA_TYPE.IMAGE, image);
+    var output1 = new ModuleData(DATA_TYPE.IMAGE, imageData);
     output = new ModuleDataChunk();
     output.addModuleData(output1);
 

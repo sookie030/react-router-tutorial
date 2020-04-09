@@ -135,11 +135,12 @@ exports.getDevices = (count) => {
 }
 
 /**
+ * @param {number} index device index
  * @return {number} resultCode: Result Code
  */
-exports.connect = () => {
+exports.connect = (index) => {
 
-    targetPtr = ref.alloc(datatypes.Device, devices[0]);
+    targetPtr = ref.alloc(datatypes.Device, devices[index]);
     let r = nmengine.nm_connect(targetPtr);
 
     return {

@@ -10,8 +10,8 @@ import { MODULES } from "../../constants/ModuleInfo";
 import ModuleDataChunk from "./ModuleDataChunk";
 import ModuleData from "./ModuleData";
 
-const nmengine = require("../../lib-test/nmengine/corewrap");
-const constants = require("../../lib-test/nmengine/constants");
+const nmengine = require("../../lib/nmengine/corewrap");
+const constants = require("../../lib/nmengine/constants");
 
 var ai = {};
 
@@ -118,7 +118,74 @@ ai[MODULES.NM500] = class extends ModuleBase {
         },
       },
     });
+
+    this.connect(0);
   }
+
+  /**
+   *
+   * @param {*} inputs
+   */
+  connect = (selectedIndex) => {
+    let count = 10;
+    let getDevices = nmengine.getDevices(count);
+
+    // Check result code
+    if (getDevices.resultCode !== constants.SUCCESS) {
+      if (getDevices.resultCode === constants.ERROR_DEVICE_NOT_FOUND) {
+        console.log("[devices] Not found ");
+      } else {
+        console.log(
+          "[devices] Failed to get device list %d\n",
+          getDevices.resultCode
+        );
+      }
+      return null;
+    }
+
+    // Check detected device count
+    if (getDevices.detectedCount < 1) {
+      console.log("[devices] There is no detected device");
+      return null;
+    }
+
+    // Print detected device count
+    console.log("[devices] %d\t detected", getDevices.detectedCount);
+    for (let i = 0; i < getDevices.detectedCount; i++) {
+      console.log(
+        "ID: %d\t TYPE: %d\t PID: %d\t VID: %d\n",
+        i,
+        getDevices.devices[i].type,
+        getDevices.devices[i].vid,
+        getDevices.devices[i].pid
+      );
+    }
+
+    // NM500 연결하기
+    let connect = nmengine.connect(selectedIndex);
+
+    if (connect.resultCode !== constants.SUCCESS) {
+      console.log(
+        "[nm_connect] Failed initialize NM500, Error: %d, or Not supported device",
+        connect.resultCode
+      );
+      return null;
+    }
+
+    // NM500 초기화
+    let forget = nmengine.forget();
+    if (forget.resultCode !== constants.SUCCESS) {
+      console.log(
+        "[nm_forget] Failed initialize NM500, Error: %d, or Not supported device",
+        forget.resultCode
+      );
+      return 0;
+    }
+
+    // 우선 Power save mode로 진입
+    let ps = nmengine.powerSave();
+    console.log("[set power_save mode] %d\n", ps.resultCode);
+  };
 
   /**
    * 모듈 실행

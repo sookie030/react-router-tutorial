@@ -38,7 +38,7 @@ dispatcher[MODULES.FILE_SAVER] = class extends ModuleBase {
    */
   process = async inputs => {
     // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
-    let mergeInputData = inputs[0].getModuleDataList()[0].getRawData();
+    let mergeInputData = inputs[0].getModuleDataList()[0].getData();
     let inputType = inputs[0].getModuleDataList()[0].getType();
     let directory = this.getProperties().getIn(["Directory", "value"]);
 

@@ -24,7 +24,7 @@ export default class ModuleDataChunk {
      */
     print() {
         this._moduleDataList.forEach(r => {
-            console.log(r.getType(), r.getRawData());
+            console.log(r.getType(), r.getData());
         });
     }
 }

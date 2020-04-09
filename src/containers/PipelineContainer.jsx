@@ -369,13 +369,13 @@ class PipelineContainer extends React.Component {
 
       // 우선 첫 번째 output만 고려한다.
       output = outputList[0];
-      let outputRawData = output.getRawData();
+      let outputdata = output.getData();
 
       switch (output.getType()) {
         case DATA_TYPE.IMAGE:          // imageData 반환
-        console.log(outputRawData);
-        console.log(outputRawData.data);
-          return outputRawData;
+        console.log(outputdata);
+        console.log(outputdata.data);
+          return outputdata;
         default:
           return null;
       }
