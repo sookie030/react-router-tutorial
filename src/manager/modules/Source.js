@@ -13,8 +13,15 @@ import ModuleData from "./ModuleData";
 // import utils
 import * as DeviceManager from "../../utils/DeviceManager";
 
+// import module from preload
 const fs = window.fs;
-var source = {};
+const ArrayType = window.ArrayType;
+
+// define array type
+let uint8Array = ArrayType("uint8");
+
+
+let source = {};
 
 source[MODULES.CAMERA] = class extends SourceModuleBase {
   constructor() {
@@ -426,37 +433,23 @@ source[MODULES.FILE_LOADER] = class extends SourceModuleBase {
     imgElement.src = inputList[this._index].thumbnail;
     let image = await createImageBitmap(imgElement);
 
-    // 20.04.06 test
+    // 20.04.06 test imageData 만들기
     let canvas = new OffscreenCanvas(image.width, image.height);
     let context = canvas.getContext("2d");
     context.drawImage(image, 0, 0);
     let imageData = context.getImageData(0, 0, image.width, image.height);
 
-    // RGBA -> RGB (Alpha 제외)
-    // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨..
-    let noAlpha = [];
-    imageData.data.forEach((elem, index) => {
-      if ((index + 1) % 4 > 0) {
-        noAlpha.push(elem);
-      }
-    });
+    // // RGBA -> RGB (Alpha 제외)
+    // // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨
+    // let noAlpha = [];
+    // imageData.data.forEach((elem, index) => {
+    //   if ((index + 1) % 4 > 0) {
+    //     noAlpha.push(elem);
+    //   }
+    // });
 
-    let uint8Data = Uint8Array.from(noAlpha);
-
-    console.log(imageData.data.length);
-    console.log(uint8Data.length);
-
-    fs.writeFile(
-      `/Users/minsook/Desktop/text_${image.width}_${image.height}_2.txt`,
-      noAlpha.toString(),
-      "utf8",
-      (err) => {
-        if (err) throw err;
-        console.log(imageData.data.length);
-        console.log(noAlpha.length);
-        console.log("save file");
-      }
-    );
+    // let uint8Data = uint8Array(noAlpha);
+    // console.log(uint8Data.buffer);
 
     // output 만들기
     var output1 = new ModuleData(DATA_TYPE.IMAGE, imageData);

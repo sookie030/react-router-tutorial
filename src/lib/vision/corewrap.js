@@ -1,10 +1,13 @@
 // Load modules about ffi
 const ffi = window.ffi;
 const ref = window.ref;
+const ArrayType = window.ArrayType;
 
 // Load data
 const constants = require("./constants");
 const datatypes = require("./datatypes");
+
+// libvision = "./lib/vision/libVisionLibrary1839.dylib";
 
 // Declare int type
 const int16 = ref.types.int16;
@@ -15,9 +18,13 @@ const bool = ref.types.bool;
 const float = ref.types.float;
 
 // Declare int pointer type
-const uint8Ptr = ref.refType(ref.types.uint8);
-const uint16Ptr = ref.refType(ref.types.uint16);
+const uint8Ptr = ref.refType(uint8);
+const uint16Ptr = ref.refType(uint16);
 const voidPtr = ref.refType(ref.types.void);
+
+// Declare array type
+const uint8Array = ArrayType(uint8);
+const uint8ArrayPtr = ref.refType(uint8Array);
 
 // Declare neuromem type
 const vectorInfoPtr = ref.refType(datatypes.VectorInfo);
@@ -88,7 +95,8 @@ if (platform === "Windows") {
 } else if (platform === "Linux") {
   // libvision = './lib/libnmengine.so'
 } else {
-  libvision = "./lib/vision/libvision.dylib";
+  // libvision = "./lib/vision/libVisionLibrary1839.dylib";
+  libvision = "./src/lib/vision/libVisionLibrary1839.dylib";
 }
 
 const visionlib = ffi.Library(libvision, {
@@ -99,25 +107,35 @@ const visionlib = ffi.Library(libvision, {
    *  blur/average.h
    ***********************************************************/
   // void get_average_blur(imagePtr, uint8_t *result_buffer);
-  get_average_blur: ["void", [imageInfoPtr, uint8Ptr]],
+  get_average_blur: ["void", [imageInfoPtr, uint8ArrayPtr]],
 
   // void get_average_blur_gray(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // get_average_blur_gray: ["void", [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr]],
   get_average_blur_gray: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
 
   // void get_average_blur_gray2(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
-  get_average_blur_gray2: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
+  get_average_blur_gray2: [
+    "void",
+    [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr],
+  ],
 
   /**********************************************************
    * blur/bilateral.h
    ***********************************************************/
   // void get_bilateral_blur(imagePtr, uint8_t *result_buffer);
-  get_bilateral_blur: ["void", [imageInfoPtr, uint8Ptr]],
+  get_bilateral_blur: ["void", [imageInfoPtr, uint8ArrayPtr]],
 
   // void get_bilateral_blur_gray(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
-  get_bilateral_blur_gray: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
+  get_bilateral_blur_gray: [
+    "void",
+    [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr],
+  ],
 
   // void get_bilateral_blur_gray2(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
-  get_bilateral_blur_gray2: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
+  get_bilateral_blur_gray2: [
+    "void",
+    [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr],
+  ],
 
   /**********************************************************
    *  blur/gaussian.h
@@ -129,13 +147,13 @@ const visionlib = ffi.Library(libvision, {
    * blur/meidan.h
    ***********************************************************/
   // void get_median_blur(imagePtr, uint8_t *result_buffer);
-  get_median_blur: ["void", [imageInfoPtr, uint8Ptr]],
+  get_median_blur: ["void", [imageInfoPtr, uint8ArrayPtr]],
 
   // void get_median_blur_gray(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
-  get_median_blur_gray: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
+  get_median_blur_gray: ["void", [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr]],
 
   // void get_median_blur_gray2(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
-  get_median_blur_gray2: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
+  get_median_blur_gray2: ["void", [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr]],
 
   /**********************************************************
    * detect/detect.h - typedef 있음
@@ -517,6 +535,29 @@ exports.getAverageBlur = (imagePtr, resultBufferPtr) => {
 };
 
 /**
+ * Get the image with average blurred
+ * @param {ImageInfo} imagePtr Image info
+ * @return {Array<number>} resultBufferPtr (output) Blurred image
+ */
+exports.getAverageBlur_0409 = (imageStr) => {
+  // calculate data array size
+  let size =
+    imageStr.size.width * imageStr.size.height * imageStr.bytes_per_pixel;
+
+  // create array pointer
+  let resultPtr = Buffer.from(new Uint8Array(size).buffer);
+
+  // TODO: call vision library
+  visionlib.get_average_blur(imageStr.ref(), resultPtr);
+
+  // get values from Buffer (result)
+  let bytes = size * Uint8Array.BYTES_PER_ELEMENT;
+  let result = new Uint8Array(resultPtr.reinterpret(bytes));
+
+  return result;
+};
+
+/**
  * Get the image with average blurred after grayscale converting
  * @param {ImageInfo*} imagePtr Image info
  * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting
@@ -524,6 +565,27 @@ exports.getAverageBlur = (imagePtr, resultBufferPtr) => {
  */
 exports.getAverageBlurGray = (imagePtr, tempBufferPtr, resultBufferPtr) => {
   visionlib.get_average_blur_gray(imagePtr, tempBufferPtr, resultBufferPtr);
+};
+
+exports.getAverageBlurGray_0410 = (imageStr) => {
+  // calculate data array size
+  let tmpSize = imageStr.size.width * imageStr.size.height * imageStr.bytes_per_pixel;
+  let resultSize = imageStr.size.width * imageStr.size.height;
+
+  console.log(tmpSize, resultSize);
+
+  // create array pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageStr);
+  let tempBufferPtr = Buffer.from(new Uint8Array(tmpSize).buffer);
+  let resultBufferPtr = Buffer.from(new Uint8Array(resultSize).buffer);
+
+  visionlib.get_average_blur_gray(imageInfoPtr, tempBufferPtr, resultBufferPtr);
+
+  // get values from Buffer (result)
+  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  let result = new Uint8Array(resultBufferPtr.reinterpret(bytes));
+
+  console.log(result);
 };
 
 /**
@@ -1454,7 +1516,6 @@ exports.functionVector32FreeListData = (targetPtr) => {
 };
 
 // typedef
-
 
 /**
  * @typedef ImageInfoPtr
