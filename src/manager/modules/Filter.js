@@ -790,9 +790,6 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
       }/${mustInputSize})`
     );
 
-    // input data 찍어보기
-    // console.log(inputs);
-
     var output;
     if (mustInputSize !== inputs.length) {
       console.log(
@@ -804,8 +801,6 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
       let mergeInputData = inputs[0].getModuleDataList()[0].getData();
       let inputType = inputs[0].getModuleDataList()[0].getType();
 
-      console.log(mergeInputData);
-
       // RGBA -> RGB (Alpha 제외)
       // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨
       let noAlpha = [];
@@ -814,21 +809,7 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
           noAlpha.push(elem);
         }
       });
-
       noAlpha = Uint8Array.from(noAlpha);
-      console.log(noAlpha);
-
-      // fs.writeFile(
-      //   `/Users/minsook/Desktop/${Date.now()}.txt`,
-      //   noAlpha.toString(),
-      //   "utf8",
-      //   (err) => {
-      //     if (err) throw err;
-      //     console.log("save file");
-      //   }
-      // );
-
-      // 200414
 
       // Create ImageInfo Struct
       let data = Buffer.from(Uint8Array.from(noAlpha));
@@ -845,11 +826,8 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
         size: size,
       });
 
-      console.log(imageInfoStr)
-
       // Create pointer
       let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
-      console.log(imageInfoPtr)
 
       // Create grayscale buffer
       let tmpSize =
@@ -862,8 +840,6 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
       // Call function
       vision.getGrayscaleImageRaw(imageInfoPtr, tempBufferPtr);
 
-      console.log(tempBufferPtr);
-
       // get values from Buffer (result)
       let bytes = tmpSize * Uint8Array.BYTES_PER_ELEMENT;
       // let result = new Uint8Array(tempBufferPtr.reinterpret(bytes));
@@ -872,18 +848,30 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
       // Print grayscale image data
       console.log("grayscale tempBufferPtr: ", result);
 
-      // 200414 end
+      // Create RGBA
+      const arr = new Uint8ClampedArray(result.length * 4);
+      for (let i = 0; i < result.length; i++) {
+        // RGB에는 같은 값 (Grayscale)
+        arr[i * 4 + 0] = result[i];
+        arr[i * 4 + 1] = result[i];
+        arr[i * 4 + 2] = result[i];
+
+        // Alpha는 항상 255
+        arr[i * 4 + 3] = 255;
+      }
+
+      // Create new ImageData
+      let newImageData = new ImageData(arr, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
+      console.log(newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return output;
     }
