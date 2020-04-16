@@ -11,19 +11,17 @@ import { MODULES } from "../../constants/ModuleInfo";
 import ModuleDataChunk from "./ModuleDataChunk";
 import ModuleData from "./ModuleData";
 
+// import utils
+import * as ImageFormatConverter from "../../utils/ImageFormatConverter";
+
 const vision = require("../../lib/vision/corewrap");
 const constants = require("../../lib/vision/constants");
 const datatypes = require("../../lib/vision/datatypes");
 
 // import module from preload
-const fs = window.fs;
 const ref = window.ref;
-const ArrayType = window.ArrayType;
 
-// define array type
-// let uint8Array = ArrayType("uint8");
-
-var filter = {};
+let filter = {};
 
 // 19년도 언젠가.. 완료
 filter[MODULES.ROI] = class extends ModuleBase {
@@ -84,15 +82,15 @@ filter[MODULES.ROI] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
 
-      // input 출력해보기
-      if (inputs.length > 0) {
-        console.log(inputs);
-        console.log(inputs[0]);
-      }
+      // // input 출력해보기
+      // if (inputs.length > 0) {
+      //   console.log(inputs);
+      //   console.log(inputs[0]);
+      // }
 
       // merge data
       // var mergeInputData = this.mergeInputData(inputs);
@@ -111,13 +109,7 @@ filter[MODULES.ROI] = class extends ModuleBase {
       let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // ROI 적용
-      let image = await createImageBitmap(
-        mergeInputData,
-        x,
-        y,
-        width,
-        height
-      );
+      let image = await createImageBitmap(mergeInputData, x, y, width, height);
 
       let canvas = new OffscreenCanvas(image.width, image.height);
       let context = canvas.getContext("2d");
@@ -154,39 +146,67 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
 
     var output;
     if (mustInputSize !== inputs.length) {
-      console.log(
-        `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
-      );
-      return null;
-    } else {
-      // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
-      );
-
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
-
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
-
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
-
-      // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
-
-      output = new ModuleDataChunk();
-      output.addModuleData(output1);
-
-      return RESULT_CODE.SUCCESS;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     }
+
+    // process 시작
+
+    // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+    let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+    // RGBA -> RGB (Alpha 제외)
+    let noAlpha = Uint8Array.from(
+      ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
+    );
+
+    // Create ImageInfo Struct
+    let data = Buffer.from(Uint8Array.from(noAlpha));
+    let size = new datatypes.SizeInfo({
+      width: mergeInputData.width,
+      height: mergeInputData.height,
+    });
+
+    let imageInfoStr = new datatypes.ImageInfo({
+      color: constants.COLOR_FORMAT.COLOR_RGB_888,
+      bytes_per_pixel: 3,
+      coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+      data: data,
+      size: size,
+    });
+
+    // Create pointer
+    let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+    // Create grayscale buffer
+    let resultSize =
+      imageInfoStr.size.width *
+      imageInfoStr.size.height *
+      imageInfoStr.bytes_per_pixel *
+      Uint8Array.BYTES_PER_ELEMENT;
+
+    let resultBufferPtr = Buffer.from(new Uint8Array(resultSize).buffer);
+
+    // Call function
+    vision.getAverageBlur(imageInfoPtr, resultBufferPtr);
+
+    // get values from Buffer (result)
+    let result = ref.reinterpret(resultBufferPtr, resultSize);
+
+    let blur = ImageFormatConverter.convertRGBtoRGBA(result);
+
+    // Create new ImageData
+    let newImageData = new ImageData(Uint8ClampedArray.from(blur), mergeInputData.width);
+
+    // output 저장공간
+    var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
+
+    output = new ModuleDataChunk();
+    output.addModuleData(output1);
+
+    // Output으로 저장
+    this.setOutput(output);
+
+    return RESULT_CODE.SUCCESS;
   }
 };
 
@@ -218,7 +238,7 @@ filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -297,7 +317,7 @@ filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -373,7 +393,7 @@ filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -449,7 +469,7 @@ filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -525,7 +545,7 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -619,7 +639,7 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -742,7 +762,7 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(
@@ -775,6 +795,7 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
   }
 };
 
+// 20.04.14 완료 (Vision Library)
 filter[MODULES.GRAYSCALE] = class extends ModuleBase {
   constructor() {
     super();
@@ -793,21 +814,16 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
     let output;
 
     if (mustInputSize !== inputs.length) {
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     }
+
     // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
     let mergeInputData = inputs[0].getModuleDataList()[0].getData();
-    let inputType = inputs[0].getModuleDataList()[0].getType();
 
     // RGBA -> RGB (Alpha 제외)
-    // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨
-    let noAlpha = [];
-    mergeInputData.data.forEach((elem, index) => {
-      if ((index + 1) % 4 > 0) {
-        noAlpha.push(elem);
-      }
-    });
-    noAlpha = Uint8Array.from(noAlpha);
+    let noAlpha = Uint8Array.from(
+      ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
+    );
 
     // Create ImageInfo Struct
     let data = Buffer.from(Uint8Array.from(noAlpha));
@@ -828,34 +844,27 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
     let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
 
     // Create grayscale buffer
-    let tmpSize =
+    let resultSize =
       imageInfoStr.size.width *
       imageInfoStr.size.height *
       Uint8Array.BYTES_PER_ELEMENT;
 
-    let tempBufferPtr = Buffer.from(new Uint8Array(tmpSize).buffer);
+    let resultBufferPtr = Buffer.from(new Uint8Array(resultSize).buffer);
 
     // Call function
-    vision.getGrayscaleImageRaw(imageInfoPtr, tempBufferPtr);
+    vision.getGrayscaleImageRaw(imageInfoPtr, resultBufferPtr);
 
     // get values from Buffer (result)
-    let bytes = tmpSize * Uint8Array.BYTES_PER_ELEMENT;
-    let result = ref.reinterpret(tempBufferPtr, bytes);
+    let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+    let result = ref.reinterpret(resultBufferPtr, bytes);
 
-    // Create RGBA
-    const arr = new Uint8ClampedArray(result.length * 4);
-    for (let i = 0; i < result.length; i++) {
-      // RGB에는 같은 값 (Grayscale)
-      arr[i * 4 + 0] = result[i];
-      arr[i * 4 + 1] = result[i];
-      arr[i * 4 + 2] = result[i];
-
-      // Alpha는 항상 255
-      arr[i * 4 + 3] = 255;
-    }
+    // Create RGBA (Gray)
+    let grayscale = Uint8ClampedArray.from(ImageFormatConverter.convertGraytoRGBAClampedArray(result));
+    // let grayscale = ImageFormatConverter.convertGraytoRGBA(result);\
 
     // Create new ImageData
-    let newImageData = new ImageData(arr, mergeInputData.width);
+    // let newImageData = new ImageData(Uint8ClampedArray.from(grayscale), mergeInputData.width);
+    let newImageData = new ImageData(grayscale, mergeInputData.width);
 
     // output 저장공간
     var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
@@ -915,7 +924,7 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
 
@@ -998,7 +1007,7 @@ filter[MODULES.CROP] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
 
@@ -1089,7 +1098,7 @@ filter[MODULES.GRID] = class extends ModuleBase {
       console.log(
         `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
       );
-      return null;
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
       console.log(

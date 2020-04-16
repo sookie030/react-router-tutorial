@@ -161,7 +161,6 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
       let context = canvas.getContext("2d");
       context.drawImage(image, 0, 0);
       let myData = context.getImageData(0, 0, image.width, image.height);
-      console.log(myData);
 
       // ImageBitmap을 Output으로 내보내고, PNG로 만드는 과정은 PipelineManager > getOutput에서 수행한다.
       var output1 = new ModuleData(DATA_TYPE.IMAGE, myData);
