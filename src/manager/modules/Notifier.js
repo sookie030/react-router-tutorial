@@ -3,7 +3,8 @@ import ModuleBase from './ModuleBase';
 import * as PROP_TYPE from '../../constants/PropertyType';
 
 // import constants
-import * as DATA_TYPE from '../../constants/DataType';
+import * as DATA_TYPE from "../../constants/DataType";
+import * as RESULT_CODE from "../../constants/ResultCode";
 
 // import components
 import ModuleDataChunk from './ModuleDataChunk';
@@ -81,7 +82,7 @@ notifier[MODULES.SOUND] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -149,7 +150,7 @@ notifier[MODULES.VIBRATION] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -217,7 +218,7 @@ notifier[MODULES.DISPLAY] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -285,7 +286,7 @@ notifier[MODULES.GRID_MAKER] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };

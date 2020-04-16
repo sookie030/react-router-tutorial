@@ -96,7 +96,7 @@ if (platform === "Windows") {
   // libvision = './lib/libnmengine.so'
 } else {
   // libvision = "./lib/vision/libVisionLibrary1839.dylib";
-  libvision = "./src/lib/vision/libVisionLibrary1839.dylib";
+  libvision = "./src/lib/vision/libVisionLibrary.dylib";
 }
 
 const visionlib = ffi.Library(libvision, {

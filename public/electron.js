@@ -3,8 +3,6 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
-const visionlib = require('../lib/vision/corewrap');
-
 let mainWindow;
 
 function createWindow() {

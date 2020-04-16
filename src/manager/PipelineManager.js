@@ -2,8 +2,8 @@ import { Map, List } from "immutable";
 
 // import constants
 import * as EVENT_TYPE from "../constants/EventType";
-import * as MESSAGE from "../constants/Message";
-import * as MESSAGE_TYPE from "../constants/MessageType";
+import * as RESULT_CODE from "../constants/ResultCode";
+import { MESSAGE, MESSAGE_TYPE } from "../constants/Message";
 import { MODULES, GROUPS } from "../constants/ModuleInfo";
 
 // import module classes
@@ -109,7 +109,7 @@ class PipelineManager {
    * @param {Number} nodeID
    */
   removeNode(nodeID) {
-    this._nodes = this._nodes.filterNot(node => node.getID() === nodeID);
+    this._nodes = this._nodes.filterNot((node) => node.getID() === nodeID);
   }
 
   /**
@@ -118,8 +118,8 @@ class PipelineManager {
    * @param {Immutable Map} newProperty
    */
   setPropertyOfNode(nodeID, newProperty) {
-    const index = this._nodes.findIndex(node => node.getID() === nodeID);
-    this._nodes.update(index, node => {
+    const index = this._nodes.findIndex((node) => node.getID() === nodeID);
+    this._nodes.update(index, (node) => {
       node.setProperties(newProperty);
 
       if (
@@ -164,15 +164,15 @@ class PipelineManager {
           io: from.io,
           x: from.x,
           y: from.y,
-          port: from.port
+          port: from.port,
         }),
         to: Map({
           node: to.nodeID,
           io: to.io,
           x: to.x,
           y: to.y,
-          port: to.port
-        })
+          port: to.port,
+        }),
       })
     );
   }
@@ -182,7 +182,7 @@ class PipelineManager {
    * @param {Number} linkID
    */
   removeLink(linkID) {
-    this._links = this._links.filterNot(link => link.get("id") === linkID);
+    this._links = this._links.filterNot((link) => link.get("id") === linkID);
   }
 
   /**
@@ -192,7 +192,7 @@ class PipelineManager {
   removeLinksByRemovingNode(nodeID) {
     // 노드가 삭제되면 연결된 path가 동시에 삭제되어야 한다.
     var affectedlinkID = [];
-    this._links.forEach(link => {
+    this._links.forEach((link) => {
       if (
         link.getIn(["from", "node"]) === nodeID ||
         link.getIn(["to", "node"]) === nodeID
@@ -202,7 +202,7 @@ class PipelineManager {
     });
 
     // 삭제할 노드와 연결된 path를 동시에 삭제.
-    this._links = this._links.filterNot(link =>
+    this._links = this._links.filterNot((link) =>
       affectedlinkID.includes(link.get("id"))
     );
   }
@@ -219,19 +219,19 @@ class PipelineManager {
       if (link.getIn(["from", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
-          io: "from"
+          io: "from",
         });
       } else if (link.getIn(["to", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
-          io: "to"
+          io: "to",
         });
       }
     });
 
     // 연결된 Path들의 좌표값 변경해주기
     // var tmpLinks = state.get('links');
-    affectedLinks.forEach(link => {
+    affectedLinks.forEach((link) => {
       this._links = this._links
         .setIn(
           [link.id, link.io, "x"],
@@ -255,20 +255,20 @@ class PipelineManager {
         affectedLinks.push({
           id: idx,
           io: "from",
-          port: link.getIn(["from", "port"])
+          port: link.getIn(["from", "port"]),
         });
       } else if (link.getIn(["to", "node"]) === nodeID) {
         affectedLinks.push({
           id: idx,
           io: "to",
-          port: link.getIn(["to", "port"])
+          port: link.getIn(["to", "port"]),
         });
       }
     });
 
     // 연결된 Path들의 좌표값 변경해주기
     // var tmpLinks = state.get('links');
-    affectedLinks.forEach(link => {
+    affectedLinks.forEach((link) => {
       if (link.port === "top") {
         // do noting
       } else if (link.port === "left" || link.port === "right") {
@@ -328,11 +328,11 @@ class PipelineManager {
   /**
    * 다음에 이어지는 노드를 탐색하여 유효성 계속 확인
    */
-  getNextNode = nodeID => {
+  getNextNode = (nodeID) => {
     let isValid = true;
 
     // link가 있는지 확인.
-    let linkList = this._links.filter(link => {
+    let linkList = this._links.filter((link) => {
       if (link.getIn(["from", "node"]) === nodeID) {
         return link;
       } else {
@@ -345,9 +345,9 @@ class PipelineManager {
       // console.log(`[PL Validation] [${nodeID}]${name} is the last node.`);
     } else {
       // link가 있다는 것은 뒷 노드가 있다는 것. 계속해서 노드를 찾는다.
-      linkList.every(link => {
+      linkList.every((link) => {
         var nextNode = this._nodes.find(
-          node => node.getID() === link.getIn(["to", "node"])
+          (node) => node.getID() === link.getIn(["to", "node"])
         );
 
         if (!nextNode.getParentIds().includes(nodeID)) {
@@ -390,7 +390,7 @@ class PipelineManager {
     this._dataList = Map({});
 
     // 부모 모듈 정보 초기화
-    this._nodes.forEach(node => {
+    this._nodes.forEach((node) => {
       node.setParentIds([]);
     });
 
@@ -414,11 +414,11 @@ class PipelineManager {
 
     // Source인 node들을 모두 찾는다.
     let sourceList = this._pipeline.filter(
-      node => node.getGroup() === GROUPS.SOURCE
+      (node) => node.getGroup() === GROUPS.SOURCE
     );
 
     if (sourceList.length > 0) {
-      sourceList.forEach(source => {
+      sourceList.forEach((source) => {
         if (
           source.getName() === MODULES.CAMERA ||
           source.getName() === MODULES.FACE_CAMERA
@@ -446,7 +446,7 @@ class PipelineManager {
 
     // Source인 node들을 모두 찾는다.
     let sourceList = this._nodes.filter(
-      node => node.getGroup() === GROUPS.SOURCE
+      (node) => node.getGroup() === GROUPS.SOURCE
     );
     // console.log(sourceList.size, sourceList.length);
     // console.log(sourceList);
@@ -461,7 +461,7 @@ class PipelineManager {
       return false;
     } else {
       // Source node들의 link를 하나씩 확인.
-      sourceList.forEach(source => {
+      sourceList.forEach((source) => {
         // _tmpPipeline 정보: node id, prev node id (Source는 이전 노드가 오지 않으므로 -1), name
         this._tmpPipeline = [source];
 
@@ -484,7 +484,7 @@ class PipelineManager {
    */
   getAnotherParentId(module, currentInputCount) {
     var nextIndex = this._pipeline.findIndex(
-      m => m.getID() === module.getParentIds()[currentInputCount]
+      (m) => m.getID() === module.getParentIds()[currentInputCount]
     );
     return nextIndex;
   }
@@ -547,42 +547,83 @@ class PipelineManager {
         // module 실행
         var result = await module.process(inputs);
 
-        // 에러 발생 시, 파이프라인을 중지한다.
-        if (result instanceof Error) {
-          // 파이프라인을 다시 시작해보자.
-          this.eventEmitter.emit(
-            EVENT_TYPE.POP_UP_TOAST,
-            MESSAGE.TRY_TO_GET_SOURCE_AGAIN,
-            MESSAGE_TYPE.WARNING
-          );
+        switch (result) {
+          case RESULT_CODE.SUCCESS:
+            // module 실행 후 결과값을 저장한다.
+            // this._dataList[module.getID()] = result;
+            this._dataList = this._dataList.set(module.getID(), module.getOutput());
 
-          this.trying();
+            // console.log(
+            //   `[PL Execution] ${module.getName()} 실행 결과값을 저장합니다.`,
+            // );
 
-          break;
-        } else if (result !== null && result !== undefined) {
-          // module 실행 후 결과값을 저장한다.
-          // this._dataList[module.getID()] = result;
-          this._dataList = this._dataList.set(module.getID(), result);
+            // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
+            this.eventEmitter.emit(
+              EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
+              module
+            );
+            i++;
+            break;
+          case RESULT_CODE.WAITING_OTHER_INPUTS:
+            // 아직 input이 모두 들어오지 않은 상태.
+            // 해당 모듈의 또 다른 부모를 찾아서 그 모듈부터 실행시킨다.
+            // console.log(
+            //   `[PL Execution] ${module.getName()} 실행 결과값이 없습니다.`,
+            // );
+            var nextIndex = this.getAnotherParentId(module, inputs.length);
+            i = nextIndex > -1 ? nextIndex : i++;
+            break;
+          case RESULT_CODE.ERROR_UNKNOWN:
+            // 파이프라인을 다시 시작해보자.
+            this.eventEmitter.emit(
+              EVENT_TYPE.POP_UP_TOAST,
+              MESSAGE.TRY_TO_GET_SOURCE_AGAIN,
+              MESSAGE_TYPE.WARNING
+            );
 
-          // console.log(
-          //   `[PL Execution] ${module.getName()} 실행 결과값을 저장합니다.`,
-          // );
-
-          // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
-          this.eventEmitter.emit(
-            EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
-            module
-          );
-          i++;
-        } else {
-          // 아직 input이 모두 들어오지 않은 상태.
-          // 해당 모듈의 또 다른 부모를 찾아서 그 모듈부터 실행시킨다.
-          // console.log(
-          //   `[PL Execution] ${module.getName()} 실행 결과값이 없습니다.`,
-          // );
-          var nextIndex = this.getAnotherParentId(module, inputs.length);
-          i = nextIndex > -1 ? nextIndex : i++;
+            this.trying();
+            break;
+          default:
+            break;
         }
+
+        // 에러 발생 시, 파이프라인을 중지한다.
+        // if (result instanceof Error) {
+        // if (result !== RESULT_CODE.SUCCESS) {
+        //   // 파이프라인을 다시 시작해보자.
+        //   this.eventEmitter.emit(
+        //     EVENT_TYPE.POP_UP_TOAST,
+        //     MESSAGE.TRY_TO_GET_SOURCE_AGAIN,
+        //     MESSAGE_TYPE.WARNING
+        //   );
+
+        //   this.trying();
+
+        //   break;
+        // } else if (result === RESULT_CODE.SUCCESS) {
+        //   // module 실행 후 결과값을 저장한다.
+        //   // this._dataList[module.getID()] = result;
+        //   this._dataList = this._dataList.set(module.getID(), result);
+
+        //   // console.log(
+        //   //   `[PL Execution] ${module.getName()} 실행 결과값을 저장합니다.`,
+        //   // );
+
+        //   // UI에서 설정한 Module List에 속하면, 결과값을 UI로 publish 해준다.
+        //   this.eventEmitter.emit(
+        //     EVENT_TYPE.SEND_PIPELINE_RESULT_TO_VIEW,
+        //     module
+        //   );
+        //   i++;
+        // } else {
+        //   // 아직 input이 모두 들어오지 않은 상태.
+        //   // 해당 모듈의 또 다른 부모를 찾아서 그 모듈부터 실행시킨다.
+        //   // console.log(
+        //   //   `[PL Execution] ${module.getName()} 실행 결과값이 없습니다.`,
+        //   // );
+        //   var nextIndex = this.getAnotherParentId(module, inputs.length);
+        //   i = nextIndex > -1 ? nextIndex : i++;
+        // }
       } catch (e) {
         console.log("PipelineManager run error: ", e);
         break;

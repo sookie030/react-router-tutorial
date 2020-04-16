@@ -9,7 +9,7 @@ import icBack from "../assets/images/ic_back.png";
 
 // import constants
 import * as EVENT_TYPE from "../constants/EventType";
-import * as MESSAGE_TYPE from "../constants/MessageType";
+import { MESSAGE_TYPE }  from "../constants/Message";
 
 // redux modules
 import { connect } from "react-redux";

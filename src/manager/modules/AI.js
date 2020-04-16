@@ -4,6 +4,7 @@ import * as PROP_TYPE from "../../constants/PropertyType";
 
 // import constants
 import * as DATA_TYPE from "../../constants/DataType";
+import * as RESULT_CODE from "../../constants/ResultCode";
 import { MODULES } from "../../constants/ModuleInfo";
 
 // import components
@@ -269,7 +270,7 @@ ai[MODULES.NM500] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -341,7 +342,7 @@ ai[MODULES.DECISION_MAKER] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };

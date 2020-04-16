@@ -3,8 +3,9 @@ import ModuleBase from "./ModuleBase";
 import * as PROP_TYPE from "../../constants/PropertyType";
 
 // import constants
-import { MODULES } from '../../constants/ModuleInfo';
 import * as DATA_TYPE from "../../constants/DataType";
+import * as RESULT_CODE from "../../constants/ResultCode";
+import { MODULES } from '../../constants/ModuleInfo';
 
 // import components
 import ModuleDataChunk from "./ModuleDataChunk";
@@ -81,7 +82,7 @@ dispatcher[MODULES.FILE_SAVER] = class extends ModuleBase {
 
     let output = new ModuleDataChunk();
     this.setOutput(output);
-    return output;
+    return RESULT_CODE.SUCCESS;
   };
 };
 

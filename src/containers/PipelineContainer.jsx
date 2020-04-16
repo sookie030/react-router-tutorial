@@ -22,8 +22,7 @@ import Linking from "../components/pipeline/Linking";
 import Pipeline from "../components/pipeline/Pipeline";
 
 // import constants
-import * as MESSAGE from "../constants/Message";
-import * as MESSAGE_TYPE from "../constants/MessageType";
+import { MESSAGE, MESSAGE_TYPE } from "../constants/Message";
 import * as DATA_TYPE from "../constants/DataType";
 import NOT_ALLOWED_TABLE from "../constants/NotAllowedTable";
 
@@ -373,8 +372,8 @@ class PipelineContainer extends React.Component {
 
       switch (output.getType()) {
         case DATA_TYPE.IMAGE:          // imageData 반환
-        console.log(outputdata);
-        console.log(outputdata.data);
+        // console.log(outputdata);
+        // console.log(outputdata.data);
           return outputdata;
         default:
           return null;

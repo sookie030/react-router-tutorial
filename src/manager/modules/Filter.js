@@ -4,6 +4,7 @@ import * as PROP_TYPE from "../../constants/PropertyType";
 
 // import constants
 import * as DATA_TYPE from "../../constants/DataType";
+import * as RESULT_CODE from "../../constants/ResultCode";
 import { MODULES } from "../../constants/ModuleInfo";
 
 // import components
@@ -110,7 +111,7 @@ filter[MODULES.ROI] = class extends ModuleBase {
       let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // ROI 적용
-      let croppedImageBitmap = await createImageBitmap(
+      let image = await createImageBitmap(
         mergeInputData,
         x,
         y,
@@ -118,14 +119,20 @@ filter[MODULES.ROI] = class extends ModuleBase {
         height
       );
 
+      let canvas = new OffscreenCanvas(image.width, image.height);
+      let context = canvas.getContext("2d");
+      context.drawImage(image, 0, 0);
+      let myData = context.getImageData(0, 0, image.width, image.height);
+      console.log(myData);
+
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, croppedImageBitmap);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, myData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
       this.setOutput(output);
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -178,7 +185,7 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -257,7 +264,7 @@ filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -318,7 +325,7 @@ filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -394,7 +401,7 @@ filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -470,7 +477,7 @@ filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -546,7 +553,7 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -640,7 +647,7 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -763,7 +770,7 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -782,99 +789,85 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
    */
   process(inputs) {
     // 입력받아야되는 input의 개수
-    var mustInputSize = this.getParentIds().length;
+    let mustInputSize = this.getParentIds().length;
+    let output;
 
-    console.log(
-      `[PL Process] ${this.getName()} (input: ${
-        inputs.length
-      }/${mustInputSize})`
-    );
-
-    var output;
     if (mustInputSize !== inputs.length) {
-      console.log(
-        `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
-      );
       return null;
-    } else {
-      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
-      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
-      let inputType = inputs[0].getModuleDataList()[0].getType();
-
-      // RGBA -> RGB (Alpha 제외)
-      // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨
-      let noAlpha = [];
-      mergeInputData.data.forEach((elem, index) => {
-        if ((index + 1) % 4 > 0) {
-          noAlpha.push(elem);
-        }
-      });
-      noAlpha = Uint8Array.from(noAlpha);
-
-      // Create ImageInfo Struct
-      let data = Buffer.from(Uint8Array.from(noAlpha));
-      let size = new datatypes.SizeInfo({
-        width: mergeInputData.width,
-        height: mergeInputData.height,
-      });
-
-      let imageInfoStr = new datatypes.ImageInfo({
-        color: constants.COLOR_FORMAT.COLOR_RGB_888,
-        bytes_per_pixel: 3,
-        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
-        data: data,
-        size: size,
-      });
-
-      // Create pointer
-      let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
-
-      // Create grayscale buffer
-      let tmpSize =
-        imageInfoStr.size.width *
-        imageInfoStr.size.height *
-        Uint8Array.BYTES_PER_ELEMENT;
-
-      let tempBufferPtr = Buffer.from(new Uint8Array(tmpSize).buffer);
-
-      // Call function
-      vision.getGrayscaleImageRaw(imageInfoPtr, tempBufferPtr);
-
-      // get values from Buffer (result)
-      let bytes = tmpSize * Uint8Array.BYTES_PER_ELEMENT;
-      // let result = new Uint8Array(tempBufferPtr.reinterpret(bytes));
-      let result = ref.reinterpret(tempBufferPtr, bytes);
-
-      // Print grayscale image data
-      console.log("grayscale tempBufferPtr: ", result);
-
-      // Create RGBA
-      const arr = new Uint8ClampedArray(result.length * 4);
-      for (let i = 0; i < result.length; i++) {
-        // RGB에는 같은 값 (Grayscale)
-        arr[i * 4 + 0] = result[i];
-        arr[i * 4 + 1] = result[i];
-        arr[i * 4 + 2] = result[i];
-
-        // Alpha는 항상 255
-        arr[i * 4 + 3] = 255;
-      }
-
-      // Create new ImageData
-      let newImageData = new ImageData(arr, mergeInputData.width);
-
-      // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
-      console.log(newImageData);
-
-      output = new ModuleDataChunk();
-      output.addModuleData(output1);
-
-      // Output으로 저장
-      this.setOutput(output);
-
-      return output;
     }
+    // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+    let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+    let inputType = inputs[0].getModuleDataList()[0].getType();
+
+    // RGBA -> RGB (Alpha 제외)
+    // map 말고 forEach 사용한 이유: element === 0 이면 return 0이 되어 데이터가 유실됨
+    let noAlpha = [];
+    mergeInputData.data.forEach((elem, index) => {
+      if ((index + 1) % 4 > 0) {
+        noAlpha.push(elem);
+      }
+    });
+    noAlpha = Uint8Array.from(noAlpha);
+
+    // Create ImageInfo Struct
+    let data = Buffer.from(Uint8Array.from(noAlpha));
+    let size = new datatypes.SizeInfo({
+      width: mergeInputData.width,
+      height: mergeInputData.height,
+    });
+
+    let imageInfoStr = new datatypes.ImageInfo({
+      color: constants.COLOR_FORMAT.COLOR_RGB_888,
+      bytes_per_pixel: 3,
+      coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+      data: data,
+      size: size,
+    });
+
+    // Create pointer
+    let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+    // Create grayscale buffer
+    let tmpSize =
+      imageInfoStr.size.width *
+      imageInfoStr.size.height *
+      Uint8Array.BYTES_PER_ELEMENT;
+
+    let tempBufferPtr = Buffer.from(new Uint8Array(tmpSize).buffer);
+
+    // Call function
+    vision.getGrayscaleImageRaw(imageInfoPtr, tempBufferPtr);
+
+    // get values from Buffer (result)
+    let bytes = tmpSize * Uint8Array.BYTES_PER_ELEMENT;
+    let result = ref.reinterpret(tempBufferPtr, bytes);
+
+    // Create RGBA
+    const arr = new Uint8ClampedArray(result.length * 4);
+    for (let i = 0; i < result.length; i++) {
+      // RGB에는 같은 값 (Grayscale)
+      arr[i * 4 + 0] = result[i];
+      arr[i * 4 + 1] = result[i];
+      arr[i * 4 + 2] = result[i];
+
+      // Alpha는 항상 255
+      arr[i * 4 + 3] = 255;
+    }
+
+    // Create new ImageData
+    let newImageData = new ImageData(arr, mergeInputData.width);
+
+    // output 저장공간
+    var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
+    // console.log(newImageData);
+
+    output = new ModuleDataChunk();
+    output.addModuleData(output1);
+
+    // Output으로 저장
+    this.setOutput(output);
+
+    return RESULT_CODE.SUCCESS;
   }
 };
 
@@ -951,7 +944,7 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
       output.addModuleData(output1);
 
       this.setOutput(output);
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -1047,7 +1040,7 @@ filter[MODULES.CROP] = class extends ModuleBase {
       output.addModuleData(output1);
 
       this.setOutput(output);
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
@@ -1114,7 +1107,7 @@ filter[MODULES.GRID] = class extends ModuleBase {
       output = new ModuleDataChunk();
       output.addModuleData(output1);
 
-      return output;
+      return RESULT_CODE.SUCCESS;
     }
   }
 };
