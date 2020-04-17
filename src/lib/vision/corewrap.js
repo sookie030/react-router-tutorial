@@ -535,57 +535,13 @@ exports.getAverageBlur = (imagePtr, resultBufferPtr) => {
 };
 
 /**
- * Get the image with average blurred
- * @param {ImageInfo} imagePtr Image info
- * @return {Array<number>} resultBufferPtr (output) Blurred image
- */
-exports.getAverageBlur_0409 = (imageStr) => {
-  // calculate data array size
-  let size =
-    imageStr.size.width * imageStr.size.height * imageStr.bytes_per_pixel;
-
-  // create array pointer
-  let resultPtr = Buffer.from(new Uint8Array(size).buffer);
-
-  // TODO: call vision library
-  visionlib.get_average_blur(imageStr.ref(), resultPtr);
-
-  // get values from Buffer (result)
-  let bytes = size * Uint8Array.BYTES_PER_ELEMENT;
-  let result = new Uint8Array(resultPtr.reinterpret(bytes));
-
-  return result;
-};
-
-/**
  * Get the image with average blurred after grayscale converting
  * @param {ImageInfo*} imagePtr Image info
- * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting
- * @param {uint8*} resultBufferPtr (output) Blurred image
+ * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting (size === w * h * bytes_per_pixel * uint8.bytes_per_element)
+ * @param {uint8*} resultBufferPtr (output) Blurred image (size === imagePtr data)
  */
 exports.getAverageBlurGray = (imagePtr, tempBufferPtr, resultBufferPtr) => {
   visionlib.get_average_blur_gray(imagePtr, tempBufferPtr, resultBufferPtr);
-};
-
-exports.getAverageBlurGray_0410 = (imageStr) => {
-  // calculate data array size
-  let tmpSize = imageStr.size.width * imageStr.size.height * imageStr.bytes_per_pixel;
-  let resultSize = imageStr.size.width * imageStr.size.height;
-
-  console.log(tmpSize, resultSize);
-
-  // create array pointer
-  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageStr);
-  let tempBufferPtr = Buffer.from(new Uint8Array(tmpSize).buffer);
-  let resultBufferPtr = Buffer.from(new Uint8Array(resultSize).buffer);
-
-  visionlib.get_average_blur_gray(imageInfoPtr, tempBufferPtr, resultBufferPtr);
-
-  // get values from Buffer (result)
-  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
-  let result = new Uint8Array(resultBufferPtr.reinterpret(bytes));
-
-  console.log(result);
 };
 
 /**
@@ -865,6 +821,20 @@ exports.drawHoughCircleResult = (resultInfoPtr, imagePtr) => {
 exports.getEdgeGapFeature = (imagePtr, lineNum, edgeGapFeature) => {
   visionlib.get_edge_gap_feature(imagePtr, lineNum, edgeGapFeature);
 };
+
+/**********************************************************
+ * edge/sobel.h - typedef 있음
+ **********************************************************/
+/**
+ * @param {ImageInfo*} imagePtr
+ * @param {SobelOptions*} optionsPtr
+ * @param {uint8*} edgeMagnitudeVectorPtr
+ */
+exports.getSobelEdge = (imagePtr, optionsPtr, edgeMagnitudeVectorPtr) => {
+  visionlib.get_sobel_edge(imagePtr, optionsPtr, edgeMagnitudeVectorPtr);
+}
+
+
 
 /**********************************************************
  * feature/hog.h - typedef 있음 / - define 있음

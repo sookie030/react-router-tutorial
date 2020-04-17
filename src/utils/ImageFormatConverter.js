@@ -31,41 +31,41 @@ export function convertRGBtoRGBA(rgbArray) {
 }
 
 /**
- * Gray (1 byte) -> RGBA (4 bytes)
- * @param {Array<number>} grayArray
- */
-export function convertGraytoRGBA(grayArray) {
-  let rgbaArray = [];
-
-  for (let i = 0; i < grayArray.length; i++) {
-    // RGB에는 같은 값 (Grayscale)
-    for (let j = 0; j < 3; j++) {
-      rgbaArray.push(grayArray[i]);
-    }
-    // Alpha는 항상 255
-    rgbaArray.push(255);
-  }
-  return rgbaArray;
-}
-
-/**
  * 버벅임이 더 적음.
  * @param {Array<number>} grayArray
  */
-export function convertGraytoRGBAClampedArray(grayArray) {
-  let rgbaArray = new Uint8ClampedArray(grayArray.length * 4);
+export function convertGray1toGray4ClampedArray(gray1Array) {
+  let gray4ClampedArray = new Uint8ClampedArray(gray1Array.length * 4);
 
-  for (let i = 0; i < grayArray.length; i++) {
+  for (let i = 0; i < gray1Array.length; i++) {
     // RGB에는 같은 값 (Grayscale)
-    rgbaArray[i * 4 + 0] = grayArray[i];
-    rgbaArray[i * 4 + 1] = grayArray[i];
-    rgbaArray[i * 4 + 2] = grayArray[i];
+    gray4ClampedArray[i * 4 + 0] = gray1Array[i];
+    gray4ClampedArray[i * 4 + 1] = gray1Array[i];
+    gray4ClampedArray[i * 4 + 2] = gray1Array[i];
 
     // Alpha는 항상 255
-    rgbaArray[i * 4 + 3] = 255;
+    gray4ClampedArray[i * 4 + 3] = 255;
   }
 
-  return rgbaArray;
+  return gray4ClampedArray;
+}
+
+/**
+ * Gray (1 byte) -> Gray (4 bytes, RGBA)
+ * @param {Array<number>} grayArray
+ */
+export function convertGray1toGray4(gray1Array) {
+  let gray4Array = [];
+
+  for (let i = 0; i < gray1Array.length; i++) {
+    // RGB에는 같은 값 (Grayscale)
+    for (let j = 0; j < 3; j++) {
+      gray4Array.push(gray1Array[i]);
+    }
+    // Alpha는 항상 255
+    gray4Array.push(255);
+  }
+  return gray4Array;
 }
 
 /**
