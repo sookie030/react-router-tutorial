@@ -106,14 +106,14 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    *  blur/average.h
    ***********************************************************/
-  // void get_average_blur(imagePtr, uint8_t *result_buffer);
+  // void get_average_blur(imageInfoPtr, uint8_t *result_buffer);
   get_average_blur: ["void", [imageInfoPtr, uint8ArrayPtr]],
 
-  // void get_average_blur_gray(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // void get_average_blur_gray(imageInfoPtr, uint8_t *temp_buffer, uint8_t *result_buffer);
   // get_average_blur_gray: ["void", [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr]],
   get_average_blur_gray: ["void", [imageInfoPtr, uint8Ptr, uint8Ptr]],
 
-  // void get_average_blur_gray2(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // void get_average_blur_gray2(imageInfoPtr, uint8_t *temp_buffer, uint8_t *result_buffer);
   get_average_blur_gray2: [
     "void",
     [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr],
@@ -122,16 +122,16 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * blur/bilateral.h
    ***********************************************************/
-  // void get_bilateral_blur(imagePtr, uint8_t *result_buffer);
+  // void get_bilateral_blur(imageInfoPtr, uint8_t *result_buffer);
   get_bilateral_blur: ["void", [imageInfoPtr, uint8ArrayPtr]],
 
-  // void get_bilateral_blur_gray(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // void get_bilateral_blur_gray(imageInfoPtr, uint8_t *temp_buffer, uint8_t *result_buffer);
   get_bilateral_blur_gray: [
     "void",
     [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr],
   ],
 
-  // void get_bilateral_blur_gray2(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // void get_bilateral_blur_gray2(imageInfoPtr, uint8_t *temp_buffer, uint8_t *result_buffer);
   get_bilateral_blur_gray2: [
     "void",
     [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr],
@@ -140,25 +140,25 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    *  blur/gaussian.h
    ***********************************************************/
-  // void get_gaussian_blur(imagePtr, image_info *result_image);
+  // void get_gaussian_blur(imageInfoPtr, image_info *result_image);
   get_gaussian_blur: ["void", [imageInfoPtr, imageInfoPtr]],
 
   /**********************************************************
    * blur/meidan.h
    ***********************************************************/
-  // void get_median_blur(imagePtr, uint8_t *result_buffer);
+  // void get_median_blur(imageInfoPtr, uint8_t *result_buffer);
   get_median_blur: ["void", [imageInfoPtr, uint8ArrayPtr]],
 
-  // void get_median_blur_gray(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // void get_median_blur_gray(imageInfoPtr, uint8_t *temp_buffer, uint8_t *result_buffer);
   get_median_blur_gray: ["void", [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr]],
 
-  // void get_median_blur_gray2(imagePtr, uint8_t *temp_buffer, uint8_t *result_buffer);
+  // void get_median_blur_gray2(imageInfoPtr, uint8_t *temp_buffer, uint8_t *result_buffer);
   get_median_blur_gray2: ["void", [imageInfoPtr, uint8ArrayPtr, uint8ArrayPtr]],
 
   /**********************************************************
    * detect/detect.h - typedef 있음
    **********************************************************/
-  // BOOL detect_roi(imagePtr, size_info min_roi, size_info stride_ratio, function_classify classify, rect_info *result_rect);
+  // BOOL detect_roi(imageInfoPtr, size_info min_roi, size_info stride_ratio, function_classify classify, rect_info *result_rect);
   detect_roi: [
     bool,
     [
@@ -173,19 +173,19 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * detect/haar.h - typedef 있음
    **********************************************************/
-  // void get_haar_cascade_detect(imagePtr, rect_info sub_area, haar_options *options, list_info *result_rect_list);
+  // void get_haar_cascade_detect(imageInfoPtr, rect_info sub_area, haar_options *options, list_info *result_rect_list);
   get_haar_cascade_detect: [
     "void",
     [imageInfoPtr, datatypes.RectInfo, haarOptionsPtr, listInfoPtr],
   ],
 
-  // void draw_haar_result(imagePtr, list_info *result_rect_list);
+  // void draw_haar_result(imageInfoPtr, list_info *result_rect_list);
   draw_haar_result: ["void", [imageInfoPtr, listInfoPtr]],
 
   /**********************************************************
    * detect/track.h - typedef 있음
    **********************************************************/
-  // BOOL track_roi(imagePtr, rect_info tracking_area, size_info min_roi, size_info stride_ratio, function_classify classify, rect_info *result_roi);
+  // BOOL track_roi(imageInfoPtr, rect_info tracking_area, size_info min_roi, size_info stride_ratio, function_classify classify, rect_info *result_roi);
   // 20.03.27 - function_classify가 이렇게하는게 맞남
   track_roi: [
     bool,
@@ -214,31 +214,31 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * edge/hough.h - typedef 있음
    **********************************************************/
-  // void get_hough_edge_line(imagePtr, hough_line_options *options, list_info *edge_list);
+  // void get_hough_edge_line(imageInfoPtr, hough_line_options *options, list_info *edge_list);
   get_hough_edge_line: [
     "void",
     [imageInfoPtr, houghLineOptionsPtr, listInfoPtr],
   ],
 
-  // void get_hough_edge_circle(imagePtr, hough_circle_options *options, list_info *edge_list);
+  // void get_hough_edge_circle(imageInfoPtr, hough_circle_options *options, list_info *edge_list);
   get_hough_edge_circle: [
     "void",
     [imageInfoPtr, houghCircleOptionsPtr, listInfoPtr],
   ],
 
-  // void draw_hough_line_result(list_info *result_list, imagePtr);
+  // void draw_hough_line_result(list_info *result_list, imageInfoPtr);
   draw_hough_line_result: ["void", [imageInfoPtr, imageInfoPtr]],
 
-  // void draw_hough_circle_result(list_info *result_list, imagePtr);
+  // void draw_hough_circle_result(list_info *result_list, imageInfoPtr);
   draw_hough_circle_result: ["void", [imageInfoPtr, imageInfoPtr]],
 
   /**********************************************************
    * edge/prewitt.h - typedef 있음
    **********************************************************/
-  // void get_prewitt_edge(imagePtr, prewitt_options *options, uint8_t *edge_magnitude_vector);
+  // void get_prewitt_edge(imageInfoPtr, prewitt_options *options, uint8_t *edge_magnitude_vector);
   get_prewitt_edge: ["void", [imageInfoPtr, prewittOptionsPtr, uint8Ptr]],
 
-  // void get_prewitt_edge_with_gradient(imagePtr, prewitt_options *options, uint16_t *edge_magnitude_vector, uint16_t *edge_gradient_vector);
+  // void get_prewitt_edge_with_gradient(imageInfoPtr, prewitt_options *options, uint16_t *edge_magnitude_vector, uint16_t *edge_gradient_vector);
   get_prewitt_edge_with_gradient: [
     "void",
     [imageInfoPtr, prewittOptionsPtr, uint16Ptr, uint16Ptr],
@@ -247,10 +247,10 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * edge/roberts.h - typedef 있음
    **********************************************************/
-  // void get_roberts_edge(imagePtr, roberts_options *options, uint8_t *edge_magnitude_vector);
+  // void get_roberts_edge(imageInfoPtr, roberts_options *options, uint8_t *edge_magnitude_vector);
   get_roberts_edge: ["void", [imageInfoPtr, robertsOptionsPtr, uint8Ptr]],
 
-  // void get_roberts_edge_with_gradient(imagePtr, roberts_options *options, uint16_t *edge_magnitude_vector, uint16_t *edge_gradient_vector);
+  // void get_roberts_edge_with_gradient(imageInfoPtr, roberts_options *options, uint16_t *edge_magnitude_vector, uint16_t *edge_gradient_vector);
   get_roberts_edge_with_gradient: [
     "void",
     [imageInfoPtr, robertsOptionsPtr, uint16Ptr, uint16Ptr],
@@ -259,10 +259,10 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * edge/sobel.h - typedef 있음
    **********************************************************/
-  // void get_sobel_edge(imagePtr, sobel_options *options, uint8_t *edge_magnitude_vector);
+  // void get_sobel_edge(imageInfoPtr, sobel_options *options, uint8_t *edge_magnitude_vector);
   get_sobel_edge: ["void", [imageInfoPtr, sobelOptionsPtr, uint8Ptr]],
 
-  // void get_sobel_edge_with_gradient(imagePtr, sobel_options *options, uint16_t *edge_magnitude_vector, uint16_t *edge_gradient_vector);
+  // void get_sobel_edge_with_gradient(imageInfoPtr, sobel_options *options, uint16_t *edge_magnitude_vector, uint16_t *edge_gradient_vector);
   get_sobel_edge_with_gradient: [
     "void",
     [imageInfoPtr, sobelOptionsPtr, uint16Ptr, uint16Ptr],
@@ -271,7 +271,7 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * feature/edgegap.h - define 있음
    **********************************************************/
-  // void get_edge_gap_feature(imagePtr, size_info line_num, uint8_t *edge_gap_feature);
+  // void get_edge_gap_feature(imageInfoPtr, size_info line_num, uint8_t *edge_gap_feature);
   get_edge_gap_feature: ["void", [imageInfoPtr, datatypes.SizeInfo, uint8Ptr]],
 
   /**********************************************************
@@ -289,22 +289,22 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * feature/lbp.h
    **********************************************************/
-  // void get_uniform_lbp_feature(imagePtr, vector_info **uniform_lbp_feature);
+  // void get_uniform_lbp_feature(imageInfoPtr, vector_info **uniform_lbp_feature);
   get_uniform_lbp_feature: ["void", [imageInfoPtr, vectorInfoPtrPtr]],
 
   /**********************************************************
    * feature/subsample.h - define 있음
    **********************************************************/
-  // void get_subsample_feature(imagePtr, size_info grid_num, uint8_t *subsample_feature);
+  // void get_subsample_feature(imageInfoPtr, size_info grid_num, uint8_t *subsample_feature);
   get_subsample_feature: ["void", [imageInfoPtr, datatypes.SizeInfo, uint8Ptr]],
 
-  // void get_subsample_feature2(imagePtr, rect_info sub_area, size_info grid_num, uint8_t *subsample_feature);
+  // void get_subsample_feature2(imageInfoPtr, rect_info sub_area, size_info grid_num, uint8_t *subsample_feature);
   get_subsample_feature2: [
     "void",
     [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo, uint8Ptr],
   ],
 
-  // void get_subsample_color_feature(imagePtr, rect_info sub_area, size_info grid_num, uint8_t *subsample_feature);
+  // void get_subsample_color_feature(imageInfoPtr, rect_info sub_area, size_info grid_num, uint8_t *subsample_feature);
   get_subsample_color_feature: [
     "void",
     [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo, uint8Ptr],
@@ -319,10 +319,10 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * utils/crop.h
    **********************************************************/
-  // image_info* crop_image(imagePtr, rect_info area);
+  // image_info* crop_image(imageInfoPtr, rect_info area);
   crop_image: [imageInfoPtr, [imageInfoPtr, datatypes.RectInfo]],
 
-  // void crop_image_raw(imagePtr, rect_info area, uint8_t *cropped_image);
+  // void crop_image_raw(imageInfoPtr, rect_info area, uint8_t *cropped_image);
   crop_image_raw: ["void", [imageInfoPtr, datatypes.RectInfo, uint8Ptr]],
 
   /**********************************************************
@@ -334,16 +334,16 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * utils/grayscale.h
    **********************************************************/
-  // image_info* get_grayscale_image(imagePtr);
+  // image_info* get_grayscale_image(imageInfoPtr);
   get_grayscale_image: [imageInfoPtr, [imageInfoPtr]],
 
-  // void get_grayscale_image_raw(imagePtr, uint8_t *gray_image);
+  // void get_grayscale_image_raw(imageInfoPtr, uint8_t *gray_image);
   get_grayscale_image_raw: ["void", [imageInfoPtr, uint8Ptr]],
 
-  // image_info* get_grayscale_image2(imagePtr, rect_info area);
+  // image_info* get_grayscale_image2(imageInfoPtr, rect_info area);
   get_grayscale_image2: [imageInfoPtr, [imageInfoPtr, datatypes.RectInfo]],
 
-  // void get_grayscale_image_raw2(imagePtr, rect_info area, uint8_t *gray_image);
+  // void get_grayscale_image_raw2(imageInfoPtr, rect_info area, uint8_t *gray_image);
   get_grayscale_image_raw2: [
     "void",
     [imageInfoPtr, datatypes.RectInfo, uint8Ptr],
@@ -361,13 +361,13 @@ const visionlib = ffi.Library(libvision, {
     [datatypes.SizeInfo, uint8, uint8],
   ],
 
-  // image_info* create_image_from_image(imagePtr);
+  // image_info* create_image_from_image(imageInfoPtr);
   create_image_from_image: [imageInfoPtr, [imageInfoPtr]],
 
-  // void destroy_image(imagePtr);
+  // void destroy_image(imageInfoPtr);
   destroy_image: ["void", [imageInfoPtr]],
 
-  // void free_image(imagePtr);
+  // void free_image(imageInfoPtr);
   free_image: ["void", [imageInfoPtr]],
 
   // void function_image_free_list_data(void *image);
@@ -429,13 +429,13 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * utils/pixelaverage.h
    **********************************************************/
-  // void get_pixel_average_color(imagePtr, rect_info area, color_info *pixel);
+  // void get_pixel_average_color(imageInfoPtr, rect_info area, color_info *pixel);
   get_pixel_average_color: [
     "void",
     [imageInfoPtr, datatypes.RectInfo, colorInfoPtr],
   ],
 
-  // void get_pixel_average_gray(imagePtr, rect_info area, uint8_t *pixel);
+  // void get_pixel_average_gray(imageInfoPtr, rect_info area, uint8_t *pixel);
   get_pixel_average_gray: [
     "void",
     [imageInfoPtr, datatypes.RectInfo, uint8Ptr],
@@ -488,7 +488,7 @@ const visionlib = ffi.Library(libvision, {
   /**********************************************************
    * utils/targetarea.h
    **********************************************************/
-  // rect_info get_target_area(imagePtr, rect_info criterion_area, size_info target_area_ratio);
+  // rect_info get_target_area(imageInfoPtr, rect_info criterion_area, size_info target_area_ratio);
   get_target_area: [
     datatypes.RectInfo,
     [imageInfoPtr, datatypes.RectInfo, datatypes.SizeInfo],
@@ -527,31 +527,84 @@ const visionlib = ffi.Library(libvision, {
  ***********************************************************/
 /**
  * Get the image with average blurred
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getAverageBlur = (imagePtr, resultBufferPtr) => {
-  visionlib.get_average_blur(imagePtr, resultBufferPtr);
+exports.getAverageBlur = (imageInfoPtr, resultBufferPtr) => {
+  visionlib.get_average_blur(imageInfoPtr, resultBufferPtr);
+};
+
+/**
+ * Get the image with average blurred
+ * @param {ImageInfo} imageInfoPtr Image info
+ * @return {Array<number>} resultBufferPtr (output) Blurred image
+ */
+exports.getAverageBlur_0409 = (imageStr) => {
+  // calculate data array size
+  let size =
+    imageStr.size.width * imageStr.size.height * imageStr.bytes_per_pixel;
+
+  // create array pointer
+  let resultPtr = Buffer.from(new Uint8Array(size).buffer);
+
+  // TODO: call vision library
+  visionlib.get_average_blur(imageStr.ref(), resultPtr);
+
+  // get values from Buffer (result)
+  let bytes = size * Uint8Array.BYTES_PER_ELEMENT;
+  let result = new Uint8Array(resultPtr.reinterpret(bytes));
+
+  return result;
 };
 
 /**
  * Get the image with average blurred after grayscale converting
- * @param {ImageInfo*} imagePtr Image info
- * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting (size === w * h * bytes_per_pixel * uint8.bytes_per_element)
- * @param {uint8*} resultBufferPtr (output) Blurred image (size === imagePtr data)
+ * @param {ImageInfo*} imageInfoPtr Image info
+ * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting
+ * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getAverageBlurGray = (imagePtr, tempBufferPtr, resultBufferPtr) => {
-  visionlib.get_average_blur_gray(imagePtr, tempBufferPtr, resultBufferPtr);
+exports.getAverageBlurGray = (imageInfoPtr, tempBufferPtr, resultBufferPtr) => {
+  visionlib.get_average_blur_gray(imageInfoPtr, tempBufferPtr, resultBufferPtr);
+};
+
+exports.getAverageBlurGray_0410 = (imageStr) => {
+  // calculate data array size
+  let tmpSize =
+    imageStr.size.width * imageStr.size.height * imageStr.bytes_per_pixel;
+  let resultSize = imageStr.size.width * imageStr.size.height;
+
+  console.log(tmpSize, resultSize);
+
+  // create array pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageStr);
+  let tempBufferPtr = Buffer.from(new Uint8Array(tmpSize).buffer);
+  let resultBufferPtr = Buffer.from(new Uint8Array(resultSize).buffer);
+
+  visionlib.get_average_blur_gray(imageInfoPtr, tempBufferPtr, resultBufferPtr);
+
+  // get values from Buffer (result)
+  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  let result = new Uint8Array(resultBufferPtr.reinterpret(bytes));
+
+  console.log(result);
 };
 
 /**
  * Get the image with grayscale converted after average blurring
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} tempBufferPtr Temporary buffer for average converting
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getAverageBlurGray2 = (imagePtr, tempBufferPtr, resultBufferPtr) => {
-  visionlib.get_average_blur_gray2(imagePtr, tempBufferPtr, resultBufferPtr);
+exports.getAverageBlurGray2 = (
+  imageInfoPtr,
+  tempBufferPtr,
+  resultBufferPtr
+) => {
+  visionlib.get_average_blur_gray2(
+    imageInfoPtr,
+    tempBufferPtr,
+    resultBufferPtr
+  );
 };
 
 /**********************************************************
@@ -559,31 +612,47 @@ exports.getAverageBlurGray2 = (imagePtr, tempBufferPtr, resultBufferPtr) => {
  **********************************************************/
 /**
  * Get the image with bilateral blurred
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getBilateralBlur = (imagePtr, resultBufferPtr) => {
-  visionlib.get_bilateral_blur(imagePtr, resultBufferPtr);
+exports.getBilateralBlur = (imageInfoPtr, resultBufferPtr) => {
+  visionlib.get_bilateral_blur(imageInfoPtr, resultBufferPtr);
 };
 
 /**
  * Get the image with bilateral blurred after grayscale converting
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getBilateralBlurGray = (imagePtr, tempBufferPtr, resultBufferPtr) => {
-  visionlib.get_bilateral_blur_gray(imagePtr, tempBufferPtr, resultBufferPtr);
+exports.getBilateralBlurGray = (
+  imageInfoPtr,
+  tempBufferPtr,
+  resultBufferPtr
+) => {
+  visionlib.get_bilateral_blur_gray(
+    imageInfoPtr,
+    tempBufferPtr,
+    resultBufferPtr
+  );
 };
 
 /**
  * Get the image with grayscale converted after bilateral blurring
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} tempBufferPtr Temporary buffer for bilateral blurring
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getBilateralBlurGray2 = (imagePtr, tempBufferPtr, resultBufferPtr) => {
-  visionlib.get_bilateral_blur_gray2(imagePtr, tempBufferPtr, resultBufferPtr);
+exports.getBilateralBlurGray2 = (
+  imageInfoPtr,
+  tempBufferPtr,
+  resultBufferPtr
+) => {
+  visionlib.get_bilateral_blur_gray2(
+    imageInfoPtr,
+    tempBufferPtr,
+    resultBufferPtr
+  );
 };
 
 /**********************************************************
@@ -591,11 +660,11 @@ exports.getBilateralBlurGray2 = (imagePtr, tempBufferPtr, resultBufferPtr) => {
  **********************************************************/
 /**
  * gaussian blur
- * @param {ImageInfo*} imagePtr source image_info
+ * @param {ImageInfo*} imageInfoPtr source image_info
  * @param {ImageInfo*} resultImagePtr destination image_info
  */
-exports.getGaussianBlur = (imagePtr, resultImagePtr) => {
-  visionlib.get_gaussian_blur(imagePtr, resultImagePtr);
+exports.getGaussianBlur = (imageInfoPtr, resultImagePtr) => {
+  visionlib.get_gaussian_blur(imageInfoPtr, resultImagePtr);
 };
 
 /**********************************************************
@@ -603,31 +672,31 @@ exports.getGaussianBlur = (imagePtr, resultImagePtr) => {
  **********************************************************/
 /**
  * Get the image with median blurred
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getMedianBlur = (imagePtr, resultBufferPtr) => {
-  visionlib.get_median_blur(imagePtr, resultBufferPtr);
+exports.getMedianBlur = (imageInfoPtr, resultBufferPtr) => {
+  visionlib.get_median_blur(imageInfoPtr, resultBufferPtr);
 };
 
 /**
  * Get the image with median blurred after grayscale converting
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} tempBufferPtr Temporary buffer for grayscale converting
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getMedianBlurGray = (imagePtr, tempBufferPtr, resultBufferPtr) => {
-  visionlib.get_median_blur_gray(imagePtr, tempBufferPtr, resultBufferPtr);
+exports.getMedianBlurGray = (imageInfoPtr, tempBufferPtr, resultBufferPtr) => {
+  visionlib.get_median_blur_gray(imageInfoPtr, tempBufferPtr, resultBufferPtr);
 };
 
 /**
  * Get the image with grayscale converted after median blurring
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} tempBufferPtr Temporary buffer for median blurring
  * @param {uint8*} resultBufferPtr (output) Blurred image
  */
-exports.getMedianBlurGray2 = (imagePtr, tempBufferPtr, resultBufferPtr) => {
-  visionlib.get_median_blur_gray2(imagePtr, tempBufferPtr, resultBufferPtr);
+exports.getMedianBlurGray2 = (imageInfoPtr, tempBufferPtr, resultBufferPtr) => {
+  visionlib.get_median_blur_gray2(imageInfoPtr, tempBufferPtr, resultBufferPtr);
 };
 
 /**********************************************************
@@ -635,7 +704,7 @@ exports.getMedianBlurGray2 = (imagePtr, tempBufferPtr, resultBufferPtr) => {
  **********************************************************/
 /**
  * Detect the ROI
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} trackingArea Area for tracking
  * @param {SizeInfo} minRoi Minimum size of ROI
  * @param {SizeInfo} strideRatio Ratio for ROI area stride
@@ -664,19 +733,19 @@ exports.detectRoi = (
  **********************************************************/
 /**
  * Get the area of HAAR cascade processing
- * @param {ImageInfo*} imagePtr Source image info
+ * @param {ImageInfo*} imageInfoPtr Source image info
  * @param {RectInfo} subArea ROI area to detect
  * @param {haarOptionsPtr} optionsPtr Options for HAAR detection
  * @param {ListInfo*} resultRectListPtr (output) Result areas info
  */
 exports.getHaarCascadeDetect = (
-  imagePtr,
+  imageInfoPtr,
   subArea,
   optionsPtr,
   resultRectListPtr
 ) => {
   visionlib.get_haar_cascade_detect(
-    imagePtr,
+    imageInfoPtr,
     subArea,
     optionsPtr,
     resultRectListPtr
@@ -685,11 +754,11 @@ exports.getHaarCascadeDetect = (
 
 /**
  * Draw the area to the image
- * @param {ImageInfo*} imagePtr Image to draw
+ * @param {ImageInfo*} imageInfoPtr Image to draw
  * @param {ListInfo*} resultRectListPtr Result list of area info
  */
-exports.drawHaarResult = (imagePtr, resultRectListPtr) => {
-  visionlib.draw_haar_result(imagePtr, resultRectListPtr);
+exports.drawHaarResult = (imageInfoPtr, resultRectListPtr) => {
+  visionlib.draw_haar_result(imageInfoPtr, resultRectListPtr);
 };
 
 /**********************************************************
@@ -698,7 +767,7 @@ exports.drawHaarResult = (imagePtr, resultRectListPtr) => {
 
 /**
  * Track the ROI
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} trackingArea Area for tracking
  * @param {SizeInfo} minRoi Minimum size of ROI
  * @param {SizeInfo} strideRatio Ratio for ROI area stride
@@ -726,6 +795,125 @@ exports.trackRoi = (
  * edge/canny.h - typedef 있음
  **********************************************************/
 /**
+ * @param {ImageInfo} ImageInfoStr
+ * @param {RobertsOptions} RobertsOptionsStr
+ * @return {Array<Number>} (output)
+ */
+exports.edgeCanny = (imageInfoStr, optionsStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // blur processing
+  let blurImageStr = imageInfoStr;
+  if (optionsStr.blur !== constants.BLUR_TYPE.BLUR_NONE) {
+    // Create grayscale buffer
+    let blurImageSize =
+      blurImageStr.size.width *
+      blurImageStr.size.height *
+      Uint8Array.BYTES_PER_ELEMENT;
+
+    blurImageStr.data = Buffer.from(new Uint8Array(blurImageSize).buffer);
+
+    switch (optionsStr.blur) {
+      case constants.BLUR_TYPE.BLUR_AVERAGE:
+        this.getAverageBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_MEDIAN:
+        this.getMedianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_BILATERAL:
+        this.getBilateralBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_GAUSSIAN:
+        // this.getGaussianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+    }
+  }
+
+  // grayscale processing
+  let blurImagePtr = ref.alloc(datatypes.ImageInfo, blurImageStr);
+  let grayscaleImageStr = blurImageStr;
+  if (blurImageStr.color !== constants.COLOR_FORMAT.COLOR_GRAY) {
+    // Create grayscale buffer
+    var grayscaleImageSize =
+      grayscaleImageStr.size.width *
+      grayscaleImageStr.size.height *
+      Uint8Array.BYTES_PER_ELEMENT;
+    grayscaleImageStr.data = Buffer.from(
+      new Uint8Array(grayscaleImageSize).buffer
+    );
+
+    this.getGrayscaleImageRaw(blurImagePtr, grayscaleImageStr.data);
+    grayscaleImageStr.color = constants.COLOR_FORMAT.COLOR_GRAY;
+    grayscaleImageStr.bytes_per_pixel = this.getBytesPerPixel(
+      grayscaleImageStr.color
+    );
+  }
+
+  // edge processing
+  let edgeMagnitudePtr = Buffer.from(
+    new Uint16Array(grayscaleImageSize).buffer
+  );
+  let edgeGradientPtr = Buffer.from(new Uint16Array(grayscaleImageSize).buffer);
+  switch (optionsStr.edge) {
+    case constants.EDGE_TYPE.EDGE_SOBEL:
+      let sobelOptionsStr = new datatypes.SobelOptions();
+      sobelOptionsStr.use_math = optionsStr.use_math;
+      sobelOptionsStr.threshold_ratio = -1;
+      sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+    case constants.EDGE_TYPE.EDGE_PREWITT:
+      let prewittOptionsStr = new datatypes.PrewittOptions();
+      prewittOptionsStr.use_math = optionsStr.use_math;
+      prewittOptionsStr.threshold_ratio = -1;
+      prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+    case constants.EDGE_TYPE.EDGE_ROBERTS:
+      let robertsOptionsStr = new datatypes.RobertsOptions();
+      robertsOptionsStr.use_math = optionsStr.use_math;
+      robertsOptionsStr.threshold_ratio = -1;
+      robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+  }
+
+  let resultImageStr = grayscaleImageStr;
+  if (
+    imageInfoStr.color === constants.COLOR_FORMAT.COLOR_GRAY &&
+    optionsStr.blur === constants.BLUR_TYPE.BLUR_NONE
+  ) {
+    resultImageStr.data = Buffer.from(new Uint8Array(grayscaleImageSize));
+  }
+  let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
+
+  let cannyOptionsStr = new datatypes.CannyOptions();
+  cannyOptionsStr.threshold_high_ratio = optionsStr.threshold_high_ratio;
+  cannyOptionsStr.threshold_low_ratio = optionsStr.threshold_low_ratio;
+  let cannyOptionsPtr = ref.alloc(datatypes.CannyOptions, cannyOptionsStr);
+
+  this.getCannyEdge(
+    resultImageStr.size,
+    edgeMagnitudePtr,
+    edgeGradientPtr,
+    cannyOptionsPtr,
+    resultImagePtr
+  );
+
+  console.log(resultImagePtr);
+
+  // Create grayscale buffer
+  let resultSize =
+  resultImageStr.size.width *
+  resultImageStr.size.height *
+    Uint8Array.BYTES_PER_ELEMENT;
+
+  // get values from Buffer (result)
+  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  let result = ref.reinterpret(resultImageStr.data, bytes);
+
+  return result;
+};
+
+/**
  * Get the edge image using sobel edge extraction
  * @param {SizeInfo} imageSize Image size
  * @param {uint8*} edgeMagnitudeVectorPtr Edge magnitude info
@@ -736,15 +924,15 @@ exports.trackRoi = (
 exports.getCannyEdge = (
   imageSize,
   edgeMagnitudeVectorPtr,
-  edgeGradientVector,
-  options,
+  edgeGradientVectorPtr,
+  optionsPtr,
   resultImagePtr
 ) => {
   visionlib.get_canny_edge(
     imageSize,
     edgeMagnitudeVectorPtr,
-    edgeGradientVector,
-    options,
+    edgeGradientVectorPtr,
+    optionsPtr,
     resultImagePtr
   );
 };
@@ -771,42 +959,384 @@ exports.calculateCannyGradient = (
 /**********************************************************
  * edge/hough.h - typedef 있음
  **********************************************************/
+// edgeCanny와 동일. 
+exports.edgeHoughLine = (imageInfoStr, optionsStr) => {
+
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // blur processing
+  let blurImageStr = imageInfoStr;
+  if (optionsStr.blur !== constants.BLUR_TYPE.BLUR_NONE) {
+    // Create grayscale buffer
+    let blurImageSize =
+      blurImageStr.size.width *
+      blurImageStr.size.height *
+      Uint8Array.BYTES_PER_ELEMENT;
+
+    blurImageStr.data = Buffer.from(new Uint8Array(blurImageSize).buffer);
+
+    switch (optionsStr.blur) {
+      case constants.BLUR_TYPE.BLUR_AVERAGE:
+        this.getAverageBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_MEDIAN:
+        this.getMedianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_BILATERAL:
+        this.getBilateralBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_GAUSSIAN:
+        // this.getGaussianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+    }
+  }
+
+  // grayscale processing
+  let blurImagePtr = ref.alloc(datatypes.ImageInfo, blurImageStr);
+  let grayscaleImageStr = blurImageStr;
+  if (blurImageStr.color !== constants.COLOR_FORMAT.COLOR_GRAY) {
+    // Create grayscale buffer
+    var grayscaleImageSize =
+      grayscaleImageStr.size.width *
+      grayscaleImageStr.size.height *
+      Uint8Array.BYTES_PER_ELEMENT;
+    grayscaleImageStr.data = Buffer.from(
+      new Uint8Array(grayscaleImageSize).buffer
+    );
+
+    this.getGrayscaleImageRaw(blurImagePtr, grayscaleImageStr.data);
+    grayscaleImageStr.color = constants.COLOR_FORMAT.COLOR_GRAY;
+    grayscaleImageStr.bytes_per_pixel = this.getBytesPerPixel(
+      grayscaleImageStr.color
+    );
+  }
+
+  // edge processing
+  let edgeMagnitudePtr = Buffer.from(
+    new Uint16Array(grayscaleImageSize).buffer
+  );
+  let edgeGradientPtr = Buffer.from(new Uint16Array(grayscaleImageSize).buffer);
+  switch (optionsStr.edge) {
+    case constants.EDGE_TYPE.EDGE_SOBEL:
+      let sobelOptionsStr = new datatypes.SobelOptions();
+      sobelOptionsStr.use_math = optionsStr.use_math;
+      sobelOptionsStr.threshold_ratio = -1;
+      sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+    case constants.EDGE_TYPE.EDGE_PREWITT:
+      let prewittOptionsStr = new datatypes.PrewittOptions();
+      prewittOptionsStr.use_math = optionsStr.use_math;
+      prewittOptionsStr.threshold_ratio = -1;
+      prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+    case constants.EDGE_TYPE.EDGE_ROBERTS:
+      let robertsOptionsStr = new datatypes.RobertsOptions();
+      robertsOptionsStr.use_math = optionsStr.use_math;
+      robertsOptionsStr.threshold_ratio = -1;
+      robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+  }
+
+  let resultImageStr = grayscaleImageStr;
+  if (
+    imageInfoStr.color === constants.COLOR_FORMAT.COLOR_GRAY &&
+    optionsStr.blur === constants.BLUR_TYPE.BLUR_NONE
+  ) {
+    resultImageStr.data = Buffer.from(new Uint8Array(grayscaleImageSize));
+  }
+  let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
+
+  let cannyOptionsStr = new datatypes.CannyOptions();
+  cannyOptionsStr.threshold_high_ratio = optionsStr.threshold_high_ratio;
+  cannyOptionsStr.threshold_low_ratio = optionsStr.threshold_low_ratio;
+  let cannyOptionsPtr = ref.alloc(datatypes.CannyOptions, cannyOptionsStr);
+
+  this.getCannyEdge(
+    resultImageStr.size,
+    edgeMagnitudePtr,
+    edgeGradientPtr,
+    cannyOptionsPtr,
+    resultImagePtr
+  );
+}
 /**
  * Get the line edge in image
- * @param {ImageInfo*} imagePtr Source image info
+ * @param {ImageInfo*} imageInfoPtr Source image info
  * @param {houghLineOptionsPtr} optionsPtr Options for edge extraction
  * @param {listInfoPtr} edgeListPtr (output) Result list of line info
  */
-exports.getHoughEdgeLine = (imagePtr, optionsPtr, edgeListPtr) => {
-  visionlib.get_hough_edge_line(imagePtr, optionsPtr, edgeListPtr);
+exports.getHoughEdgeLine = (imageInfoPtr, optionsPtr, edgeListPtr) => {
+  visionlib.get_hough_edge_line(imageInfoPtr, optionsPtr, edgeListPtr);
 };
 
 /**
  * Get the circle edge in image
- * @param {ImageInfo*} imagePtr Source image info
+ * @param {ImageInfo*} imageInfoPtr Source image info
  * @param {houghCircleOptionsPtr} optionsPtr Options for edge extraction
  * @param {listInfoPtr} edgeListPtr (output) Result list of circle info
  */
-exports.getHoughEdgeCircle = (imagePtr, optionsPtr, edgeListPtr) => {
-  visionlib.get_hough_edge_circle(imagePtr, optionsPtr, edgeListPtr);
+exports.getHoughEdgeCircle = (imageInfoPtr, optionsPtr, edgeListPtr) => {
+  visionlib.get_hough_edge_circle(imageInfoPtr, optionsPtr, edgeListPtr);
 };
 
 /**
  * Draw the line edge to the image
  * @param {ListInfo*} resultInfoPtr Result list of line info
- * @param {ImageInfo*} imagePtr (output) Line drawn image
+ * @param {ImageInfo*} imageInfoPtr (output) Line drawn image
  */
-exports.drawHoughLineResult = (resultInfoPtr, imagePtr) => {
-  visionlib.draw_hough_line_result(resultInfoPtr, imagePtr);
+exports.drawHoughLineResult = (resultInfoPtr, imageInfoPtr) => {
+  visionlib.draw_hough_line_result(resultInfoPtr, imageInfoPtr);
 };
 
 /**
  * Draw the circle edge to the image
  * @param {ListInfo*} resultInfoPtr Result list of circle info
- * @param {ImageInfo*} imagePtr (output) Circle drawn image
+ * @param {ImageInfo*} imageInfoPtr (output) Circle drawn image
  */
-exports.drawHoughCircleResult = (resultInfoPtr, imagePtr) => {
-  visionlib.draw_hough_circle_result(resultInfoPtr, imagePtr);
+exports.drawHoughCircleResult = (resultInfoPtr, imageInfoPtr) => {
+  visionlib.draw_hough_circle_result(resultInfoPtr, imageInfoPtr);
+};
+
+/**********************************************************
+ * edge/prewitt.h - typedef 있음
+ **********************************************************/
+/**
+ * @param {ImageInfo} ImageInfoStr
+ * @param {PrewittOptions} PrewittOptionsStr
+ * @return {Array<Number>} (output)
+ */
+exports.edgePrewitt = (imageInfoStr, optionsStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create grayscale buffer
+  let resultSize =
+    imageInfoStr.size.width *
+    imageInfoStr.size.height *
+    Uint8Array.BYTES_PER_ELEMENT;
+
+  let resultImagePtr = Buffer.from(new Uint8Array(resultSize).buffer);
+
+  // Call function (color to grayscale)
+  this.getGrayscaleImageRaw(imageInfoPtr, resultImagePtr);
+
+  // get values from Buffer (result)
+  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  let grayscaleData = ref.reinterpret(resultImagePtr, bytes);
+
+  // re-create
+  imageInfoStr.data = grayscaleData;
+  imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create pointer
+  let optionsPtr = ref.alloc(datatypes.SobelOptions, optionsStr);
+
+  // Call functioon
+  this.getPrewittEdge(imageInfoPtr, optionsPtr, resultImagePtr);
+
+  // get values from Buffer (result)
+  let result = ref.reinterpret(resultImagePtr, bytes);
+
+  return result;
+};
+
+/**
+ * @param {ImageInfo*} imageInfoPtr
+ * @param {PrewittOptions*} prewittOptionsPtr
+ * @param {uint8*} edgeMagnitudeVectorPtr
+ */
+exports.getPrewittEdge = (
+  imageInfoPtr,
+  prewittOptionsPtr,
+  edgeMagnitudeVectorPtr
+) => {
+  visionlib.get_prewitt_edge(
+    imageInfoPtr,
+    prewittOptionsPtr,
+    edgeMagnitudeVectorPtr
+  );
+};
+
+/**
+ * @param {ImageInfo*} imageInfoPtr
+ * @param {PrewittOptions*} prewittOptionsPtr
+ * @param {uint16*} edgeMagnitudeVectorPtr
+ * @param {uint16*} edgeGradientVectorPtr
+ */
+exports.getPrewittEdgeWithGradient = (
+  imageInfoPtr,
+  prewittOptionsPtr,
+  edgeMagnitudeVectorPtr,
+  edgeGradientVectorPtr
+) => {
+  visionlib.get_prewitt_edge_with_gradient(
+    imageInfoPtr,
+    prewittOptionsPtr,
+    edgeMagnitudeVectorPtr,
+    edgeGradientVectorPtr
+  );
+};
+
+/**********************************************************
+ * edge/roberts.h - typedef 있음
+ **********************************************************/
+/**
+ * @param {ImageInfo} ImageInfoStr
+ * @param {RobertsOptions} RobertsOptionsStr
+ * @return {Array<Number>} (output)
+ */
+exports.edgeReberts = (imageInfoStr, optionsStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create grayscale buffer
+  let resultSize =
+    imageInfoStr.size.width *
+    imageInfoStr.size.height *
+    Uint8Array.BYTES_PER_ELEMENT;
+
+  let resultImagePtr = Buffer.from(new Uint8Array(resultSize).buffer);
+
+  // Call function (color to grayscale)
+  this.getGrayscaleImageRaw(imageInfoPtr, resultImagePtr);
+
+  // get values from Buffer (result)
+  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  let grayscaleData = ref.reinterpret(resultImagePtr, bytes);
+
+  // re-create
+  imageInfoStr.data = grayscaleData;
+  imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create pointer
+  let optionsPtr = ref.alloc(datatypes.SobelOptions, optionsStr);
+
+  // Call functioon
+  this.getRobertsEdge(imageInfoPtr, optionsPtr, resultImagePtr);
+
+  // get values from Buffer (result)
+  let result = ref.reinterpret(resultImagePtr, bytes);
+
+  return result;
+};
+/**
+ * @param {ImageInfo*} imageInfoPtr
+ * @param {RobertsOptions*} prewittOptionsPtr
+ * @param {uint8*} edgeMagnitudeVectorPtr
+ */
+exports.getRobertsEdge = (
+  imageInfoPtr,
+  robertsOptionsPtr,
+  edgeMagnitudeVectorPtr
+) => {
+  visionlib.get_roberts_edge(
+    imageInfoPtr,
+    robertsOptionsPtr,
+    edgeMagnitudeVectorPtr
+  );
+};
+
+/**
+ * @param {ImageInfo*} imageInfoPtr
+ * @param {RobertsOptions*} prewittOptionsPtr
+ * @param {uint16*} edgeMagnitudeVectorPtr
+ * @param {uint16*} edgeGradientVectorPtr
+ */
+exports.getRobertsEdgeWithGradient = (
+  imageInfoPtr,
+  robertsOptionsPtr,
+  edgeMagnitudeVectorPtr,
+  edgeGradientVectorPtr
+) => {
+  visionlib.get_roberts_edge_with_gradient(
+    imageInfoPtr,
+    robertsOptionsPtr,
+    edgeMagnitudeVectorPtr,
+    edgeGradientVectorPtr
+  );
+};
+
+/**********************************************************
+ * edge/sobel.h - typedef 있음
+ **********************************************************/
+/**
+ * @param {ImageInfo} ImageInfoStr
+ * @param {SobelOptions} SobelOptionsStr
+ * @return {Array<Number>} (output)
+ */
+exports.edgeSobel = (imageInfoStr, optionsStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create grayscale buffer
+  let resultSize =
+    imageInfoStr.size.width *
+    imageInfoStr.size.height *
+    Uint8Array.BYTES_PER_ELEMENT;
+
+  let resultImagePtr = Buffer.from(new Uint8Array(resultSize).buffer);
+
+  // Call function (color to grayscale)
+  this.getGrayscaleImageRaw(imageInfoPtr, resultImagePtr);
+
+  // get values from Buffer (result)
+  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  let grayscaleData = ref.reinterpret(resultImagePtr, bytes);
+
+  // re-create
+  imageInfoStr.data = grayscaleData;
+  imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create pointer
+  let optionsPtr = ref.alloc(datatypes.SobelOptions, optionsStr);
+
+  // Call functioon
+  this.getSobelEdge(imageInfoPtr, optionsPtr, resultImagePtr);
+
+  // get values from Buffer (result)
+  let result = ref.reinterpret(resultImagePtr, bytes);
+
+  return result;
+};
+
+/**
+ * Run the sobel edge processing
+ * @param {ImageInfo*} imageInfoPtr Image info
+ * @param {SobelOptions*} sobelOptionsPtr Options for the edge processing
+ * @param {uint8*} edgeMagnitudeVectorPtr (output) Edge magnitude
+ */
+exports.getSobelEdge = (
+  imageInfoPtr,
+  sobelOptionsPtr,
+  edgeMagnitudeVectorPtr
+) => {
+  visionlib.get_sobel_edge(
+    imageInfoPtr,
+    sobelOptionsPtr,
+    edgeMagnitudeVectorPtr
+  );
+};
+
+/**
+ * Run the sobel edge processing
+ * @param {ImageInfo*} imageInfoPtr Image info
+ * @param {SobelOptions*} sobelOptionsPtr Options for the edge processing
+ * @param {uint16*} edgeMagnitudeVectorPtr (output) Edge magnitude
+ * @param {uint16*} edgeGradientVectorPtr (output) Edge gradient
+ */
+exports.getSobelEdgeWithGradient = (
+  imageInfoPtr,
+  sobelOptionsPtr,
+  edgeMagnitudeVectorPtr,
+  edgeGradientVectorPtr
+) => {
+  visionlib.get_sobel_edge_with_gradient(
+    imageInfoPtr,
+    sobelOptionsPtr,
+    edgeMagnitudeVectorPtr,
+    edgeGradientVectorPtr
+  );
 };
 
 /**********************************************************
@@ -814,27 +1344,13 @@ exports.drawHoughCircleResult = (resultInfoPtr, imagePtr) => {
  **********************************************************/
 /**
  * Get the feature vector using edge gap
- * @param {ImageInfo*} imagePtr  Image info
+ * @param {ImageInfo*} imageInfoPtr  Image info
  * @param {SizeInfo} lineNum Line count for calculate edge gap
  * @param {uint8*} edgeGapFeature (output) Feature vector
  */
-exports.getEdgeGapFeature = (imagePtr, lineNum, edgeGapFeature) => {
-  visionlib.get_edge_gap_feature(imagePtr, lineNum, edgeGapFeature);
+exports.getEdgeGapFeature = (imageInfoPtr, lineNum, edgeGapFeature) => {
+  visionlib.get_edge_gap_feature(imageInfoPtr, lineNum, edgeGapFeature);
 };
-
-/**********************************************************
- * edge/sobel.h - typedef 있음
- **********************************************************/
-/**
- * @param {ImageInfo*} imagePtr
- * @param {SobelOptions*} optionsPtr
- * @param {uint8*} edgeMagnitudeVectorPtr
- */
-exports.getSobelEdge = (imagePtr, optionsPtr, edgeMagnitudeVectorPtr) => {
-  visionlib.get_sobel_edge(imagePtr, optionsPtr, edgeMagnitudeVectorPtr);
-}
-
-
 
 /**********************************************************
  * feature/hog.h - typedef 있음 / - define 있음
@@ -887,11 +1403,11 @@ exports.calculateHogGradient = (
  **********************************************************/
 /**
  * Get the LBP feature vector
- * @param {ImageInfo*} imagePtr Image source
+ * @param {ImageInfo*} imageInfoPtr Image source
  * @param {uniformLbpFeaturePtrPtr} uniformLbpFeaturePtrPtr (output) LBP feature vector
  */
-exports.getUniformLbpFeature = (imagePtr, uniformLbpFeaturePtrPtr) => {
-  visionlib.get_uniform_lbp_feature(imagePtr, uniformLbpFeaturePtrPtr);
+exports.getUniformLbpFeature = (imageInfoPtr, uniformLbpFeaturePtrPtr) => {
+  visionlib.get_uniform_lbp_feature(imageInfoPtr, uniformLbpFeaturePtrPtr);
 };
 
 /***********************************************************
@@ -899,29 +1415,37 @@ exports.getUniformLbpFeature = (imagePtr, uniformLbpFeaturePtrPtr) => {
  **********************************************************/
 /**
  * Get the feature vector using subsampling
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {SizeInfo} gridNum Grid count for subsampling
  * @param {uint8*} subsampleFeaturePtr (output) Feature vector
  */
-exports.getSubsampleFeature = (imagePtr, gridNum, getSubsampleColorFeature) => {
-  visionlib.get_subsample_feature(imagePtr, gridNum, getSubsampleColorFeature);
+exports.getSubsampleFeature = (
+  imageInfoPtr,
+  gridNum,
+  getSubsampleColorFeature
+) => {
+  visionlib.get_subsample_feature(
+    imageInfoPtr,
+    gridNum,
+    getSubsampleColorFeature
+  );
 };
 
 /**
  * Get the feature vector using subsampling in sub area
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} subArea Sub area info
  * @param {SizeInfo} gridNum Grid count for subsampling
  * @param {uint8*} subsampleFeaturePtr (output) Feature vector
  */
 exports.getSubsampleFeature2 = (
-  imagePtr,
+  imageInfoPtr,
   subArea,
   gridNum,
   getSubsampleColorFeature
 ) => {
   visionlib.get_subsample_feature2(
-    imagePtr,
+    imageInfoPtr,
     subArea,
     gridNum,
     getSubsampleColorFeature
@@ -930,19 +1454,19 @@ exports.getSubsampleFeature2 = (
 
 /**
  * Get the color feature vector using subsampling in sub area
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} subArea Sub area info
  * @param {SizeInfo} gridNum Grid count for subsampling
  * @param {uint8*} subsampleFeaturePtr (output) Feature vector
  */
 exports.getSubsampleColorFeature = (
-  imagePtr,
+  imageInfoPtr,
   subArea,
   gridNum,
   getSubsampleColorFeature
 ) => {
   visionlib.get_subsample_color_feature(
-    imagePtr,
+    imageInfoPtr,
     subArea,
     gridNum,
     getSubsampleColorFeature
@@ -966,22 +1490,22 @@ exports.getBytesPerPixel = (format) => {
  **********************************************************/
 /**
  * Get the cropped image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} area Sub area
  * @return Cropped image
  */
-exports.cropImage = (imagePtr, area) => {
-  return visionlib.crop_image(imagePtr, area);
+exports.cropImage = (imageInfoPtr, area) => {
+  return visionlib.crop_image(imageInfoPtr, area);
 };
 
 /**
  * Get the cropped image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} area Sub area
  * @param {uint8*} croppedImagePtr (output) Cropped image
  */
-exports.cropImageRaw = (imagePtr, area, croppedImagePtr) => {
-  visionlib.crop_image_raw(imagePtr, area, croppedImagePtr);
+exports.cropImageRaw = (imageInfoPtr, area, croppedImagePtr) => {
+  visionlib.crop_image_raw(imageInfoPtr, area, croppedImagePtr);
 };
 
 /***********************************************************
@@ -1001,40 +1525,40 @@ exports.equalizeGrayHistogram = (sourcePtr, destinationPtr) => {
  **********************************************************/
 /**
  * Get the grayscale image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @return {ImageInfo*} Grayscale image
  */
-exports.getGrayscaleImage = (imagePtr) => {
-  return visionlib.get_grayscale_image(imagePtr);
+exports.getGrayscaleImage = (imageInfoPtr) => {
+  return visionlib.get_grayscale_image(imageInfoPtr);
 };
 
 /**
  * Get the grayscale image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {uint8*} grayImagePtr (output) Grayscale image
  */
-exports.getGrayscaleImageRaw = (imagePtr, grayImagePtr) => {
-  visionlib.get_grayscale_image_raw(imagePtr, grayImagePtr);
+exports.getGrayscaleImageRaw = (imageInfoPtr, grayImagePtr) => {
+  visionlib.get_grayscale_image_raw(imageInfoPtr, grayImagePtr);
 };
 
 /**
  * Get the grayscale image in the sub area
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} area Sub area
  * @return {ImageInfo*} Grayscale image
  */
-exports.getGrayscaleImage2 = (imagePtr, area) => {
-  return visionlib.get_grayscale_image2(imagePtr, area);
+exports.getGrayscaleImage2 = (imageInfoPtr, area) => {
+  return visionlib.get_grayscale_image2(imageInfoPtr, area);
 };
 
 /**
  * Get the grayscale image in the sub area
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} area Sub area
  * @param {uint8*} grayImagePtr (output) Grayscale image
  */
-exports.getGrayscaleImageRaw2 = (imagePtr, area, grayImagePtr) => {
-  visionlib.get_grayscale_image_raw2(imagePtr, area, grayImagePtr);
+exports.getGrayscaleImageRaw2 = (imageInfoPtr, area, grayImagePtr) => {
+  visionlib.get_grayscale_image_raw2(imageInfoPtr, area, grayImagePtr);
 };
 
 /***********************************************************
@@ -1063,35 +1587,35 @@ exports.createImageWithCoordinate = (size, format, coordinate) => {
 
 /**
  * Create the image info
- * @param {ImageInfo*} imagePtr Source image info
+ * @param {ImageInfo*} imageInfoPtr Source image info
  * @return {ImageInfo*} Image info
  */
-exports.createImageFromImage = (imagePtr) => {
-  return visionlib.create_image_from_image(imagePtr);
+exports.createImageFromImage = (imageInfoPtr) => {
+  return visionlib.create_image_from_image(imageInfoPtr);
 };
 
 /**
  * Destroy the image info
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  */
-exports.destroyImage = (imagePtr) => {
-  visionlib.destroy_image(imagePtr);
+exports.destroyImage = (imageInfoPtr) => {
+  visionlib.destroy_image(imageInfoPtr);
 };
 
 /**
  * Free the memory of image info
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  */
-exports.freeImage = (imagePtr) => {
-  visionlib.free_image(imagePtr);
+exports.freeImage = (imageInfoPtr) => {
+  visionlib.free_image(imageInfoPtr);
 };
 
 /**
  * Definition the callback function to free the memory of image info
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  */
-exports.functionImageFreeListData = (imagePtr) => {
-  visionlib.function_image_free_list_data(imagePtr);
+exports.functionImageFreeListData = (imageInfoPtr) => {
+  visionlib.function_image_free_list_data(imageInfoPtr);
 };
 
 /***********************************************************
@@ -1250,22 +1774,22 @@ exports.removeFromListAt = (listPtr, index, freeData) => {
  ***********************************************************/
 /**
  * Get the color average value of pixel color in the sub area of image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} area Sub area
  * @param {ColorInfo*} pixelPtr (output) Average value of pixel color
  */
-exports.getPixelAverageColor = (imagePtr, area, pixelPtr) => {
-  visionlib.get_pixel_average_color(imagePtr, area, pixelPtr);
+exports.getPixelAverageColor = (imageInfoPtr, area, pixelPtr) => {
+  visionlib.get_pixel_average_color(imageInfoPtr, area, pixelPtr);
 };
 
 /**
  * Set the color average value of pixel color in the sub area of image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} area Sub area
  * @param {ColorInfo*} pixelPtr (output) Average value of pixel color
  */
-exports.getPixelAverageGray = (imagePtr, area, pixelPtr) => {
-  visionlib.get_pixel_average_gray(imagePtr, area, pixelPtr);
+exports.getPixelAverageGray = (imageInfoPtr, area, pixelPtr) => {
+  visionlib.get_pixel_average_gray(imageInfoPtr, area, pixelPtr);
 };
 
 /***********************************************************
@@ -1296,40 +1820,40 @@ exports.setPixelColor = (pixelPositionPtr, format, pixelColorPtr) => {
  ***********************************************************/
 /**
  * Resize the image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {SizeInfo} targetSize Target size to resize
  * @return {ImageInfo*} Resized image
  */
-exports.resizeImage = (imagePtr, targetSize) => {
-  return visionlib.resize_image(imagePtr, targetSize);
+exports.resizeImage = (imageInfoPtr, targetSize) => {
+  return visionlib.resize_image(imageInfoPtr, targetSize);
 };
 
 /**
  * Resize the image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {SizeInfo} targetSize Target size to resize
  * @param {ResizeType} type Type of resize
  * @return {ImageInfo*} Resized image
  */
-exports.resizeToGrayscaleImage = (imagePtr, targetSize, type) => {
-  return visionlib.resize_to_grayscale_image(imagePtr, targetSize, type);
+exports.resizeToGrayscaleImage = (imageInfoPtr, targetSize, type) => {
+  return visionlib.resize_to_grayscale_image(imageInfoPtr, targetSize, type);
 };
 
 /**
  * Resize the image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {SizeInfo} targetSize Target size to resize
  * @param {ResizeType} type Type of resize
  * @param {ImageInfo*} resizedImagePtr (output) Resized image
  */
 exports.resizeToGrayscaleImageRaw = (
-  imagePtr,
+  imageInfoPtr,
   targetSize,
   type,
   resizedImagePtr
 ) => {
   visionlib.resize_to_grayscale_image_raw(
-    imagePtr,
+    imageInfoPtr,
     targetSize,
     type,
     resizedImagePtr
@@ -1338,15 +1862,15 @@ exports.resizeToGrayscaleImageRaw = (
 
 /**
  * Resize the image in sub area of image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} subArea Sub area
  * @param {SizeInfo} targetSize Target size to resize
  * @param {ResizeType} type Type of resize
  * @return {ImageInfo*} Resized image
  */
-exports.resizeToGrayscaleImage2 = (imagePtr, subArea, targetSize, type) => {
+exports.resizeToGrayscaleImage2 = (imageInfoPtr, subArea, targetSize, type) => {
   return visionlib.resize_to_grayscale_image2(
-    imagePtr,
+    imageInfoPtr,
     subArea,
     targetSize,
     type
@@ -1355,21 +1879,21 @@ exports.resizeToGrayscaleImage2 = (imagePtr, subArea, targetSize, type) => {
 
 /**
  * Resize the image in sub area of image
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} subArea Sub area
  * @param {SizeInfo} targetSize Target size to resize
  * @param {ResizeType} type Type of resize
  * @param {ImageInfo*} resizedImagePtr (output) Resized image
  */
 exports.resizeToGrayscaleImageRaw2 = (
-  imagePtr,
+  imageInfoPtr,
   subArea,
   targetSize,
   type,
   resizedImagePtr
 ) => {
   visionlib.resize_to_grayscale_image_raw2(
-    imagePtr,
+    imageInfoPtr,
     subArea,
     targetSize,
     type,
@@ -1406,13 +1930,17 @@ exports.getSquareRoot = (value) => {
  **********************************************************/
 /**
  * Get the target area for tracking or detecting
- * @param {ImageInfo*} imagePtr Image info
+ * @param {ImageInfo*} imageInfoPtr Image info
  * @param {RectInfo} criterionArea Criterion area
  * @param {SizeInfo} targetAreaRatio Ratio of target area
  * @return {RectInfo} Target area
  */
-exports.getTargetArea = (imagePtr, criterionArea, targetAreaRatio) => {
-  return visionlib.get_target_area(imagePtr, criterionArea, targetAreaRatio);
+exports.getTargetArea = (imageInfoPtr, criterionArea, targetAreaRatio) => {
+  return visionlib.get_target_area(
+    imageInfoPtr,
+    criterionArea,
+    targetAreaRatio
+  );
 };
 
 /***********************************************************

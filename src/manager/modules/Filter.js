@@ -203,7 +203,10 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
     let blur = ImageFormatConverter.convertGray1toGray4(result);
 
     // Create new ImageData
-    let newImageData = new ImageData(Uint8ClampedArray.from(blur), mergeInputData.width);
+    let newImageData = new ImageData(
+      Uint8ClampedArray.from(blur),
+      mergeInputData.width
+    );
 
     // output 저장공간
     var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
@@ -314,7 +317,10 @@ filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
     let blur = ImageFormatConverter.convertGray1toGray4(result);
 
     // Create new ImageData
-    let newImageData = new ImageData(Uint8ClampedArray.from(blur), mergeInputData.width);
+    let newImageData = new ImageData(
+      Uint8ClampedArray.from(blur),
+      mergeInputData.width
+    );
 
     // output 저장공간
     var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
@@ -402,7 +408,10 @@ filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
     let blur = ImageFormatConverter.convertGray1toGray4(result);
 
     // Create new ImageData
-    let newImageData = new ImageData(Uint8ClampedArray.from(blur), mergeInputData.width);
+    let newImageData = new ImageData(
+      Uint8ClampedArray.from(blur),
+      mergeInputData.width
+    );
 
     // output 저장공간
     var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
@@ -463,30 +472,58 @@ filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
       return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
       );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // Create sobel option
+      const props = this.getProperties();
+      const useMath = props.getIn(["Use Math Function", "value"]);
+      const ThresholdRatio = props.getIn(["Threshold Ratio", "value"]);
+
+      let optionsStr = new datatypes.SobelOptions();
+      optionsStr.use_math = useMath;
+      optionsStr.threshold_ratio = ThresholdRatio;
+
+      // Call functioon
+      let result = vision.edgeSobel(imageInfoStr, optionsStr);
+
+      // Create RGBA (Gray)
+      let grayscale = Uint8ClampedArray.from(
+        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      );
+
+      // Create new ImageData
+      let newImageData = new ImageData(grayscale, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }
@@ -539,30 +576,58 @@ filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
       return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
       );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // Create sobel option
+      const props = this.getProperties();
+      const useMath = props.getIn(["Use Math Function", "value"]);
+      const ThresholdRatio = props.getIn(["Threshold Ratio", "value"]);
+
+      let optionsStr = new datatypes.PrewittOptions();
+      optionsStr.use_math = useMath;
+      optionsStr.threshold_ratio = ThresholdRatio;
+
+      // Call functioon
+      let result = vision.edgePrewitt(imageInfoStr, optionsStr);
+
+      // Create RGBA (Gray)
+      let grayscale = Uint8ClampedArray.from(
+        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      );
+
+      // Create new ImageData
+      let newImageData = new ImageData(grayscale, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }
@@ -615,30 +680,58 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
       return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
       );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // Create sobel option
+      const props = this.getProperties();
+      const useMath = props.getIn(["Use Math Function", "value"]);
+      const ThresholdRatio = props.getIn(["Threshold Ratio", "value"]);
+
+      let optionsStr = new datatypes.RobertsOptions();
+      optionsStr.use_math = useMath;
+      optionsStr.threshold_ratio = ThresholdRatio;
+
+      // Call functioon
+      let result = vision.edgePrewitt(imageInfoStr, optionsStr);
+
+      // Create RGBA (Gray)
+      let grayscale = Uint8ClampedArray.from(
+        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      );
+
+      // Create new ImageData
+      let newImageData = new ImageData(grayscale, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }
@@ -709,30 +802,78 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
       return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
       );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // Create sobel option
+      const props = this.getProperties();
+      const edge =
+        props.getIn(["Edge Type", "value"]) === "Sobel"
+          ? constants.EDGE_TYPE.EDGE_SOBEL
+          : props.getIn(["Edge Type", "value"]) === "Prewitt"
+          ? constants.EDGE_TYPE.EDGE_PREWITT
+          : props.getIn(["Edge Type", "value"]) === "Roberts"
+          ? constants.EDGE_TYPE.EDGE_ROBERTS
+          : constants.EDGE_TYPE.EDGE_SOBEL;
+      const useMath = props.getIn(["Use Math Function", "value"]);
+      const thresholdRatioHigh = props.getIn([
+        "Threshold Ratio",
+        "High",
+        "value",
+      ]);
+      const thresholdRatioLow = props.getIn([
+        "Threshold Ratio",
+        "Low",
+        "value",
+      ]);
+
+      let optionsStr = new datatypes.CannyOptions();
+      optionsStr.blur = constants.BLUR_TYPE.BLUR_NONE;
+      optionsStr.edge = edge;
+      optionsStr.use_math = useMath;
+      optionsStr.threshold_high_ratio = thresholdRatioHigh;
+      optionsStr.threshold_low_ratio = thresholdRatioLow;
+
+      // Call functioon
+      let result = vision.edgeCanny(imageInfoStr, optionsStr);
+
+      // Create RGBA (Gray)
+      let grayscale = Uint8ClampedArray.from(
+        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      );
+
+      // Create new ImageData
+      let newImageData = new ImageData(grayscale, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }
@@ -787,18 +928,18 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
         type: PROP_TYPE.NUMBER_EDIT,
         value: 300,
       },
-      Radius: {
+      "Radius": {
         type: PROP_TYPE.GROUP,
         properties: {
-          Min: {
+          "Min": {
             type: PROP_TYPE.NUMBER_EDIT,
             value: 16,
           },
-          Max: {
+          "Max": {
             type: PROP_TYPE.NUMBER_EDIT,
             value: 200,
           },
-          Step: {
+          "Step": {
             type: PROP_TYPE.NUMBER_EDIT,
             value: 2,
           },
@@ -832,30 +973,104 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
       return RESULT_CODE.WAITING_OTHER_INPUTS;
     } else {
       // process 시작
-      console.log(
-        `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
       );
 
-      // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
-      // this.setParentIds([]);
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
 
-      // properties 확인
-      // console.log(`${this.getName()} 의 속성값을 확인합니다.`);
-      // this.printProperty(this.getProperties());
+      // Create sobel option
+      const props = this.getProperties();
+      const target = props.getIn(["Search Target", "value"]);
+      const edge =
+        props.getIn(["Edge Type", "value"]) === "Sobel"
+          ? constants.EDGE_TYPE.EDGE_SOBEL
+          : props.getIn(["Edge Type", "value"]) === "Prewitt"
+          ? constants.EDGE_TYPE.EDGE_PREWITT
+          : props.getIn(["Edge Type", "value"]) === "Roberts"
+          ? constants.EDGE_TYPE.EDGE_ROBERTS
+          : constants.EDGE_TYPE.EDGE_SOBEL;
+      const useMath = props.getIn(["Use Math Function", "value"]);
+      const thresholdRatioHigh = props.getIn([
+        "Threshold Ratio",
+        "High",
+        "value",
+      ]);
+      const thresholdRatioLow = props.getIn([
+        "Threshold Ratio",
+        "Low",
+        "value",
+      ]);
+      const ThresholdCount = props.getIn(["Threshold Ratio", "value"]);
+      const radiusMin = props.getIn(["Radius", "Min", "value"]);
+      const radiusMax = props.getIn(["Radius", "Max", "value"]);
+      const radiusStep = props.getIn(["Radius", "Step", "value"]);
+
+      let optionsStr;
+      let result;
+
+      if (target === "Line") {
+        
+        optionsStr = new datatypes.HoughLineOptions();
+        optionsStr.blur = constants.BLUR_TYPE.BLUR_NONE;
+        optionsStr.edge = edge;
+        optionsStr.use_math = useMath;
+        optionsStr.threshold_high_ratio = thresholdRatioHigh;
+        optionsStr.threshold_low_ratio = thresholdRatioLow;
+        optionsStr.threshold = 25; // property에 없는데.. 우선 상수로 넣어준다.
+
+        result = vision.edgeHoughLine(imageInfoStr, optionsStr);
+
+      } else if (target === "Circle") {
+
+        optionsStr = new datatypes.HoughCircleOptions();
+        optionsStr.blur = constants.BLUR_TYPE.BLUR_NONE;
+        optionsStr.edge = edge;
+        optionsStr.use_math = useMath;
+        optionsStr.threshold_high_ratio = thresholdRatioHigh;
+        optionsStr.threshold_low_ratio = thresholdRatioLow;
+        optionsStr.threshold = 50; // property에 없는데.. 우선 상수로 넣어준다.
+        optionsStr.min_radius = radiusMin;
+        optionsStr.max_radius = radiusMax;
+        optionsStr.radius_stride = radiusStep;
+
+        result = vision.edgeHoughCircle(imageInfoStr, optionsStr);
+      }
+
+      // Create RGBA (Gray)
+      let grayscale = Uint8ClampedArray.from(
+        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      );
+
+      // Create new ImageData
+      let newImageData = new ImageData(grayscale, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }
@@ -926,7 +1141,9 @@ filter[MODULES.GRAYSCALE] = class extends ModuleBase {
     let result = ref.reinterpret(resultBufferPtr, bytes);
 
     // Create RGBA (Gray)
-    let grayscale = Uint8ClampedArray.from(ImageFormatConverter.convertGray1toGray4ClampedArray(result));
+    let grayscale = Uint8ClampedArray.from(
+      ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+    );
 
     // Create new ImageData
     let newImageData = new ImageData(grayscale, mergeInputData.width);
