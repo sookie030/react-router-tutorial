@@ -856,7 +856,17 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
       optionsStr.threshold_low_ratio = thresholdRatioLow;
 
       // Call functioon
-      let result = vision.edgeCanny(imageInfoStr, optionsStr);
+      let resultImageStr = vision.edgeCanny(imageInfoStr, optionsStr);
+      let resultSize =
+        resultImageStr.size.width *
+        resultImageStr.size.height *
+        Uint8Array.BYTES_PER_ELEMENT;
+
+      // get values from Buffer (result)
+      let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+      let result = ref.reinterpret(resultImageStr.data, bytes);
+
+      console.log(result);
 
       // Create RGBA (Gray)
       let grayscale = Uint8ClampedArray.from(
@@ -928,18 +938,18 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
         type: PROP_TYPE.NUMBER_EDIT,
         value: 300,
       },
-      "Radius": {
+      Radius: {
         type: PROP_TYPE.GROUP,
         properties: {
-          "Min": {
+          Min: {
             type: PROP_TYPE.NUMBER_EDIT,
             value: 16,
           },
-          "Max": {
+          Max: {
             type: PROP_TYPE.NUMBER_EDIT,
             value: 200,
           },
-          "Step": {
+          Step: {
             type: PROP_TYPE.NUMBER_EDIT,
             value: 2,
           },
@@ -1028,8 +1038,7 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
       let result;
 
       if (target === "Line") {
-        
-        optionsStr = new datatypes.HoughLineOptions();
+        optionsStr = new datatypes.edgeHoughLineOptions();
         optionsStr.blur = constants.BLUR_TYPE.BLUR_NONE;
         optionsStr.edge = edge;
         optionsStr.use_math = useMath;
@@ -1038,10 +1047,8 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
         optionsStr.threshold = 25; // property에 없는데.. 우선 상수로 넣어준다.
 
         result = vision.edgeHoughLine(imageInfoStr, optionsStr);
-
       } else if (target === "Circle") {
-
-        optionsStr = new datatypes.HoughCircleOptions();
+        optionsStr = new datatypes.edgeHoughCircleOptions();
         optionsStr.blur = constants.BLUR_TYPE.BLUR_NONE;
         optionsStr.edge = edge;
         optionsStr.use_math = useMath;
@@ -1211,6 +1218,10 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
       // process 시작
 
       const props = this.getProperties();
+      const type =
+        props.getIn(["Resize Type", "value"]) === "Average"
+          ? constants.RESIZE_TYPE.RESIZE_AVERAGE
+          : constants.RESIZE_TYPE.RESIZE_HOP;
       const width = Number(
         props.getIn(["Size", "properties", "Width", "value"])
       );
@@ -1221,15 +1232,41 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
       // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
       let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
-      // Resize 적용
-      let resizedImageBitmap = await createImageBitmap(mergeInputData, {
-        resizeWidth: width,
-        resizeHeight: height,
-        resizeQuality: "high",
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
+      );
+
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
       });
 
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
+
+      // Create SizeInfo Struct
+      let targetSizeStr = new datatypes.SizeInfo();
+      targetSizeStr.width = width;
+      targetSizeStr.height = height;
+
+      // Call function
+      let result = vision.resize(imageInfoStr, targetSizeStr);
+
+      let resize = ImageFormatConverter.convertRGBtoRGBA(result);
+
+      // Create new ImageData
+      let newImageData = new ImageData(Uint8ClampedArray.from(resize), width);
+
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, resizedImageBitmap);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
@@ -1240,7 +1277,7 @@ filter[MODULES.RESIZE] = class extends ModuleBase {
   }
 };
 
-// 20.03.17 완료
+// 20.04.20 완료
 filter[MODULES.CROP] = class extends ModuleBase {
   constructor() {
     super();
@@ -1316,16 +1353,16 @@ filter[MODULES.CROP] = class extends ModuleBase {
       let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // ROI 적용
-      let croppedImageBitmap = await createImageBitmap(
-        mergeInputData,
-        x,
-        y,
-        width,
-        height
-      );
+      let image = await createImageBitmap(mergeInputData, x, y, width, height);
+
+      let canvas = new OffscreenCanvas(image.width, image.height);
+      let context = canvas.getContext("2d");
+      context.drawImage(image, 0, 0);
+      let myData = context.getImageData(0, 0, image.width, image.height);
+      console.log(myData);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, croppedImageBitmap);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, myData);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);

@@ -108,6 +108,64 @@ exports.ListInfo = StructType({
 });
 
 /**************************************************
+ * edge.h
+ **************************************************/
+exports.edgeSobelOptions = StructType({
+  threshold_ratio: "uint8",
+  use_math: "bool"
+});
+
+exports.edgePrewittOptions = StructType({
+  use_math: "bool",
+  threshold_ratio: "int8"
+});
+
+exports.edgeRobertsOptions = StructType({
+  use_math: "bool",
+  threshold_ratio: "int8"
+});
+
+exports.edgeCannyOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  threshold_high_ratio: "int8",
+  threshold_low_ratio: "int8"
+});
+
+exports.edgeHoughLineOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  threshold_high_ratio: "int8",
+  threshold_low_ratio: "int8",
+  threshold: "uint16"
+});
+
+/**
+ * @param {uint32} blur
+ * @param {uint32} edge
+ * @param {bool} use_math
+ * @param {int8} threshold_high_ratio
+ * @param {int8} threshold_low_ratio
+ * @param {uint16} threshold
+ * @param {uint16} min_radius
+ * @param {uint16} max_radius
+ * @param {uint16} radius_stride
+ */
+exports.edgeHoughCircleOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  threshold_high_ratio: "int8",
+  threshold_low_ratio: "int8",
+  threshold: "uint16",
+  min_radius: "uint16",
+  max_radius: "uint16",
+  radius_stride: "uint16"
+});
+
+/**************************************************
  * edge/sobel.h
  **************************************************/
 let calculateGradientFuncPtr = ffi.Function("uint16", [

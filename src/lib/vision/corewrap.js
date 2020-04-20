@@ -797,7 +797,7 @@ exports.trackRoi = (
 /**
  * @param {ImageInfo} ImageInfoStr
  * @param {RobertsOptions} RobertsOptionsStr
- * @return {Array<Number>} (output)
+ * @return {ImageInfo} (output) Result ImageInfoStr
  */
 exports.edgeCanny = (imageInfoStr, optionsStr) => {
   // Create pointer
@@ -898,19 +898,19 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
     resultImagePtr
   );
 
-  console.log(resultImagePtr);
+  // console.log(resultImagePtr);
 
-  // Create grayscale buffer
-  let resultSize =
-  resultImageStr.size.width *
-  resultImageStr.size.height *
-    Uint8Array.BYTES_PER_ELEMENT;
+  // // Create grayscale buffer
+  // let resultSize =
+  // resultImageStr.size.width *
+  // resultImageStr.size.height *
+  //   Uint8Array.BYTES_PER_ELEMENT;
 
-  // get values from Buffer (result)
-  let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
-  let result = ref.reinterpret(resultImageStr.data, bytes);
+  // // get values from Buffer (result)
+  // let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  // let result = ref.reinterpret(resultImageStr.data, bytes);
 
-  return result;
+  return resultImagePtr.deref();
 };
 
 /**
@@ -961,104 +961,10 @@ exports.calculateCannyGradient = (
  **********************************************************/
 // edgeCanny와 동일. 
 exports.edgeHoughLine = (imageInfoStr, optionsStr) => {
+  let cannyData = this.edgeCanny(imageInfoStr, optionsStr);
 
-  // Create pointer
-  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+  let resultListPtr = this.createList();
 
-  // blur processing
-  let blurImageStr = imageInfoStr;
-  if (optionsStr.blur !== constants.BLUR_TYPE.BLUR_NONE) {
-    // Create grayscale buffer
-    let blurImageSize =
-      blurImageStr.size.width *
-      blurImageStr.size.height *
-      Uint8Array.BYTES_PER_ELEMENT;
-
-    blurImageStr.data = Buffer.from(new Uint8Array(blurImageSize).buffer);
-
-    switch (optionsStr.blur) {
-      case constants.BLUR_TYPE.BLUR_AVERAGE:
-        this.getAverageBlur(imageInfoPtr, blurImageStr.data);
-        break;
-      case constants.BLUR_TYPE.BLUR_MEDIAN:
-        this.getMedianBlur(imageInfoPtr, blurImageStr.data);
-        break;
-      case constants.BLUR_TYPE.BLUR_BILATERAL:
-        this.getBilateralBlur(imageInfoPtr, blurImageStr.data);
-        break;
-      case constants.BLUR_TYPE.BLUR_GAUSSIAN:
-        // this.getGaussianBlur(imageInfoPtr, blurImageStr.data);
-        break;
-    }
-  }
-
-  // grayscale processing
-  let blurImagePtr = ref.alloc(datatypes.ImageInfo, blurImageStr);
-  let grayscaleImageStr = blurImageStr;
-  if (blurImageStr.color !== constants.COLOR_FORMAT.COLOR_GRAY) {
-    // Create grayscale buffer
-    var grayscaleImageSize =
-      grayscaleImageStr.size.width *
-      grayscaleImageStr.size.height *
-      Uint8Array.BYTES_PER_ELEMENT;
-    grayscaleImageStr.data = Buffer.from(
-      new Uint8Array(grayscaleImageSize).buffer
-    );
-
-    this.getGrayscaleImageRaw(blurImagePtr, grayscaleImageStr.data);
-    grayscaleImageStr.color = constants.COLOR_FORMAT.COLOR_GRAY;
-    grayscaleImageStr.bytes_per_pixel = this.getBytesPerPixel(
-      grayscaleImageStr.color
-    );
-  }
-
-  // edge processing
-  let edgeMagnitudePtr = Buffer.from(
-    new Uint16Array(grayscaleImageSize).buffer
-  );
-  let edgeGradientPtr = Buffer.from(new Uint16Array(grayscaleImageSize).buffer);
-  switch (optionsStr.edge) {
-    case constants.EDGE_TYPE.EDGE_SOBEL:
-      let sobelOptionsStr = new datatypes.SobelOptions();
-      sobelOptionsStr.use_math = optionsStr.use_math;
-      sobelOptionsStr.threshold_ratio = -1;
-      sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
-      break;
-    case constants.EDGE_TYPE.EDGE_PREWITT:
-      let prewittOptionsStr = new datatypes.PrewittOptions();
-      prewittOptionsStr.use_math = optionsStr.use_math;
-      prewittOptionsStr.threshold_ratio = -1;
-      prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
-      break;
-    case constants.EDGE_TYPE.EDGE_ROBERTS:
-      let robertsOptionsStr = new datatypes.RobertsOptions();
-      robertsOptionsStr.use_math = optionsStr.use_math;
-      robertsOptionsStr.threshold_ratio = -1;
-      robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
-      break;
-  }
-
-  let resultImageStr = grayscaleImageStr;
-  if (
-    imageInfoStr.color === constants.COLOR_FORMAT.COLOR_GRAY &&
-    optionsStr.blur === constants.BLUR_TYPE.BLUR_NONE
-  ) {
-    resultImageStr.data = Buffer.from(new Uint8Array(grayscaleImageSize));
-  }
-  let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
-
-  let cannyOptionsStr = new datatypes.CannyOptions();
-  cannyOptionsStr.threshold_high_ratio = optionsStr.threshold_high_ratio;
-  cannyOptionsStr.threshold_low_ratio = optionsStr.threshold_low_ratio;
-  let cannyOptionsPtr = ref.alloc(datatypes.CannyOptions, cannyOptionsStr);
-
-  this.getCannyEdge(
-    resultImageStr.size,
-    edgeMagnitudePtr,
-    edgeGradientPtr,
-    cannyOptionsPtr,
-    resultImagePtr
-  );
 }
 /**
  * Get the line edge in image
@@ -1818,6 +1724,32 @@ exports.setPixelColor = (pixelPositionPtr, format, pixelColorPtr) => {
 /***********************************************************
  *  utils/resize.h
  ***********************************************************/
+/**
+ * Resize image
+ * @param {ImageInfo} imageInfoStr ImageInfoStr of input image
+ * @param {SizeInfo} targetSizeStr resize size
+ * @return {Array<number>} (output) raw data result of resized image
+ */
+exports.resize = (imageInfoStr, targetSizeStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  let resultImageInfoPtr = this.resizeImage(imageInfoPtr, targetSizeStr);
+  let resultImageInfoStr = resultImageInfoPtr.deref();
+
+  // Create result buffer
+  let resultSize =
+    resultImageInfoStr.size.width *
+    resultImageInfoStr.size.height *
+    resultImageInfoStr.bytes_per_pixel *
+    Uint8Array.BYTES_PER_ELEMENT;
+
+  // get values from Buffer (result)
+  let result = ref.reinterpret(resultImageInfoStr.data, resultSize);
+
+  return result;
+}
+
 /**
  * Resize the image
  * @param {ImageInfo*} imageInfoPtr Image info
