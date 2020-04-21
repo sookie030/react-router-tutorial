@@ -68,28 +68,32 @@ feature[MODULES.SUBSAMPLE] = class extends ModuleBase {
 
       // Get properties
       const props = this.getProperties();
-      const gridNumWidth = Number(props.getIn(["Grid Count", "properties", "Horizontal", "value"]));
-      const gridNumHeight = Number(props.getIn(["Grid Count", "properties", "Vertical", "value"]));
+      const gridNumWidth = Number(
+        props.getIn(["Grid Count", "properties", "Horizontal", "value"])
+      );
+      const gridNumHeight = Number(
+        props.getIn(["Grid Count", "properties", "Vertical", "value"])
+      );
 
-    // RGBA -> RGB (Alpha 제외)
-    let noAlpha = Uint8Array.from(
-      ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
-    );
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
+      );
 
-    // Create ImageInfo Struct
-    let data = Buffer.from(Uint8Array.from(noAlpha));
-    let size = new datatypes.SizeInfo({
-      width: mergeInputData.width,
-      height: mergeInputData.height,
-    });
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
 
-    let imageInfoStr = new datatypes.ImageInfo({
-      color: constants.COLOR_FORMAT.COLOR_RGB_888,
-      bytes_per_pixel: 3,
-      coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
-      data: data,
-      size: size,
-    });
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
 
       // Create options
       let optionsStr = new datatypes.FeatureSubsampleOptions();
@@ -308,7 +312,7 @@ feature[MODULES.HOG] = class extends ModuleBase {
       optionsStr.pixel_per_cell.width = pixelPerCellWidth;
       optionsStr.pixel_per_cell.height = pixelPerCellHeight;
       optionsStr.cell_per_block.width = cellPerBlockWidth;
-      optionsStr.cell_per_block.height = cellPerBlockHeight
+      optionsStr.cell_per_block.height = cellPerBlockHeight;
       optionsStr.stride_distance.width = strideDistanceWidth;
       optionsStr.stride_distance.height = strideDistanceHeight;
       optionsStr.use_magnitude = useMagnitude;
@@ -322,6 +326,115 @@ feature[MODULES.HOG] = class extends ModuleBase {
       featureOptionsStr.hog_options = optionsPtr;
 
       vision.featureHog(imageInfoStr, featureOptionsStr);
+
+      return RESULT_CODE.SUCCESS;
+    }
+  }
+};
+
+feature[MODULES.LBP] = class extends ModuleBase {
+  constructor() {
+    super();
+
+    // default properties
+    this.initialize({
+      "Grid Count": {
+        type: PROP_TYPE.GROUP,
+        properties: {
+          Horizontal: {
+            type: PROP_TYPE.NUMBER_EDIT,
+            value: 32,
+          },
+          Vertical: {
+            type: PROP_TYPE.NUMBER_EDIT,
+            value: 32,
+          },
+        },
+      },
+    });
+  }
+
+  /**
+   * 모듈 실행
+   * @param {List<ModuleDataChunk>} inputs
+   */
+  process(inputs) {
+    // 입력받아야되는 input의 개수
+    var mustInputSize = this.getParentIds().length;
+
+    var output;
+    if (mustInputSize !== inputs.length) {
+      console.log(
+        `${this.getName()} input이 모두 들어오지 않아 실행하지 않습니다.`
+      );
+      return RESULT_CODE.WAITING_OTHER_INPUTS;
+    } else {
+      // process 시작
+
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
+
+      // Get properties
+      const props = this.getProperties();
+      const gridNumWidth = Number(
+        props.getIn(["Grid Count", "properties", "Horizontal", "value"])
+      );
+      const gridNumHeight = Number(
+        props.getIn(["Grid Count", "properties", "Vertical", "value"])
+      );
+
+      // RGBA -> RGB (Alpha 제외)
+      let noAlpha = Uint8Array.from(
+        ImageFormatConverter.convertRGBAtoRGB(mergeInputData.data)
+      );
+
+      // Create ImageInfo Struct
+      let data = Buffer.from(Uint8Array.from(noAlpha));
+      let size = new datatypes.SizeInfo({
+        width: mergeInputData.width,
+        height: mergeInputData.height,
+      });
+
+      let imageInfoStr = new datatypes.ImageInfo({
+        color: constants.COLOR_FORMAT.COLOR_RGB_888,
+        bytes_per_pixel: 3,
+        coordinate: constants.COORDINATE_TYPE.COORDINATE_LEFT_TOP,
+        data: data,
+        size: size,
+      });
+
+      // Create options
+      let optionsStr = new datatypes.featureLbpOptions();
+      optionsStr.grid_num.width = gridNumWidth;
+      optionsStr.grid_num.height = gridNumHeight;
+
+      let result = vision.lbp(imageInfoStr, optionsStr);
+
+      let lbp = ImageFormatConverter.convertGray1toGray4(result);
+
+      console.log(imageInfoStr.size.width * imageInfoStr.size.height * 4);
+      console.log(lbp);
+
+      let blockWidth = (imageInfoStr.size.width + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
+      let blockHeight = (imageInfoStr.size.height + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
+
+      console.log(blockWidth, blockHeight);
+      console.log(blockWidth * blockHeight * constants.UNIFORM_LBP_BIN);
+
+      // Create new ImageData
+      let newImageData = new ImageData(
+        Uint8ClampedArray.from(lbp),
+        blockWidth
+      );
+
+      // output 저장공간
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
+
+      output = new ModuleDataChunk();
+      output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }

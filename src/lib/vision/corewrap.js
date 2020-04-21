@@ -1424,6 +1424,47 @@ exports.calculateHogGradient = (
 /**********************************************************
  * feature/lbp.h
  **********************************************************/
+exports.lbp = (imageInfoStr, optionsStr) => {
+
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+  let optionsPtr = ref.alloc(datatypes.featureLbpOptions, optionsStr);
+
+  let resultVectorPtr = new datatypes.VectorInfo().ref();
+  let resultVectorPtrPtr = resultVectorPtr.ref();
+
+  let grayscaleImagePtr = this.resizeToGrayscaleImage(imageInfoPtr, optionsStr.grid_num, constants.RESIZE_TYPE.RESIZE_AVERAGE);
+  this.getUniformLbpFeature(grayscaleImagePtr, resultVectorPtrPtr);
+
+  // console.log(grayscaleImagePtr);
+  // console.log(grayscaleImagePtr.deref());
+  // console.log(resultVectorPtrPtr.deref());
+  console.log(resultVectorPtrPtr.deref().deref());
+  console.log(resultVectorPtrPtr.deref().deref().vector);
+
+  let tmp = Uint8Array.from(resultVectorPtrPtr.deref().deref().vector);
+  
+
+  // Create result buffer
+  let blockSize = new datatypes.SizeInfo();
+  blockSize.width = (imageInfoStr.size.width + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
+  blockSize.height = (imageInfoStr.size.height + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
+  let resultSize = blockSize.width * blockSize.height * constants.UNIFORM_LBP_BIN;
+
+  let result = ref.reinterpret(tmp, resultSize);
+  console.log(result)
+  // let grayscaleImagePtr = this.resizeToGrayscaleImage(imageInfoPtr, optionsStr.grid_num, constants.RESIZE_TYPE.RESIZE_AVERAGE);
+
+  // console.log(grayscaleImagePtr.deref());
+
+  // this.getUniformLbpFeature(grayscaleImagePtr, resultVectorPtr);
+
+  // // get values from Buffer (result)
+  // let result = ref.reinterpret(resultVectorPtr, resultSize);
+
+  // return result;
+}
+
 /**
  * Get the LBP feature vector
  * @param {ImageInfo*} imageInfoPtr Image source
