@@ -108,64 +108,6 @@ exports.ListInfo = StructType({
 });
 
 /**************************************************
- * edge.h
- **************************************************/
-exports.edgeSobelOptions = StructType({
-  threshold_ratio: "uint8",
-  use_math: "bool"
-});
-
-exports.edgePrewittOptions = StructType({
-  use_math: "bool",
-  threshold_ratio: "int8"
-});
-
-exports.edgeRobertsOptions = StructType({
-  use_math: "bool",
-  threshold_ratio: "int8"
-});
-
-exports.edgeCannyOptions = StructType({
-  blur: "uint32",
-  edge: "uint32",
-  use_math: "bool",
-  threshold_high_ratio: "int8",
-  threshold_low_ratio: "int8"
-});
-
-exports.edgeHoughLineOptions = StructType({
-  blur: "uint32",
-  edge: "uint32",
-  use_math: "bool",
-  threshold_high_ratio: "int8",
-  threshold_low_ratio: "int8",
-  threshold: "uint16"
-});
-
-/**
- * @param {uint32} blur
- * @param {uint32} edge
- * @param {bool} use_math
- * @param {int8} threshold_high_ratio
- * @param {int8} threshold_low_ratio
- * @param {uint16} threshold
- * @param {uint16} min_radius
- * @param {uint16} max_radius
- * @param {uint16} radius_stride
- */
-exports.edgeHoughCircleOptions = StructType({
-  blur: "uint32",
-  edge: "uint32",
-  use_math: "bool",
-  threshold_high_ratio: "int8",
-  threshold_low_ratio: "int8",
-  threshold: "uint16",
-  min_radius: "uint16",
-  max_radius: "uint16",
-  radius_stride: "uint16"
-});
-
-/**************************************************
  * edge/sobel.h
  **************************************************/
 let calculateGradientFuncPtr = ffi.Function("uint16", [
@@ -234,6 +176,64 @@ exports.HoughCircleOptions = StructType({
 });
 
 /**************************************************
+ * edge.h
+ **************************************************/
+exports.edgeSobelOptions = StructType({
+  threshold_ratio: "uint8",
+  use_math: "bool"
+});
+
+exports.edgePrewittOptions = StructType({
+  use_math: "bool",
+  threshold_ratio: "int8"
+});
+
+exports.edgeRobertsOptions = StructType({
+  use_math: "bool",
+  threshold_ratio: "int8"
+});
+
+exports.edgeCannyOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  threshold_high_ratio: "int8",
+  threshold_low_ratio: "int8"
+});
+
+exports.edgeHoughLineOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  threshold_high_ratio: "int8",
+  threshold_low_ratio: "int8",
+  threshold: "uint16"
+});
+
+/**
+ * @param {uint32} blur
+ * @param {uint32} edge
+ * @param {bool} use_math
+ * @param {int8} threshold_high_ratio
+ * @param {int8} threshold_low_ratio
+ * @param {uint16} threshold
+ * @param {uint16} min_radius
+ * @param {uint16} max_radius
+ * @param {uint16} radius_stride
+ */
+exports.edgeHoughCircleOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  threshold_high_ratio: "int8",
+  threshold_low_ratio: "int8",
+  threshold: "uint16",
+  min_radius: "uint16",
+  max_radius: "uint16",
+  radius_stride: "uint16"
+});
+
+/**************************************************
  * feature/hog.h
  **************************************************/
 exports.HogOptions = StructType({
@@ -247,6 +247,27 @@ exports.HogOptions = StructType({
   stride_distance: this.SizeInfo,
   // Whether to use magnitude info for calculate histogram index
   use_magnitude: "bool",
+});
+
+
+/**************************************************
+ * feature.h
+ **************************************************/
+exports.FeatureSubsampleOptions = StructType({
+  is_gray: "bool",
+  sub_area: this.RectInfo,
+  grid_num: this.SizeInfo,
+});
+
+exports.featureHogOptions = StructType({
+  blur: "uint32",
+  edge: "uint32",
+  use_math: "bool",
+  hog_options: ref.refType(this.HogOptions)
+});
+
+exports.featureLbpOptions = StructType({
+  grid_num: this.SizeInfo
 });
 
 /**************************************************

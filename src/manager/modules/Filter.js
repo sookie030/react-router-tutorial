@@ -86,15 +86,10 @@ filter[MODULES.ROI] = class extends ModuleBase {
     } else {
       // process 시작
 
-      // // input 출력해보기
-      // if (inputs.length > 0) {
-      //   console.log(inputs);
-      //   console.log(inputs[0]);
-      // }
+      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
+      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
-      // merge data
-      // var mergeInputData = this.mergeInputData(inputs);
-
+      // Get properties
       const props = this.getProperties();
       const x = Number(props.getIn(["Area", "properties", "x", "value"]));
       const y = Number(props.getIn(["Area", "properties", "y", "value"]));
@@ -104,9 +99,6 @@ filter[MODULES.ROI] = class extends ModuleBase {
       const height = Number(
         props.getIn(["Area", "properties", "Height", "value"])
       );
-
-      // merge는 아직 구현 X. 우선 ROI는 첫 번쨰 input만 사용하도록 구현한다.
-      let mergeInputData = inputs[0].getModuleDataList()[0].getData();
 
       // ROI 적용
       let image = await createImageBitmap(mergeInputData, x, y, width, height);
@@ -129,6 +121,7 @@ filter[MODULES.ROI] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료
 filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
   constructor() {
     super();
@@ -210,30 +203,7 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
 
     // output 저장공간
     var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
-
-    // // Create result buffer
-    // let resultSize =
-    //   imageInfoStr.size.width *
-    //   imageInfoStr.size.height *
-    //   imageInfoStr.bytes_per_pixel *
-    //   Uint8Array.BYTES_PER_ELEMENT;
-
-    // let resultBufferPtr = Buffer.from(new Uint8Array(resultSize).buffer);
-
-    // // Call function
-    // vision.getAverageBlur(imageInfoPtr, resultBufferPtr);
-
-    // // get values from Buffer (result)
-    // let result = ref.reinterpret(resultBufferPtr, resultSize);
-
-    // let blur = ImageFormatConverter.convertRGBtoRGBA(result);
-
-    // // Create new ImageData
-    // let newImageData = new ImageData(Uint8ClampedArray.from(blur), mergeInputData.width);
-
-    // // output 저장공간
-    // var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
-
+    
     output = new ModuleDataChunk();
     output.addModuleData(output1);
 
@@ -244,6 +214,7 @@ filter[MODULES.BLUR_AVERAGE] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료
 filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
   constructor() {
     super();
@@ -335,6 +306,7 @@ filter[MODULES.BLUR_MEDIAN] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료
 filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
   constructor() {
     super();
@@ -426,6 +398,7 @@ filter[MODULES.BLUR_BIATERAL] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료
 filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
   constructor() {
     super();
@@ -530,6 +503,7 @@ filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료
 filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
   constructor() {
     super();
@@ -634,6 +608,7 @@ filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료
 filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
   constructor() {
     super();
@@ -738,6 +713,7 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료했으나 오류
 filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
   constructor() {
     super();
@@ -890,6 +866,7 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
   }
 };
 
+// 20.04.20 완료했으나 오류
 filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
   constructor() {
     super();

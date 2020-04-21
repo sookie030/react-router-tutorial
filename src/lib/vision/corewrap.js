@@ -804,12 +804,20 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
   let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
 
   // blur processing
-  let blurImageStr = imageInfoStr;
+  let blurImageStr = new datatypes.ImageInfo({
+    data: imageInfoStr.data,
+    size: imageInfoStr.size,
+    color: imageInfoStr.color,
+    bytes_per_pixel: imageInfoStr.bytes_per_pixel,
+    coordinate: imageInfoStr.coordinate,
+  });
+
   if (optionsStr.blur !== constants.BLUR_TYPE.BLUR_NONE) {
-    // Create grayscale buffer
-    let blurImageSize =
+    // Create blur buffer
+    var blurImageSize =
       blurImageStr.size.width *
       blurImageStr.size.height *
+      blurImageStr.bytes_per_pixel *
       Uint8Array.BYTES_PER_ELEMENT;
 
     blurImageStr.data = Buffer.from(new Uint8Array(blurImageSize).buffer);
@@ -832,7 +840,15 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
 
   // grayscale processing
   let blurImagePtr = ref.alloc(datatypes.ImageInfo, blurImageStr);
-  let grayscaleImageStr = blurImageStr;
+
+  let grayscaleImageStr = new datatypes.ImageInfo({
+    data: blurImageStr.data,
+    size: blurImageStr.size,
+    color: blurImageStr.color,
+    bytes_per_pixel: blurImageStr.bytes_per_pixel,
+    coordinate: blurImageStr.coordinate,
+  });
+
   if (blurImageStr.color !== constants.COLOR_FORMAT.COLOR_GRAY) {
     // Create grayscale buffer
     var grayscaleImageSize =
@@ -876,7 +892,14 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
       break;
   }
 
-  let resultImageStr = grayscaleImageStr;
+  let resultImageStr = new datatypes.ImageInfo({
+    data: grayscaleImageStr.data,
+    size: grayscaleImageStr.size,
+    color: grayscaleImageStr.color,
+    bytes_per_pixel: grayscaleImageStr.bytes_per_pixel,
+    coordinate: grayscaleImageStr.coordinate,
+  });
+
   if (
     imageInfoStr.color === constants.COLOR_FORMAT.COLOR_GRAY &&
     optionsStr.blur === constants.BLUR_TYPE.BLUR_NONE
@@ -897,18 +920,6 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
     cannyOptionsPtr,
     resultImagePtr
   );
-
-  // console.log(resultImagePtr);
-
-  // // Create grayscale buffer
-  // let resultSize =
-  // resultImageStr.size.width *
-  // resultImageStr.size.height *
-  //   Uint8Array.BYTES_PER_ELEMENT;
-
-  // // get values from Buffer (result)
-  // let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
-  // let result = ref.reinterpret(resultImageStr.data, bytes);
 
   return resultImagePtr.deref();
 };
@@ -959,13 +970,12 @@ exports.calculateCannyGradient = (
 /**********************************************************
  * edge/hough.h - typedef 있음
  **********************************************************/
-// edgeCanny와 동일. 
+// edgeCanny와 동일.
 exports.edgeHoughLine = (imageInfoStr, optionsStr) => {
-  let cannyData = this.edgeCanny(imageInfoStr, optionsStr);
+  let cannyResultStr = this.edgeCanny(imageInfoStr, optionsStr);
 
   let resultListPtr = this.createList();
-
-}
+};
 /**
  * Get the line edge in image
  * @param {ImageInfo*} imageInfoPtr Source image info
@@ -1261,6 +1271,113 @@ exports.getEdgeGapFeature = (imageInfoPtr, lineNum, edgeGapFeature) => {
 /**********************************************************
  * feature/hog.h - typedef 있음 / - define 있음
  **********************************************************/
+exports.featureHog = (imageInfoStr, optionsStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // blur processing
+  let blurImageStr = new datatypes.ImageInfo({
+    data: imageInfoStr.data,
+    size: imageInfoStr.size,
+    color: imageInfoStr.color,
+    bytes_per_pixel: imageInfoStr.bytes_per_pixel,
+    coordinate: imageInfoStr.coordinate,
+  });
+
+  if (optionsStr.blur !== constants.BLUR_TYPE.BLUR_NONE) {
+    // Create blur buffer
+    let blurImageSize =
+      blurImageStr.size.width *
+      blurImageStr.size.height *
+      blurImageStr.bytes_per_pixel *
+      Uint8Array.BYTES_PER_ELEMENT;
+
+    blurImageStr.data = Buffer.from(new Uint8Array(blurImageSize).buffer);
+
+    switch (optionsStr.blur) {
+      case constants.BLUR_TYPE.BLUR_AVERAGE:
+        this.getAverageBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_MEDIAN:
+        this.getMedianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_BILATERAL:
+        this.getBilateralBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      case constants.BLUR_TYPE.BLUR_GAUSSIAN:
+        // this.getGaussianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+    }
+  }
+
+  // grayscale processing
+  let blurImagePtr = ref.alloc(datatypes.ImageInfo, blurImageStr);
+
+  let grayscaleImageStr = new datatypes.ImageInfo({
+    data: blurImageStr.data,
+    size: blurImageStr.size,
+    color: blurImageStr.color,
+    bytes_per_pixel: blurImageStr.bytes_per_pixel,
+    coordinate: blurImageStr.coordinate,
+  });
+
+  if (blurImageStr.color !== constants.COLOR_FORMAT.COLOR_GRAY) {
+    // Create grayscale buffer
+    var grayscaleImageSize =
+      grayscaleImageStr.size.width *
+      grayscaleImageStr.size.height *
+      Uint8Array.BYTES_PER_ELEMENT;
+    grayscaleImageStr.data = Buffer.from(
+      new Uint8Array(grayscaleImageSize).buffer
+    );
+
+    this.getGrayscaleImageRaw(blurImagePtr, grayscaleImageStr.data);
+    grayscaleImageStr.color = constants.COLOR_FORMAT.COLOR_GRAY;
+    grayscaleImageStr.bytes_per_pixel = this.getBytesPerPixel(
+      grayscaleImageStr.color
+    );
+  }
+
+  // edge processing
+  let edgeMagnitudePtr = Buffer.from(
+    new Uint16Array(grayscaleImageSize).buffer
+  );
+  let edgeGradientPtr = Buffer.from(new Uint16Array(grayscaleImageSize).buffer);
+  switch (optionsStr.edge) {
+    case constants.EDGE_TYPE.EDGE_SOBEL:
+      let sobelOptionsStr = new datatypes.SobelOptions();
+      sobelOptionsStr.use_math = optionsStr.use_math;
+      sobelOptionsStr.threshold_ratio = -1;
+      sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+    case constants.EDGE_TYPE.EDGE_PREWITT:
+      let prewittOptionsStr = new datatypes.PrewittOptions();
+      prewittOptionsStr.use_math = optionsStr.use_math;
+      prewittOptionsStr.threshold_ratio = -1;
+      prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+    case constants.EDGE_TYPE.EDGE_ROBERTS:
+      let robertsOptionsStr = new datatypes.RobertsOptions();
+      robertsOptionsStr.use_math = optionsStr.use_math;
+      robertsOptionsStr.threshold_ratio = -1;
+      robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      break;
+  }
+
+  // Create pointer
+  let optionsPtr = ref.alloc(datatypes.featureHogOptions, optionsStr);
+
+  // Create result buffer
+  let hogVector = new datatypes.VectorInfo();
+  let hogVectorPtr = ref.alloc(datatypes.VectorInfo, hogVector);
+  let hogVectorPtrPtr = ref.alloc(datatypes.VectorInfo, hogVectorPtr);
+
+  // 아래 함수를 실행시키면 프로그램이 멈춘다 ㅠㅠ
+  // this.getHogFeature(grayscaleImageStr.size, edgeMagnitudePtr, edgeGradientPtr, optionsPtr, hogVectorPtrPtr);
+
+  return null;
+};
+
 /**
  * Get the HOG feature vector
  * @param {SizeInfo} imageSize Image size
@@ -1319,6 +1436,36 @@ exports.getUniformLbpFeature = (imageInfoPtr, uniformLbpFeaturePtrPtr) => {
 /***********************************************************
  * feature/subsample.h - define 있음
  **********************************************************/
+exports.subsample = (imageInfoStr, optionsStr) => {
+
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // Create result buffer
+  let resultVectorPtr = Buffer.from(new Uint8Array(constants.MAX_VECTOR_LENGTH).buffer);
+
+  if (optionsStr.is_gray) {
+    this.getSubsampleFeature2(
+      imageInfoPtr,
+      optionsStr.sub_area,
+      optionsStr.grid_num,
+      resultVectorPtr
+    );
+  } else {
+    this.getSubsampleColorFeature(
+      imageInfoPtr,
+      optionsStr.sub_area,
+      optionsStr.grid_num,
+      resultVectorPtr
+    );
+  }
+
+  // get values from Buffer (result)
+  let result = ref.reinterpret(resultVectorPtr, constants.MAX_VECTOR_LENGTH);
+
+  return result;
+};
+
 /**
  * Get the feature vector using subsampling
  * @param {ImageInfo*} imageInfoPtr Image info
@@ -1748,7 +1895,7 @@ exports.resize = (imageInfoStr, targetSizeStr) => {
   let result = ref.reinterpret(resultImageInfoStr.data, resultSize);
 
   return result;
-}
+};
 
 /**
  * Resize the image
@@ -1885,7 +2032,16 @@ exports.getTargetArea = (imageInfoPtr, criterionArea, targetAreaRatio) => {
  * @return {Vectorinfo*} Vector info
  */
 exports.createVector = (length) => {
-  return visionlib.create_vector(length);
+
+  // return visionlib.create_vector(length);
+
+  let newVectorStr = new datatypes.VectorInfo();
+  newVectorStr.vector = Buffer.from(new Uint8Array(length).buffer);
+  newVectorStr.length = length;
+
+  let newVectorPtr = ref.alloc(datatypes.VectorInfo, newVectorStr);
+
+  return newVectorPtr;
 };
 
 /**
