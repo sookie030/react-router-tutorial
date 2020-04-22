@@ -410,21 +410,15 @@ feature[MODULES.LBP] = class extends ModuleBase {
 
       let result = vision.lbp(imageInfoStr, optionsStr);
 
+      // 이미지 관련 데이터는 아니지만 Preview를 위해서.. 얘를 어떻게 따로 분류해주징
       let lbp = ImageFormatConverter.convertGray1toGray4(result);
 
-      console.log(imageInfoStr.size.width * imageInfoStr.size.height * 4);
-      console.log(lbp);
-
-      let blockWidth = (imageInfoStr.size.width + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
-      let blockHeight = (imageInfoStr.size.height + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
-
-      console.log(blockWidth, blockHeight);
-      console.log(blockWidth * blockHeight * constants.UNIFORM_LBP_BIN);
+      console.log(constants.UNIFORM_LBP_BLOCK_SIZE, lbp);
 
       // Create new ImageData
       let newImageData = new ImageData(
         Uint8ClampedArray.from(lbp),
-        blockWidth
+        constants.UNIFORM_LBP_BLOCK_SIZE
       );
 
       // output 저장공간

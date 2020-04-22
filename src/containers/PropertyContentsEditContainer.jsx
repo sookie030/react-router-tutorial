@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 // import { Grid, Divider, Dropdown, Input } from 'semantic-ui-react';
-import { Map } from 'immutable';
+import { Map } from "immutable";
 
 // import presentational comps
-import PropertyComponent from '../components/settingDialog/Property';
+import PropertyComponent from "../components/settingDialog/Property";
 
 // import constants
-import * as PROP_TYPE from '../constants/PropertyType';
+import * as PROP_TYPE from "../constants/PropertyType";
 import { MODULES } from "../constants/ModuleInfo";
 
 const fs = window.fs;
 const dialog = window.dialog;
 const nativeImage = window.nativeImage;
-const path = require('path');
+const path = require("path");
 
 class PropertyContentsEditContainer extends React.Component {
   state = {
@@ -28,7 +28,7 @@ class PropertyContentsEditContainer extends React.Component {
   inputOpenFileRef = React.createRef();
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('getDerivedStateFromProps');
+    console.log("getDerivedStateFromProps");
     if (prevState.node === null && nextProps.node !== null) {
       return {
         node: nextProps.node,
@@ -55,33 +55,36 @@ class PropertyContentsEditContainer extends React.Component {
 
     switch (true) {
       // 디렉토리 경로 변경 - File List 변경
-      case this.props.node.getName() === MODULES. FILE_LOADER && key === 'Directory':
-        fs.exists(value, isExist => {
+      case this.props.node.getName() === MODULES.FILE_LOADER &&
+        key === "Directory":
+        fs.exists(value, (isExist) => {
           if (isExist) {
             fs.readdir(value, (err, files) => {
               if (err) {
-                newProperties = newProperties.setIn(['File List', 'value'], []);
+                newProperties = newProperties.setIn(["File List", "value"], []);
               } else {
-                let fileObjList = files.map(file => {
+                let fileObjList = [];
+
+                // 우선 이미지 파일만 받아온다.
+                files.forEach((file) => {
                   let ext = file
-                    .substring(file.lastIndexOf('.') + 1, file.length)
+                    .substring(file.lastIndexOf(".") + 1, file.length)
                     .toLowerCase();
-                  console.log(ext);
-                  return {
-                    name: file,
-                    thumbnail:
-                      ext === 'jpg' || ext === 'jpeg' || ext === 'png'
-                        ? nativeImage
-                            .createFromPath(path.join(value, '/', file))
-                            .toDataURL()
-                        : null,
-                    selected: true,
-                  };
+
+                  if (ext === "jpg" || ext === "jpeg" || ext === "png") {
+                    fileObjList.push({
+                      name: file,
+                      thumbnail: nativeImage
+                        .createFromPath(path.join(value, "/", file))
+                        .toDataURL(),
+                      selected: true,
+                    });
+                  }
                 });
 
                 newProperties = newProperties
-                  .setIn(['File List', 'value'], fileObjList)
-                  .setIn(['Directory', 'value'], value);
+                  .setIn(["File List", "value"], fileObjList)
+                  .setIn(["Directory", "value"], value);
               }
 
               // property값 변경
@@ -91,8 +94,8 @@ class PropertyContentsEditContainer extends React.Component {
             });
           } else {
             newProperties = newProperties
-              .setIn(['File List', 'value'], [])
-              .setIn(['Directory', 'value'], value);
+              .setIn(["File List", "value"], [])
+              .setIn(["Directory", "value"], value);
 
             // property값 변경
             this.setState({
@@ -103,10 +106,11 @@ class PropertyContentsEditContainer extends React.Component {
         break;
 
       // File Click - 선택/선택 해제
-      case this.props.node.getName() === MODULES. FILE_LOADER && key === 'File List':
+      case this.props.node.getName() === MODULES.FILE_LOADER &&
+        key === "File List":
         newProperties = newProperties
           // .setIn(['Option', 'value'], option)
-          .setIn(['File List', 'value'], value);
+          .setIn(["File List", "value"], value);
 
         // property값 변경
         this.setState({
@@ -115,11 +119,11 @@ class PropertyContentsEditContainer extends React.Component {
         break;
 
       // Option 변경 - All로 변경하면 모든 파일 selected === true
-      case this.props.node.getName() === MODULES. FILE_LOADER &&
-        key === 'Option' &&
-        value === 'All':
-        console.log('hello, option all');
-        newProperties = newProperties.setIn(['Option', 'value'], value);
+      case this.props.node.getName() === MODULES.FILE_LOADER &&
+        key === "Option" &&
+        value === "All":
+        console.log("hello, option all");
+        newProperties = newProperties.setIn(["Option", "value"], value);
 
         this.setState(
           {
@@ -128,24 +132,24 @@ class PropertyContentsEditContainer extends React.Component {
           () => {
             let fileList =
               group === undefined
-                ? newProperties.getIn(['File List', 'value'])
-                : newProperties.getIn([group, 'File List', 'value']);
+                ? newProperties.getIn(["File List", "value"])
+                : newProperties.getIn([group, "File List", "value"]);
 
-            fileList = fileList.forEach(file => {
+            fileList = fileList.forEach((file) => {
               file.selected = true;
             });
 
             this.setProperties(group, key, fileList);
-          },
+          }
         );
 
         break;
 
-      case this.props.node.getName() === MODULES. FILE_LOADER &&
-        key === 'Option' &&
-        value === 'Selected Only':
-        console.log('hello, option Selected Only');
-        newProperties = newProperties.setIn(['Option', 'value'], value);
+      case this.props.node.getName() === MODULES.FILE_LOADER &&
+        key === "Option" &&
+        value === "Selected Only":
+        console.log("hello, option Selected Only");
+        newProperties = newProperties.setIn(["Option", "value"], value);
 
         console.log(newProperties);
 
@@ -159,8 +163,8 @@ class PropertyContentsEditContainer extends React.Component {
       default:
         if (group !== null && group !== undefined) {
           newProperties = newProperties.setIn(
-            [group, 'properties', key, 'value'],
-            value,
+            [group, "properties", key, "value"],
+            value
           );
 
           // property값 변경
@@ -168,7 +172,7 @@ class PropertyContentsEditContainer extends React.Component {
             properties: newProperties,
           });
         } else {
-          newProperties = newProperties.setIn([key, 'value'], value);
+          newProperties = newProperties.setIn([key, "value"], value);
 
           // property값 변경
           this.setState({
@@ -200,9 +204,9 @@ class PropertyContentsEditContainer extends React.Component {
 
   handleOpenDirectoryDialog = (group, key, e) => {
     var userAgent = navigator.userAgent.toLowerCase();
-    if (userAgent.indexOf(' electron/') > -1) {
-      console.log('running on electron!');
-      dialog.showOpenDialog({ properties: ['openDirectory'] }, result => {
+    if (userAgent.indexOf(" electron/") > -1) {
+      console.log("running on electron!");
+      dialog.showOpenDialog({ properties: ["openDirectory"] }, (result) => {
         console.log(result);
         // 선택한 디렉토리 경로
         let path = result[0];
@@ -211,7 +215,7 @@ class PropertyContentsEditContainer extends React.Component {
         this.setProperties(group, key, path);
       });
     } else {
-      console.log('no electron environment');
+      console.log("no electron environment");
       this.inputOpenFileRef.click();
     }
   };
@@ -222,30 +226,30 @@ class PropertyContentsEditContainer extends React.Component {
   handleOnClickFile = (group, key, file, e) => {
     let option =
       group === undefined
-        ? this.state.properties.getIn(['Option', 'value'])
-        : this.state.properties.getIn([group, 'Option', 'value']);
+        ? this.state.properties.getIn(["Option", "value"])
+        : this.state.properties.getIn([group, "Option", "value"]);
 
     let fileList =
       group === undefined
-        ? this.state.properties.getIn([key, 'value'])
-        : this.state.properties.getIn([group, key, 'value']);
+        ? this.state.properties.getIn([key, "value"])
+        : this.state.properties.getIn([group, key, "value"]);
 
-    let index = fileList.findIndex(f => f === file);
+    let index = fileList.findIndex((f) => f === file);
     fileList[index].selected = !fileList[index].selected;
 
     let selectedFileCount = 0;
     fileList.forEach(
-      f =>
+      (f) =>
         (selectedFileCount =
-          f.selected === true ? selectedFileCount + 1 : selectedFileCount),
+          f.selected === true ? selectedFileCount + 1 : selectedFileCount)
     );
 
     if (fileList.length === selectedFileCount) {
-      console.log('all!');
-      this.setProperties(group, 'Option', 'All');
+      console.log("all!");
+      this.setProperties(group, "Option", "All");
     } else {
-      console.log('all -> selected');
-      this.setProperties(group, 'Option', 'Selected Only');
+      console.log("all -> selected");
+      this.setProperties(group, "Option", "Selected Only");
       // this.setProperties(group, key, fileList);
     }
   };
@@ -263,20 +267,20 @@ class PropertyContentsEditContainer extends React.Component {
 
     properties.entrySeq().forEach(([key, value]) => {
       console.log(key, value);
-      switch (value.get('type')) {
+      switch (value.get("type")) {
         case PROP_TYPE.GROUP:
           // Group Title
           propertyList.push(
             <React.Fragment key={`group-${key}`}>
               <div className="navigator-header">{key}</div>
-            </React.Fragment>,
+            </React.Fragment>
           );
 
           // 하위 Property 탐색
           this.getPropertyComponents(
-            value.get('properties'),
+            value.get("properties"),
             propertyList,
-            key,
+            key
           );
 
           // 구분선 추가
@@ -292,7 +296,7 @@ class PropertyContentsEditContainer extends React.Component {
         case PROP_TYPE.DROPDOWN:
           // option값 가져오기
           try {
-            let options = value.get('options').map(option => {
+            let options = value.get("options").map((option) => {
               return (
                 <option key={option.key} value={option.value}>
                   {option.value}
@@ -321,8 +325,8 @@ class PropertyContentsEditContainer extends React.Component {
                       >
                         <select
                           className="one"
-                          value={value.get('value')}
-                          onChange={e => this.handleOnChange(group, key, e)}
+                          value={value.get("value")}
+                          onChange={(e) => this.handleOnChange(group, key, e)}
                         >
                           {options}
                         </select>
@@ -330,11 +334,11 @@ class PropertyContentsEditContainer extends React.Component {
                     </div>
                   </div>
                 </div>
-              </React.Fragment>,
+              </React.Fragment>
             );
           } catch (e) {
             console.log(
-              'https 혹은 localhost가 아닌 경우, Media 옵션 변경 불가능.',
+              "https 혹은 localhost가 아닌 경우, Media 옵션 변경 불가능."
             );
           }
           break;
@@ -366,15 +370,15 @@ class PropertyContentsEditContainer extends React.Component {
                       <input
                         className="one"
                         type="text"
-                        value={value.get('value')}
+                        value={value.get("value")}
                         title={key}
-                        onChange={e => this.handleOnChange(group, key, e)}
+                        onChange={(e) => this.handleOnChange(group, key, e)}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-            </React.Fragment>,
+            </React.Fragment>
           );
           break;
         case PROP_TYPE.NUMBER_EDIT:
@@ -391,7 +395,7 @@ class PropertyContentsEditContainer extends React.Component {
           //   />
           // );
           if (this.state.error.id === id) {
-            console.log('error hi');
+            console.log("error hi");
             this.setState({
               error: {
                 id: null,
@@ -439,21 +443,21 @@ class PropertyContentsEditContainer extends React.Component {
                       <input
                         className="one"
                         type="text"
-                        value={value.get('value')}
+                        value={value.get("value")}
                         title={key}
-                        onChange={e => this.handleOnChange(group, key, e)}
+                        onChange={(e) => this.handleOnChange(group, key, e)}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-            </React.Fragment>,
+            </React.Fragment>
           );
           break;
 
         case PROP_TYPE.SELECT_DIRECTORY:
           // File Loader, File Saver에만 적용
-          let directoryPath = value.get('value');
+          let directoryPath = value.get("value");
 
           propertyList.push(
             <React.Fragment
@@ -469,22 +473,22 @@ class PropertyContentsEditContainer extends React.Component {
                       <input
                         className="input-directory"
                         type="text"
-                        value={value.get('value')}
-                        onChange={e => this.handleOnChange(group, key, e)}
+                        value={value.get("value")}
+                        onChange={(e) => this.handleOnChange(group, key, e)}
                       />
 
                       <input
                         type="file"
                         webkitdirectory=""
-                        ref={r => (this.inputOpenFileRef = r)}
-                        style={{ display: 'none' }}
-                        onChange={e => this.handleOnChangeFile(group, key, e)}
+                        ref={(r) => (this.inputOpenFileRef = r)}
+                        style={{ display: "none" }}
+                        onChange={(e) => this.handleOnChangeFile(group, key, e)}
                       />
 
                       <button
                         className="button-directory"
                         type="button"
-                        onClick={e =>
+                        onClick={(e) =>
                           this.handleOpenDirectoryDialog(group, key, e)
                         }
                       >
@@ -494,12 +498,12 @@ class PropertyContentsEditContainer extends React.Component {
                   </div>
                 </div>
               </div>
-            </React.Fragment>,
+            </React.Fragment>
           );
           break;
 
         case PROP_TYPE.LIST:
-          let list = value.get('value');
+          let list = value.get("value");
 
           propertyList.push(
             <React.Fragment key="prop-files">
@@ -515,15 +519,15 @@ class PropertyContentsEditContainer extends React.Component {
                 <div className="navigator-item-value-list">
                   <div className="navigator-item-value">
                     <div className="navigator-item-value-line">
-                      <ul style={{ listStyleType: 'none' }}>
+                      <ul style={{ listStyleType: "none" }}>
                         {list.map((file, index) => {
                           return (
                             <li
                               key={index}
                               className={`navigator-file-list${
-                                file.selected ? ' selected' : ''
+                                file.selected ? " selected" : ""
                               }`}
-                              onClick={e =>
+                              onClick={(e) =>
                                 this.handleOnClickFile(group, key, file, e)
                               }
                             >
@@ -543,7 +547,7 @@ class PropertyContentsEditContainer extends React.Component {
                   </div>
                 </div>
               </div>
-            </React.Fragment>,
+            </React.Fragment>
           );
           break;
 

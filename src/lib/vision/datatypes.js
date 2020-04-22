@@ -54,7 +54,8 @@ exports.RectInfo = StructType({
  * @param {number} length
  */
 exports.VectorInfo = StructType({
-  vector: "uint8",
+  // vector: "uint8",
+  vector: ref.refType("uint8"),
   length: "uint32",
 });
 
@@ -64,7 +65,7 @@ exports.VectorInfo = StructType({
  * @param {number} length
  */
 exports.Vector32Info = StructType({
-  vector: "uint32",
+  vector: ref.refType("uint32"),
   length: "uint32",
 });
 
@@ -77,11 +78,11 @@ exports.Vector32Info = StructType({
  * @param {uint32} coordinate
  */
 exports.ImageInfo = StructType({
-  data: ref.refType('uint8'),
+  data: ref.refType("uint8"),
   size: this.SizeInfo,
-  color: 'uint32',
-  bytes_per_pixel: 'uint8',
-  coordinate: 'uint32',
+  color: "uint32",
+  bytes_per_pixel: "uint8",
+  coordinate: "uint32",
 });
 
 /**************************************************
@@ -282,10 +283,10 @@ exports.functionClassifyFuncPtr = ffi.Function("bool", [
  * detect/haar.h
  **************************************************/
 exports.HaarOptions = StructType({
-  // Minimum size of result's area
+  // Minimum size of result"s area
   min_size: this.SizeInfo,
 
-  // Maximum size of result's area
+  // Maximum size of result"s area
   max_size: this.SizeInfo,
 
   // Increase rate of window size (%)

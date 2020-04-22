@@ -1425,45 +1425,51 @@ exports.calculateHogGradient = (
  * feature/lbp.h
  **********************************************************/
 exports.lbp = (imageInfoStr, optionsStr) => {
-
-  // Create pointer
+  // create pointer
   let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
-  let optionsPtr = ref.alloc(datatypes.featureLbpOptions, optionsStr);
 
   let resultVectorPtr = new datatypes.VectorInfo().ref();
   let resultVectorPtrPtr = resultVectorPtr.ref();
 
-  let grayscaleImagePtr = this.resizeToGrayscaleImage(imageInfoPtr, optionsStr.grid_num, constants.RESIZE_TYPE.RESIZE_AVERAGE);
+  let grayscaleImagePtr = this.resizeToGrayscaleImage(
+    imageInfoPtr,
+    optionsStr.grid_num,
+    constants.RESIZE_TYPE.RESIZE_AVERAGE
+  );
+
+  // call function
   this.getUniformLbpFeature(grayscaleImagePtr, resultVectorPtrPtr);
 
-  // console.log(grayscaleImagePtr);
-  // console.log(grayscaleImagePtr.deref());
-  // console.log(resultVectorPtrPtr.deref());
-  console.log(resultVectorPtrPtr.deref().deref());
-  console.log(resultVectorPtrPtr.deref().deref().vector);
+  // get result vector
+  let resultVector = resultVectorPtrPtr.deref().deref().vector;
 
-  let tmp = Uint8Array.from(resultVectorPtrPtr.deref().deref().vector);
-  
-
-  // Create result buffer
   let blockSize = new datatypes.SizeInfo();
-  blockSize.width = (imageInfoStr.size.width + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
-  blockSize.height = (imageInfoStr.size.height + constants.UNIFORM_LBP_BLOCK_SIZE - 1) / constants.UNIFORM_LBP_BLOCK_SIZE;
-  let resultSize = blockSize.width * blockSize.height * constants.UNIFORM_LBP_BIN;
+  blockSize.width =
+    (grayscaleImagePtr.deref().size.width +
+      constants.UNIFORM_LBP_BLOCK_SIZE -
+      1) /
+    constants.UNIFORM_LBP_BLOCK_SIZE;
+  blockSize.height =
+    (grayscaleImagePtr.deref().size.height +
+      constants.UNIFORM_LBP_BLOCK_SIZE -
+      1) /
+    constants.UNIFORM_LBP_BLOCK_SIZE;
+  let resultSize =
+    blockSize.width * blockSize.height * constants.UNIFORM_LBP_BIN;
 
-  let result = ref.reinterpret(tmp, resultSize);
-  console.log(result)
-  // let grayscaleImagePtr = this.resizeToGrayscaleImage(imageInfoPtr, optionsStr.grid_num, constants.RESIZE_TYPE.RESIZE_AVERAGE);
+  let result = ref.reinterpret(resultVector, resultSize);
 
-  // console.log(grayscaleImagePtr.deref());
-
-  // this.getUniformLbpFeature(grayscaleImagePtr, resultVectorPtr);
-
-  // // get values from Buffer (result)
-  // let result = ref.reinterpret(resultVectorPtr, resultSize);
-
-  // return result;
-}
+  // 결과값이 256보다 작다면, 빈 공간을 0으로 채워준다.
+  if (resultSize < 256) {
+    let result256 = new Uint8Array(256);
+    let dummyZeroArray = new Uint8Array(256 - resultSize);
+    result256.set(result);
+    result256.set(dummyZeroArray, result.length);
+    return result256;
+  } else {
+    return result;
+  }
+};
 
 /**
  * Get the LBP feature vector
@@ -1478,12 +1484,13 @@ exports.getUniformLbpFeature = (imageInfoPtr, uniformLbpFeaturePtrPtr) => {
  * feature/subsample.h - define 있음
  **********************************************************/
 exports.subsample = (imageInfoStr, optionsStr) => {
-
   // Create pointer
   let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
 
   // Create result buffer
-  let resultVectorPtr = Buffer.from(new Uint8Array(constants.MAX_VECTOR_LENGTH).buffer);
+  let resultVectorPtr = Buffer.from(
+    new Uint8Array(constants.MAX_VECTOR_LENGTH).buffer
+  );
 
   if (optionsStr.is_gray) {
     this.getSubsampleFeature2(
@@ -2073,7 +2080,6 @@ exports.getTargetArea = (imageInfoPtr, criterionArea, targetAreaRatio) => {
  * @return {Vectorinfo*} Vector info
  */
 exports.createVector = (length) => {
-
   // return visionlib.create_vector(length);
 
   let newVectorStr = new datatypes.VectorInfo();
