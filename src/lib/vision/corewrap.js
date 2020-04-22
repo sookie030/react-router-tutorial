@@ -972,9 +972,21 @@ exports.calculateCannyGradient = (
  **********************************************************/
 // edgeCanny와 동일.
 exports.edgeHoughLine = (imageInfoStr, optionsStr) => {
-  let cannyResultStr = this.edgeCanny(imageInfoStr, optionsStr);
+  let resultImageStr = this.edgeCanny(imageInfoStr, optionsStr);
+  let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
 
   let resultListPtr = this.createList();
+
+  // hog processing
+  let houghLineOptions = new datatypes.HoughLineOptions();
+  houghLineOptions.threshold = optionsStr.threshold;
+  let houghLineOptionsPtr = ref.alloc(datatypes.HoughLineOptions, houghLineOptions);
+
+  this.getHoughEdgeLine(resultImagePtr, houghLineOptionsPtr, resultListPtr);
+  this.drawHoughLineResult(resultListPtr, resultImagePtr);
+
+  console.log(resultImagePtr.deref());
+  console.log(resultListPtr.deref());
 };
 /**
  * Get the line edge in image

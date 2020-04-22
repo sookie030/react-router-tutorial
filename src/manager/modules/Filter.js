@@ -472,7 +472,7 @@ filter[MODULES.EDGE_SOBEL] = class extends ModuleBase {
       // Create sobel option
       const props = this.getProperties();
       const useMath = props.getIn(["Use Math Function", "value"]);
-      const ThresholdRatio = props.getIn(["Threshold Ratio", "value"]);
+      const ThresholdRatio = Number(props.getIn(["Threshold Ratio", "value"]));
 
       let optionsStr = new datatypes.SobelOptions();
       optionsStr.use_math = useMath;
@@ -577,7 +577,7 @@ filter[MODULES.EDGE_PREWITT] = class extends ModuleBase {
       // Create sobel option
       const props = this.getProperties();
       const useMath = props.getIn(["Use Math Function", "value"]);
-      const ThresholdRatio = props.getIn(["Threshold Ratio", "value"]);
+      const ThresholdRatio = Number(props.getIn(["Threshold Ratio", "value"]));
 
       let optionsStr = new datatypes.PrewittOptions();
       optionsStr.use_math = useMath;
@@ -682,8 +682,8 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
       // Create sobel option
       const props = this.getProperties();
       const useMath = props.getIn(["Use Math Function", "value"]);
-      const ThresholdRatio = props.getIn(["Threshold Ratio", "value"]);
-
+      const ThresholdRatio = Number(props.getIn(["Threshold Ratio", "value"]));
+console.log(ThresholdRatio)
       let optionsStr = new datatypes.RobertsOptions();
       optionsStr.use_math = useMath;
       optionsStr.threshold_ratio = ThresholdRatio;
@@ -813,16 +813,16 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
           ? constants.EDGE_TYPE.EDGE_ROBERTS
           : constants.EDGE_TYPE.EDGE_SOBEL;
       const useMath = props.getIn(["Use Math Function", "value"]);
-      const thresholdRatioHigh = props.getIn([
+      const thresholdRatioHigh = Number(props.getIn([
         "Threshold Ratio",
         "High",
         "value",
-      ]);
-      const thresholdRatioLow = props.getIn([
+      ]));
+      const thresholdRatioLow = Number(props.getIn([
         "Threshold Ratio",
         "Low",
         "value",
-      ]);
+      ]));
 
       let optionsStr = new datatypes.CannyOptions();
       optionsStr.blur = constants.BLUR_TYPE.BLUR_NONE;
@@ -848,6 +848,7 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
       let grayscale = Uint8ClampedArray.from(
         ImageFormatConverter.convertGray1toGray4ClampedArray(result)
       );
+      console.log(grayscale);
 
       // Create new ImageData
       let newImageData = new ImageData(grayscale, mergeInputData.width);
@@ -996,20 +997,20 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
           ? constants.EDGE_TYPE.EDGE_ROBERTS
           : constants.EDGE_TYPE.EDGE_SOBEL;
       const useMath = props.getIn(["Use Math Function", "value"]);
-      const thresholdRatioHigh = props.getIn([
+      const thresholdRatioHigh = Number(props.getIn([
         "Threshold Ratio",
         "High",
         "value",
-      ]);
-      const thresholdRatioLow = props.getIn([
+      ]));
+      const thresholdRatioLow = Number(props.getIn([
         "Threshold Ratio",
         "Low",
         "value",
-      ]);
-      const ThresholdCount = props.getIn(["Threshold Ratio", "value"]);
-      const radiusMin = props.getIn(["Radius", "Min", "value"]);
-      const radiusMax = props.getIn(["Radius", "Max", "value"]);
-      const radiusStep = props.getIn(["Radius", "Step", "value"]);
+      ]));
+      const ThresholdCount = Number(props.getIn(["Threshold Ratio", "value"]));
+      const radiusMin = Number(props.getIn(["Radius", "Min", "value"]));
+      const radiusMax = Number(props.getIn(["Radius", "Max", "value"]));
+      const radiusStep = Number(props.getIn(["Radius", "Step", "value"]));
 
       let optionsStr;
       let result;
@@ -1039,16 +1040,16 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
         result = vision.edgeHoughCircle(imageInfoStr, optionsStr);
       }
 
-      // Create RGBA (Gray)
-      let grayscale = Uint8ClampedArray.from(
-        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
-      );
+      // // Create RGBA (Gray)
+      // let grayscale = Uint8ClampedArray.from(
+      //   ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      // );
 
-      // Create new ImageData
-      let newImageData = new ImageData(grayscale, mergeInputData.width);
+      // // Create new ImageData
+      // let newImageData = new ImageData(grayscale, mergeInputData.width);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, [0, 0, 0, 0]);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);

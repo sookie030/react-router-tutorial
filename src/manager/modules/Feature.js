@@ -332,6 +332,7 @@ feature[MODULES.HOG] = class extends ModuleBase {
   }
 };
 
+// 20.04.22 완료
 feature[MODULES.LBP] = class extends ModuleBase {
   constructor() {
     super();

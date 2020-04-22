@@ -50,19 +50,18 @@ exports.RectInfo = StructType({
 
 /**
  * Vector info
- * @param {number} vector
- * @param {number} length
+ * @param {buffer(Uint8Array)} vector
+ * @param {uint32} length
  */
 exports.VectorInfo = StructType({
-  // vector: "uint8",
   vector: ref.refType("uint8"),
   length: "uint32",
 });
 
 /**
  * 32bit Vector info
- * @param {number} vector
- * @param {number} length
+ * @param {buffer(Uint32Array)} vector
+ * @param {uint32} length
  */
 exports.Vector32Info = StructType({
   vector: ref.refType("uint32"),

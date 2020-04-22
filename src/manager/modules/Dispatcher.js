@@ -14,6 +14,7 @@ const fs = window.fs;
 
 var dispatcher = {};
 
+// 20.03.. 언젠가 완료
 dispatcher[MODULES.FILE_SAVER] = class extends ModuleBase {
   constructor() {
     super();
