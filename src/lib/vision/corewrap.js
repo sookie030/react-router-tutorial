@@ -732,10 +732,98 @@ exports.detectRoi = (
  * detect/haar.h - typedef 있음
  **********************************************************/
 /**
+ * @param {ImageInfo} ImageInfoStr
+ * @param {HaarOptions} HaarOptionsStr
+ * @return {ImageInfo} (output) Result ImageInfoStr
+ */
+exports.detectFace = (imageInfoStr, optionsStr) => {
+  // Create pointer
+  let imageInfoPtr = ref.alloc(datatypes.ImageInfo, imageInfoStr);
+
+  // filter type === FACE
+  optionsStr.window_size.width = constants.FRONTAL_FACE_WINDOW_WIDTH;
+  optionsStr.window_size.width = constants.FRONTAL_FACE_WINDOW_HEIGHT;
+  optionsStr.stage_count = constants.FRONTAL_FACE_STAGE_COUNT;
+  optionsStr.tree_counts = Buffer.from(
+    Uint16Array.from(constants.FRONTAL_FACE_STAGES)
+  );
+  optionsStr.stage_threshold = Buffer.from(
+    Uint16Array.from(constants.FRONTAL_FACE_STAGE_THRESHOLDS)
+  );
+  optionsStr.tree_threshold = Buffer.from(
+    Uint16Array.from(constants.FRONTAL_FACE_TREE_THRESHOLDS)
+  );
+  optionsStr.tree_left_value = Buffer.from(
+    Uint16Array.from(constants.FRONTAL_FACE_TREE_ALPHA1)
+  );
+  optionsStr.tree_right_value = Buffer.from(
+    Uint16Array.from(constants.FRONTAL_FACE_TREE_ALPHA2)
+  );
+  optionsStr.tree_rect_count = Buffer.from(
+    Uint8Array.from(constants.FRONTAL_FACE_TREE_RECTANGLES)
+  );
+  optionsStr.tree_rects = Buffer.from(
+    Uint8Array.from(constants.FRONTAL_FACE_TREE_RECTANGLE_ARRAY)
+  );
+  optionsStr.tree_rect_weights = Buffer.from(
+    Uint8Array.from(constants.FRONTAL_FACE_TREE_RECTANGLE_WEIGHTS)
+  );
+
+  let optionsPtr = ref.alloc(datatypes.HaarOptions, optionsStr);
+
+  console.log(Uint16Array.from(constants.FRONTAL_FACE_STAGES))
+  console.log(optionsStr.tree_counts)
+
+  // create roi
+  let pointInfo = new datatypes.PointInfo({
+    x: 0,
+    y: 0,
+  });
+  let roiStr = new datatypes.RectInfo({
+    point: pointInfo,
+    size: imageInfoStr.size,
+  });
+
+  // 얼굴 영역 리스트
+  let resultRectListPtr = this.createList();
+
+  // TODO: 얼굴 찾기 시~작! (얘만 시작하면 프로그램이 멈춘다.)
+  // this.getHaarCascadeDetect(imageInfoPtr, roiStr, optionsPtr, resultRectListPtr);
+
+  // color image to grayscale
+  let resultSize =
+    imageInfoStr.size.width *
+    imageInfoStr.size.height *
+    Uint8Array.BYTES_PER_ELEMENT;
+
+  let resultImageStr = new datatypes.ImageInfo({
+    data: Buffer.from(new Uint8Array(resultSize).buffer),
+    size: imageInfoStr.size,
+    color: constants.COLOR_FORMAT.COLOR_GRAY,
+    bytes_per_pixel: imageInfoStr.bytes_per_pixel,
+    coordinate: imageInfoStr.coordinate,
+  });
+
+  // Haar 결과를 graycale로 변환
+  this.getGrayscaleImageRaw(imageInfoPtr, resultImageStr.data);
+
+  // grayscale 이미지 위에 detect 영역 그리기
+  let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
+  this.drawHaarResult(resultImagePtr, resultRectListPtr);
+
+  // 영역이 그려진 이미지 반환
+  let resultImageDeref = resultImagePtr.deref();
+  console.log(resultImageDeref);
+  let result = ref.reinterpret(resultImageDeref.data, resultSize);
+
+  return result;
+};
+
+/**
  * Get the area of HAAR cascade processing
  * @param {ImageInfo*} imageInfoPtr Source image info
  * @param {RectInfo} subArea ROI area to detect
- * @param {haarOptionsPtr} optionsPtr Options for HAAR detection
+ * @param {haarOptions*} optionsPtr Options for HAAR detection
  * @param {ListInfo*} resultRectListPtr (output) Result areas info
  */
 exports.getHaarCascadeDetect = (
@@ -882,23 +970,44 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
       sobelOptionsStr.threshold_ratio = -1;
       sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
       let sobelOptionsPtr = ref.alloc(datatypes.SobelOptions, sobelOptionsStr);
-      this.getSobelEdgeWithGradient(grayscaleImagePtr, sobelOptionsPtr, edgeMagnitudePtr, edgeGradientPtr);
+      this.getSobelEdgeWithGradient(
+        grayscaleImagePtr,
+        sobelOptionsPtr,
+        edgeMagnitudePtr,
+        edgeGradientPtr
+      );
       break;
     case constants.EDGE_TYPE.EDGE_PREWITT:
       let prewittOptionsStr = new datatypes.PrewittOptions();
       prewittOptionsStr.use_math = optionsStr.use_math;
       prewittOptionsStr.threshold_ratio = -1;
       prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
-      let prewittOptionsPtr = ref.alloc(datatypes.PrewittOptions, prewittOptionsStr);
-      this.getPrewittEdgeWithGradient(grayscaleImagePtr, prewittOptionsPtr, edgeMagnitudePtr, edgeGradientPtr);
+      let prewittOptionsPtr = ref.alloc(
+        datatypes.PrewittOptions,
+        prewittOptionsStr
+      );
+      this.getPrewittEdgeWithGradient(
+        grayscaleImagePtr,
+        prewittOptionsPtr,
+        edgeMagnitudePtr,
+        edgeGradientPtr
+      );
       break;
     case constants.EDGE_TYPE.EDGE_ROBERTS:
       let robertsOptionsStr = new datatypes.RobertsOptions();
       robertsOptionsStr.use_math = optionsStr.use_math;
       robertsOptionsStr.threshold_ratio = -1;
       robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
-      let robertsOptionsPtr = ref.alloc(datatypes.RobertsOptions, robertsOptionsStr);
-      this.getRobertsEdgeWithGradient(grayscaleImagePtr, robertsOptionsPtr, edgeMagnitudePtr, edgeGradientPtr);
+      let robertsOptionsPtr = ref.alloc(
+        datatypes.RobertsOptions,
+        robertsOptionsStr
+      );
+      this.getRobertsEdgeWithGradient(
+        grayscaleImagePtr,
+        robertsOptionsPtr,
+        edgeMagnitudePtr,
+        edgeGradientPtr
+      );
       break;
   }
 
@@ -984,7 +1093,10 @@ exports.edgeHoughLine = (imageInfoStr, optionsStr) => {
   // hog processing
   let houghLineOptions = new datatypes.HoughLineOptions();
   houghLineOptions.threshold = optionsStr.threshold;
-  let houghLineOptionsPtr = ref.alloc(datatypes.HoughLineOptions, houghLineOptions);
+  let houghLineOptionsPtr = ref.alloc(
+    datatypes.HoughLineOptions,
+    houghLineOptions
+  );
 
   this.getHoughEdgeLine(resultImagePtr, houghLineOptionsPtr, resultListPtr);
   this.drawHoughLineResult(resultListPtr, resultImagePtr);

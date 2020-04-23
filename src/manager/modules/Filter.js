@@ -713,7 +713,7 @@ console.log(ThresholdRatio)
   }
 };
 
-// 20.04.20 완료했으나 오류
+// 20.04.23 완료 
 filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
   constructor() {
     super();

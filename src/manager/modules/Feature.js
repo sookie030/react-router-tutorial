@@ -81,7 +81,8 @@ feature[MODULES.SUBSAMPLE] = class extends ModuleBase {
       );
 
       // Create ImageInfo Struct
-      let data = Buffer.from(Uint8Array.from(noAlpha));
+      // let data = Buffer.from(Uint8Array.from(noAlpha));
+      let data = Uint8Array.from(noAlpha);
       let size = new datatypes.SizeInfo({
         width: mergeInputData.width,
         height: mergeInputData.height,
