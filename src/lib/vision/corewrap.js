@@ -835,6 +835,8 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
       case constants.BLUR_TYPE.BLUR_GAUSSIAN:
         // this.getGaussianBlur(imageInfoPtr, blurImageStr.data);
         break;
+      default:
+        break;
     }
   }
 
@@ -866,6 +868,8 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
     );
   }
 
+  let grayscaleImagePtr = ref.alloc(datatypes.ImageInfo, grayscaleImageStr);
+
   // edge processing
   let edgeMagnitudePtr = Buffer.from(
     new Uint16Array(grayscaleImageSize).buffer
@@ -877,35 +881,35 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
       sobelOptionsStr.use_math = optionsStr.use_math;
       sobelOptionsStr.threshold_ratio = -1;
       sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      let sobelOptionsPtr = ref.alloc(datatypes.SobelOptions, sobelOptionsStr);
+      this.getSobelEdgeWithGradient(grayscaleImagePtr, sobelOptionsPtr, edgeMagnitudePtr, edgeGradientPtr);
       break;
     case constants.EDGE_TYPE.EDGE_PREWITT:
       let prewittOptionsStr = new datatypes.PrewittOptions();
       prewittOptionsStr.use_math = optionsStr.use_math;
       prewittOptionsStr.threshold_ratio = -1;
       prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      let prewittOptionsPtr = ref.alloc(datatypes.PrewittOptions, prewittOptionsStr);
+      this.getPrewittEdgeWithGradient(grayscaleImagePtr, prewittOptionsPtr, edgeMagnitudePtr, edgeGradientPtr);
       break;
     case constants.EDGE_TYPE.EDGE_ROBERTS:
       let robertsOptionsStr = new datatypes.RobertsOptions();
       robertsOptionsStr.use_math = optionsStr.use_math;
       robertsOptionsStr.threshold_ratio = -1;
       robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      let robertsOptionsPtr = ref.alloc(datatypes.RobertsOptions, robertsOptionsStr);
+      this.getRobertsEdgeWithGradient(grayscaleImagePtr, robertsOptionsPtr, edgeMagnitudePtr, edgeGradientPtr);
       break;
   }
 
   let resultImageStr = new datatypes.ImageInfo({
-    data: grayscaleImageStr.data,
+    data: Buffer.from(new Uint8Array(grayscaleImageSize).buffer),
     size: grayscaleImageStr.size,
     color: grayscaleImageStr.color,
     bytes_per_pixel: grayscaleImageStr.bytes_per_pixel,
     coordinate: grayscaleImageStr.coordinate,
   });
 
-  if (
-    imageInfoStr.color === constants.COLOR_FORMAT.COLOR_GRAY &&
-    optionsStr.blur === constants.BLUR_TYPE.BLUR_NONE
-  ) {
-    resultImageStr.data = Buffer.from(new Uint8Array(grayscaleImageSize));
-  }
   let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
 
   let cannyOptionsStr = new datatypes.CannyOptions();

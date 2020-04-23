@@ -842,13 +842,10 @@ filter[MODULES.EDGE_CANNY] = class extends ModuleBase {
       let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
       let result = ref.reinterpret(resultImageStr.data, bytes);
 
-      console.log(result);
-
       // Create RGBA (Gray)
       let grayscale = Uint8ClampedArray.from(
         ImageFormatConverter.convertGray1toGray4ClampedArray(result)
       );
-      console.log(grayscale);
 
       // Create new ImageData
       let newImageData = new ImageData(grayscale, mergeInputData.width);
@@ -1022,7 +1019,7 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
         optionsStr.use_math = useMath;
         optionsStr.threshold_high_ratio = thresholdRatioHigh;
         optionsStr.threshold_low_ratio = thresholdRatioLow;
-        optionsStr.threshold = 25; // property에 없는데.. 우선 상수로 넣어준다.
+        optionsStr.threshold = ThresholdCount; // 이게 맞는지 모르겠다
 
         result = vision.edgeHoughLine(imageInfoStr, optionsStr);
       } else if (target === "Circle") {
@@ -1032,7 +1029,7 @@ filter[MODULES.EDGE_HOUGH] = class extends ModuleBase {
         optionsStr.use_math = useMath;
         optionsStr.threshold_high_ratio = thresholdRatioHigh;
         optionsStr.threshold_low_ratio = thresholdRatioLow;
-        optionsStr.threshold = 50; // property에 없는데.. 우선 상수로 넣어준다.
+        optionsStr.threshold = ThresholdCount; // 이게 맞는지 모르겠다
         optionsStr.min_radius = radiusMin;
         optionsStr.max_radius = radiusMax;
         optionsStr.radius_stride = radiusStep;

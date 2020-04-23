@@ -52,7 +52,6 @@ const uint32 = ref.types.uint32;
 
 // Declare *uint type
 const uint8Ptr = ref.refType(ref.types.uint8);
-const uint16Ptr = ref.refType(ref.types.uint16);
 const uint32Ptr = ref.refType(ref.types.uint32);
 
 // Declare neuromem type
