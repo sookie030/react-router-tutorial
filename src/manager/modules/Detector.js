@@ -23,6 +23,7 @@ const ref = window.ref;
 
 var detector = {};
 
+// 20.04.23 추가하였으나.. 오류
 detector[MODULES.FACE_DETECTOR] = class extends ModuleBase {
     constructor() {
         super();
