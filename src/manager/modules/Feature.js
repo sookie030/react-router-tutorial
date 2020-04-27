@@ -326,7 +326,24 @@ feature[MODULES.HOG] = class extends ModuleBase {
       featureOptionsStr.use_math = useMath;
       featureOptionsStr.hog_options = optionsPtr;
 
-      vision.featureHog(imageInfoStr, featureOptionsStr);
+      let result = vision.featureHog(imageInfoStr, featureOptionsStr);
+      
+      // Create RGBA (Gray)
+      let grayscale = Uint8ClampedArray.from(
+        ImageFormatConverter.convertGray1toGray4ClampedArray(result)
+      );
+
+      // Create new ImageData
+      let newImageData = new ImageData(grayscale, mergeInputData.width);
+
+      // output 저장공간
+      var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
+
+      output = new ModuleDataChunk();
+      output.addModuleData(output1);
+
+      // Output으로 저장
+      this.setOutput(output);
 
       return RESULT_CODE.SUCCESS;
     }
@@ -414,8 +431,6 @@ feature[MODULES.LBP] = class extends ModuleBase {
 
       // 이미지 관련 데이터는 아니지만 Preview를 위해서.. 얘를 어떻게 따로 분류해주징
       let lbp = ImageFormatConverter.convertGray1toGray4(result);
-
-      console.log(constants.UNIFORM_LBP_BLOCK_SIZE, lbp);
 
       // Create new ImageData
       let newImageData = new ImageData(

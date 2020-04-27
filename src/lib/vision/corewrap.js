@@ -771,8 +771,8 @@ exports.detectFace = (imageInfoStr, optionsStr) => {
 
   let optionsPtr = ref.alloc(datatypes.HaarOptions, optionsStr);
 
-  console.log(Uint16Array.from(constants.FRONTAL_FACE_STAGES))
-  console.log(optionsStr.tree_counts)
+  console.log(Uint16Array.from(constants.FRONTAL_FACE_STAGES));
+  console.log(optionsStr.tree_counts);
 
   // create roi
   let pointInfo = new datatypes.PointInfo({
@@ -1414,7 +1414,7 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
 
   if (optionsStr.blur !== constants.BLUR_TYPE.BLUR_NONE) {
     // Create blur buffer
-    let blurImageSize =
+    var blurImageSize =
       blurImageStr.size.width *
       blurImageStr.size.height *
       blurImageStr.bytes_per_pixel *
@@ -1434,6 +1434,8 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
         break;
       case constants.BLUR_TYPE.BLUR_GAUSSIAN:
         // this.getGaussianBlur(imageInfoPtr, blurImageStr.data);
+        break;
+      default:
         break;
     }
   }
@@ -1466,6 +1468,8 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
     );
   }
 
+  let grayscaleImagePtr = ref.alloc(datatypes.ImageInfo, grayscaleImageStr);
+
   // edge processing
   let edgeMagnitudePtr = Buffer.from(
     new Uint16Array(grayscaleImageSize).buffer
@@ -1477,33 +1481,129 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
       sobelOptionsStr.use_math = optionsStr.use_math;
       sobelOptionsStr.threshold_ratio = -1;
       sobelOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      let sobelOptionsPtr = ref.alloc(datatypes.SobelOptions, sobelOptionsStr);
+      this.getSobelEdgeWithGradient(
+        grayscaleImagePtr,
+        sobelOptionsPtr,
+        edgeMagnitudePtr,
+        edgeGradientPtr
+      );
       break;
     case constants.EDGE_TYPE.EDGE_PREWITT:
       let prewittOptionsStr = new datatypes.PrewittOptions();
       prewittOptionsStr.use_math = optionsStr.use_math;
       prewittOptionsStr.threshold_ratio = -1;
       prewittOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      let prewittOptionsPtr = ref.alloc(
+        datatypes.PrewittOptions,
+        prewittOptionsStr
+      );
+      this.getPrewittEdgeWithGradient(
+        grayscaleImagePtr,
+        prewittOptionsPtr,
+        edgeMagnitudePtr,
+        edgeGradientPtr
+      );
       break;
     case constants.EDGE_TYPE.EDGE_ROBERTS:
       let robertsOptionsStr = new datatypes.RobertsOptions();
       robertsOptionsStr.use_math = optionsStr.use_math;
       robertsOptionsStr.threshold_ratio = -1;
       robertsOptionsStr.calculate_gradient = this.calculateCannyGradient;
+      let robertsOptionsPtr = ref.alloc(
+        datatypes.RobertsOptions,
+        robertsOptionsStr
+      );
+      this.getRobertsEdgeWithGradient(
+        grayscaleImagePtr,
+        robertsOptionsPtr,
+        edgeMagnitudePtr,
+        edgeGradientPtr
+      );
       break;
   }
-
   // Create pointer
-  let optionsPtr = ref.alloc(datatypes.featureHogOptions, optionsStr);
+  // let optionsPtr = ref.alloc(datatypes.featureHogOptions, optionsStr);
 
   // Create result buffer
-  let hogVector = new datatypes.VectorInfo();
-  let hogVectorPtr = ref.alloc(datatypes.VectorInfo, hogVector);
-  let hogVectorPtrPtr = ref.alloc(datatypes.VectorInfo, hogVectorPtr);
+  let resultVectorPtr = new datatypes.VectorInfo().ref();
+  let resultVectorPtrPtr = resultVectorPtr.ref();
 
   // 아래 함수를 실행시키면 프로그램이 멈춘다 ㅠㅠ
-  // this.getHogFeature(grayscaleImageStr.size, edgeMagnitudePtr, edgeGradientPtr, optionsPtr, hogVectorPtrPtr);
+  this.getHogFeature(
+    grayscaleImageStr.size,
+    edgeMagnitudePtr,
+    edgeGradientPtr,
+    optionsStr.hog_options,
+    resultVectorPtrPtr
+  );
 
-  return null;
+  let hogOptionsStr = optionsStr.hog_options.deref();
+
+  // get result vector
+  let resultVector = resultVectorPtrPtr.deref().deref().vector;
+
+  let blockNumX =
+    (grayscaleImageStr.size.width -
+      hogOptionsStr.cell_per_block.width *
+        hogOptionsStr.pixel_per_cell.width +
+      hogOptionsStr.stride_distance.width) /
+    hogOptionsStr.stride_distance.width;
+  let blockNumY =
+    (grayscaleImageStr.size.height -
+      hogOptionsStr.cell_per_block.height *
+        hogOptionsStr.pixel_per_cell.height +
+      hogOptionsStr.stride_distance.height) /
+    hogOptionsStr.stride_distance.height;
+  let histogramBlockLen =
+    hogOptionsStr.cell_per_block.width *
+    hogOptionsStr.cell_per_block.height *
+    hogOptionsStr.histogram_bin_num;
+
+  let resultSize = blockNumX * blockNumY * histogramBlockLen;
+
+  console.log(resultSize);
+
+  let result = ref.reinterpret(resultVector, resultSize);
+
+  console.log(result);
+
+  return result;
+
+  // // test - canny
+  // let resultImageStr = new datatypes.ImageInfo({
+  //   data: Buffer.from(new Uint8Array(grayscaleImageSize).buffer),
+  //   size: grayscaleImageStr.size,
+  //   color: grayscaleImageStr.color,
+  //   bytes_per_pixel: grayscaleImageStr.bytes_per_pixel,
+  //   coordinate: grayscaleImageStr.coordinate,
+  // });
+
+  // let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
+
+  // let cannyOptionsStr = new datatypes.CannyOptions();
+  // cannyOptionsStr.threshold_high_ratio = optionsStr.threshold_high_ratio;
+  // cannyOptionsStr.threshold_low_ratio = optionsStr.threshold_low_ratio;
+  // let cannyOptionsPtr = ref.alloc(datatypes.CannyOptions, cannyOptionsStr);
+
+  // this.getCannyEdge(
+  //   resultImageStr.size,
+  //   edgeMagnitudePtr,
+  //   edgeGradientPtr,
+  //   cannyOptionsPtr,
+  //   resultImagePtr
+  // );
+
+  // let resultSize =
+  //   resultImageStr.size.width *
+  //   resultImageStr.size.height *
+  //   Uint8Array.BYTES_PER_ELEMENT;
+
+  // // get values from Buffer (result)
+  // let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
+  // let result = ref.reinterpret(resultImageStr.data, bytes);
+
+  // return result;
 };
 
 /**
@@ -1521,6 +1621,7 @@ exports.getHogFeature = (
   optionsPtr,
   hogFeaturePtrPtr
 ) => {
+  console.log("hi this is get_hog_feature");
   visionlib.get_hog_feature(
     imageSize,
     edgeMagnitudePtr,
