@@ -170,7 +170,8 @@ class DefaultApplicationContainer extends React.Component {
         this.childViewRef.sourceCanvasRef.height = image.height;
 
         // Canvas에 캡쳐 이미지 뿌리기
-        inputCanvasCtx.drawImage(image, 0, 0);
+        // inputCanvasCtx.drawImage(image, 0, 0);
+        inputCanvasCtx.putImageData(image, 0, 0);
 
         // Canvas 실제 좌표값 및 사이즈 정보 갱신
         if (
@@ -188,9 +189,9 @@ class DefaultApplicationContainer extends React.Component {
           };
         }
 
-        if (!this.modulesInPipeline.nm500) {
-          this.drawPreviewImage(module);
-        }
+        // if (!this.modulesInPipeline.nm500) {
+        //   this.drawPreviewImage(module);
+        // }
 
         break;
 
@@ -332,21 +333,22 @@ class DefaultApplicationContainer extends React.Component {
    * Preview 영역에 이미지 뿌려주기
    */
   drawPreviewImage = module => {
-    let previewImage = module
+    let previewImageData = module
       .getOutput()
       .getModuleDataList()[0]
       .getData();
 
-    // Canvas에 캡쳐 이미지 뿌리기
-    this.childViewRef.previewCanvasRef
-      .getContext("2d")
-      .drawImage(
-        previewImage,
-        0,
-        0,
-        this.childViewRef.previewCanvasRef.width,
-        this.childViewRef.previewCanvasRef.height
-      );
+    // imageData resize
+    createImageBitmap(previewImageData, {
+      resizeWidth: this.childViewRef.previewCanvasRef.width,
+      resizeHeight: this.childViewRef.previewCanvasRef.height,
+      resizeQuality: "high"
+    }).then(image => {
+      this.childViewRef.previewCanvasRef
+      .getContext("2d").drawImage(image, 0, 0);
+    });
+
+    // Canvas에 캡쳐 이미지 뿌리기?
   };
 
   /**

@@ -48,8 +48,6 @@ class Node extends React.Component {
       resizeQuality: "high"
     }).then(image => {
       canvasCtx.drawImage(image, 0, 0, image.width, image.height);
-      // console.log('hihihi output of ', this.props.node.getName());
-      // console.log(image, image.width, image.height);
     });
   }
 

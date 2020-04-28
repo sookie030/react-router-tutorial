@@ -96,6 +96,7 @@ if (platform === "Windows") {
   // libvision = './lib/libnmengine.so'
 } else {
   // libvision = "./lib/vision/libVisionLibrary1839.dylib";
+  // libvision = "./src/lib/vision/libVisionLibrary1754.dylib";
   libvision = "./src/lib/vision/libVisionLibrary.dylib";
 }
 
@@ -282,6 +283,16 @@ const visionlib = ffi.Library(libvision, {
     "void",
     [datatypes.SizeInfo, uint16Ptr, uint16Ptr, hogOptionsPtr, vectorInfoPtrPtr],
   ],
+
+  // get_hog_feature2: [
+  //   "void",
+  //   [datatypes.SizeInfo, uint16Ptr, uint16Ptr, hogOptionsPtr, uint8Ptr],
+  // ],
+
+  // get_hog_feature3: [
+  //   "void",
+  //   [datatypes.SizeInfo, uint16Ptr, uint16Ptr, hogOptionsPtr, uint8Ptr, uint32],
+  // ],
 
   // uint16_t calculate_hog_gradient(int16_t vertical_magnitude, int16_t horizontal_magnitude, BOOL use_math);
   calculate_hog_gradient: [uint16, [int16, int16, bool]],
@@ -1040,8 +1051,8 @@ exports.edgeCanny = (imageInfoStr, optionsStr) => {
 /**
  * Get the edge image using sobel edge extraction
  * @param {SizeInfo} imageSize Image size
- * @param {uint8*} edgeMagnitudeVectorPtr Edge magnitude info
- * @param {uint8*} edgeGradientVector Edge gradient info (0~4, 0:virtical edge, 1:left-up and right-down edge, 2:horizontal edge, 3:right-up and left-down edge)
+ * @param {uint16*} edgeMagnitudeVectorPtr Edge magnitude info
+ * @param {uint16*} edgeGradientVector Edge gradient info (0~4, 0:virtical edge, 1:left-up and right-down edge, 2:horizontal edge, 3:right-up and left-down edge)
  * @param {cannyOptionsPtr} options Options for edge extraction
  * @param {ImageInfo*} resultImagePtr (output) Result image info
  */
@@ -1457,6 +1468,7 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
       grayscaleImageStr.size.width *
       grayscaleImageStr.size.height *
       Uint8Array.BYTES_PER_ELEMENT;
+      
     grayscaleImageStr.data = Buffer.from(
       new Uint8Array(grayscaleImageSize).buffer
     );
@@ -1468,6 +1480,9 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
     );
   }
 
+  // get values from Buffer (gray result)
+  // let result = ref.reinterpret(grayscaleImageStr.data, grayscaleImageSize);
+
   let grayscaleImagePtr = ref.alloc(datatypes.ImageInfo, grayscaleImageStr);
 
   // edge processing
@@ -1475,6 +1490,13 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
     new Uint16Array(grayscaleImageSize).buffer
   );
   let edgeGradientPtr = Buffer.from(new Uint16Array(grayscaleImageSize).buffer);
+  console.log(edgeMagnitudePtr)
+  console.log(edgeGradientPtr)
+  console.log(new Uint16Array(grayscaleImageSize).buffer);
+  console.log(new Uint16Array(grayscaleImageSize).buffer);
+  console.log(Buffer.from(new Uint16Array(grayscaleImageSize)));
+  console.log(Buffer.from(new Uint16Array(grayscaleImageSize)));
+
   switch (optionsStr.edge) {
     case constants.EDGE_TYPE.EDGE_SOBEL:
       let sobelOptionsStr = new datatypes.SobelOptions();
@@ -1522,88 +1544,54 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
       );
       break;
   }
-  // Create pointer
-  // let optionsPtr = ref.alloc(datatypes.featureHogOptions, optionsStr);
 
-  // Create result buffer
-  let resultVectorPtr = new datatypes.VectorInfo().ref();
-  let resultVectorPtrPtr = resultVectorPtr.ref();
+  // get values from Buffer (Edge Gradient 0~359 result)
+  console.log(grayscaleImageSize);
+  console.log(edgeGradientPtr);
+  let result = ref.reinterpret(edgeGradientPtr, grayscaleImageSize * Uint16Array.BYTES_PER_ELEMENT);
+  let result2 = Uint16Array.from(result);
+  console.log(result2);
+  // // Create result buffer
+  // let hogOptionsStr = optionsStr.hog_options.deref();
 
-  // 아래 함수를 실행시키면 프로그램이 멈춘다 ㅠㅠ
-  this.getHogFeature(
-    grayscaleImageStr.size,
-    edgeMagnitudePtr,
-    edgeGradientPtr,
-    optionsStr.hog_options,
-    resultVectorPtrPtr
-  );
+  // let blockNumX =
+  //   (grayscaleImageStr.size.width -
+  //     hogOptionsStr.cell_per_block.width * hogOptionsStr.pixel_per_cell.width +
+  //     hogOptionsStr.stride_distance.width) /
+  //   hogOptionsStr.stride_distance.width;
+  // let blockNumY =
+  //   (grayscaleImageStr.size.height -
+  //     hogOptionsStr.cell_per_block.height *
+  //       hogOptionsStr.pixel_per_cell.height +
+  //     hogOptionsStr.stride_distance.height) /
+  //   hogOptionsStr.stride_distance.height;
+  // let histogramBlockLen =
+  //   hogOptionsStr.cell_per_block.width *
+  //   hogOptionsStr.cell_per_block.height *
+  //   hogOptionsStr.histogram_bin_num;
 
-  let hogOptionsStr = optionsStr.hog_options.deref();
+  // let resultSize = blockNumX * blockNumY * histogramBlockLen;
+  // let resultVectorPtrPtr = new datatypes.VectorInfo().ref().ref();
 
-  // get result vector
-  let resultVector = resultVectorPtrPtr.deref().deref().vector;
+  // this.getHogFeature(
+  //   grayscaleImageStr.size,
+  //   edgeMagnitudePtr,
+  //   edgeGradientPtr,
+  //   optionsStr.hog_options,
+  //   resultVectorPtrPtr
+  // );
 
-  let blockNumX =
-    (grayscaleImageStr.size.width -
-      hogOptionsStr.cell_per_block.width *
-        hogOptionsStr.pixel_per_cell.width +
-      hogOptionsStr.stride_distance.width) /
-    hogOptionsStr.stride_distance.width;
-  let blockNumY =
-    (grayscaleImageStr.size.height -
-      hogOptionsStr.cell_per_block.height *
-        hogOptionsStr.pixel_per_cell.height +
-      hogOptionsStr.stride_distance.height) /
-    hogOptionsStr.stride_distance.height;
-  let histogramBlockLen =
-    hogOptionsStr.cell_per_block.width *
-    hogOptionsStr.cell_per_block.height *
-    hogOptionsStr.histogram_bin_num;
+  // console.log(resultVectorPtrPtr.deref().deref());
 
-  let resultSize = blockNumX * blockNumY * histogramBlockLen;
+  // let resultVectorPtr = resultVectorPtrPtr.deref().deref().vector;
+  // console.log(resultVectorPtrPtr.deref().deref().length, resultVectorPtr);
 
-  console.log(resultSize);
-
-  let result = ref.reinterpret(resultVector, resultSize);
+  // // get values from Buffer (result)
+  // let result = ref.reinterpret(resultVectorPtr, resultSize);
 
   console.log(result);
 
   return result;
-
-  // // test - canny
-  // let resultImageStr = new datatypes.ImageInfo({
-  //   data: Buffer.from(new Uint8Array(grayscaleImageSize).buffer),
-  //   size: grayscaleImageStr.size,
-  //   color: grayscaleImageStr.color,
-  //   bytes_per_pixel: grayscaleImageStr.bytes_per_pixel,
-  //   coordinate: grayscaleImageStr.coordinate,
-  // });
-
-  // let resultImagePtr = ref.alloc(datatypes.ImageInfo, resultImageStr);
-
-  // let cannyOptionsStr = new datatypes.CannyOptions();
-  // cannyOptionsStr.threshold_high_ratio = optionsStr.threshold_high_ratio;
-  // cannyOptionsStr.threshold_low_ratio = optionsStr.threshold_low_ratio;
-  // let cannyOptionsPtr = ref.alloc(datatypes.CannyOptions, cannyOptionsStr);
-
-  // this.getCannyEdge(
-  //   resultImageStr.size,
-  //   edgeMagnitudePtr,
-  //   edgeGradientPtr,
-  //   cannyOptionsPtr,
-  //   resultImagePtr
-  // );
-
-  // let resultSize =
-  //   resultImageStr.size.width *
-  //   resultImageStr.size.height *
-  //   Uint8Array.BYTES_PER_ELEMENT;
-
-  // // get values from Buffer (result)
-  // let bytes = resultSize * Uint8Array.BYTES_PER_ELEMENT;
-  // let result = ref.reinterpret(resultImageStr.data, bytes);
-
-  // return result;
 };
 
 /**
@@ -1630,6 +1618,60 @@ exports.getHogFeature = (
     hogFeaturePtrPtr
   );
 };
+
+/**
+ * Get the HOG feature vector
+ * @param {SizeInfo} imageSize Image size
+ * @param {uint16*} edgeMagnitudePtr Edge magnitude info
+ * @param {uint16*} edgeGradientPtr Edge gradient info (0~359)
+ * @param {hogOptionsPtr} optionsPtr Options to calculate for HOG feature vector
+ * @param {uint8*} hogFeaturePtr (output) HOG feature vector
+ */
+// exports.getHogFeature2 = (
+//   imageSize,
+//   edgeMagnitudePtr,
+//   edgeGradientPtr,
+//   optionsPtr,
+//   hogFeaturePtr
+// ) => {
+//   console.log("hi this is get_hog_feature2");
+//   visionlib.get_hog_feature2(
+//     imageSize,
+//     edgeMagnitudePtr,
+//     edgeGradientPtr,
+//     optionsPtr,
+//     hogFeaturePtr
+//   );
+// };
+
+
+/**
+ * Get the HOG feature vector
+ * @param {SizeInfo} imageSize Image size
+ * @param {uint16*} edgeMagnitudePtr Edge magnitude info
+ * @param {uint16*} edgeGradientPtr Edge gradient info (0~359)
+ * @param {hogOptionsPtr} optionsPtr Options to calculate for HOG feature vector
+ * @param {uint8*} hogFeaturePtr (output) HOG feature vector
+ * @param {uint32} vectorLength 
+ */
+// exports.getHogFeature3 = (
+//   imageSize,
+//   edgeMagnitudePtr,
+//   edgeGradientPtr,
+//   optionsPtr,
+//   hogFeaturePtr,
+//   vectorLength
+// ) => {
+//   console.log("hi this is get_hog_feature2");
+//   visionlib.get_hog_feature3(
+//     imageSize,
+//     edgeMagnitudePtr,
+//     edgeGradientPtr,
+//     optionsPtr,
+//     hogFeaturePtr,
+//     vectorLength
+//   );
+// };
 
 /**
  * Define the function for calculate gradient to get HOG feature vector

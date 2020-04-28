@@ -13,6 +13,7 @@ import ModuleData from "./ModuleData";
 
 const nmengine = require("../../lib/nmengine/corewrap");
 const constants = require("../../lib/nmengine/constants");
+const ArrayType = window.ArrayType;
 
 var ai = {};
 
@@ -27,11 +28,11 @@ ai[MODULES.NM500] = class extends ModuleBase {
         properties: {
           "Context ID": {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: "-",
+            value: "1",
           },
           "Context Name": {
             type: PROP_TYPE.TEXT_EDIT,
-            value: "-",
+            value: "1",
           },
           Norm: {
             type: PROP_TYPE.DROPDOWN,
@@ -57,11 +58,11 @@ ai[MODULES.NM500] = class extends ModuleBase {
         properties: {
           "Category ID": {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: "-",
+            value: "1",
           },
           "Category Name": {
             type: PROP_TYPE.TEXT_EDIT,
-            value: "-",
+            value: "1",
           },
         },
       },
@@ -121,6 +122,11 @@ ai[MODULES.NM500] = class extends ModuleBase {
     });
 
     this.connect(0);
+    this.setContext();
+    this.learnTest(10, 3, 1, 1);
+    this.learnTest(20, 3, 2, 1);
+    this.learnTest(50, 3, 5, 1);
+    this.modelStatTest();
   }
 
   /**
@@ -188,6 +194,109 @@ ai[MODULES.NM500] = class extends ModuleBase {
     console.log("[set power_save mode] %d\n", ps.resultCode);
   };
 
+  setContext = () => {
+    // Get properties
+    const props = this.getProperties();
+    const contextID = Number(
+      props.getIn(["Context", "properties", "Context ID", "value"])
+    );
+    const norm =
+      props.getIn(["Context", "properties", "Norm", "value"]) === "L1"
+        ? constants.L1
+        : constants.Lsup;
+    const minif = Number(
+      props.getIn(["Context", "properties", "Minif", "value"])
+    );
+    const maxif = Number(
+      props.getIn(["Context", "properties", "Maxif", "value"])
+    );
+
+    let sc = nmengine.setContext(contextID, norm, minif, maxif);
+    if (sc.resultCode === constants.SUCCESS) {
+      let ctx = sc.ctx;
+      console.log(
+        "[tcSetContext] CONTEXT: %d, NORM: %d, MINIF: %d, MAXIF: %d",
+        ctx.context,
+        ctx.norm,
+        ctx.minif,
+        ctx.maxif
+      );
+    } else {
+      console.log(
+        "[tcSetContext] Error: Failed to set context. %d",
+        sc.resultCode
+      );
+    }
+  };
+
+  learnTest = (data, size, category, queryAffected) => {
+
+    let vector = Array(constants.NEURON_MEMORY).fill(0);
+
+    // Make input vector
+    console.log("[tcLearn] VECTOR: ")
+    for (let i = 0; i < size; i++) {
+        vector[i] = data;
+        console.log(" " + data)
+    }
+    console.log(", CAT: " + category)
+
+    // Training
+    let learn = nmengine.learn(vector, category, queryAffected);
+
+    // Training result
+    if (learn.resultCode === constants.SUCCESS) {
+        let req = learn.req;
+        console.log(",\tRESULT: %d\n", req.status);
+
+        if (queryAffected === 1) {
+            for (let i = 0; i < req.affected_count; i++) {
+                console.log("affected neuron nid: %d, cat: %d, aif: %d\n", req.affected_neurons[i].nid, req.affected_neurons[i].cat, req.affected_neurons[i].aif);
+            }
+        }
+    } else {
+        console.log("[tcLearn] Error: Failed to learn. %d\n", learn.resultCode);
+    }
+  }
+
+  modelStatTest = () => {
+
+    let uint16Array = ArrayType('uint16');
+
+    let gmi = nmengine.getModelInfo();
+    let mi = gmi.modelInfo;
+    console.log("[tcModelAnalysis] used: %d, max ctx: %d, max cat: %d\n", mi.count, mi.max_context, mi.max_category);
+
+    let gms = nmengine.getModelStat(1, mi.max_category);
+    let ms = gms.modelStat;
+
+    // Get values from Buffer
+    let bytes = (mi.max_category + 1) * uint16Array.BYTES_PER_ELEMENT;
+    let histoCat = uint16Array(ms.histo_cat.reinterpret(bytes))
+    let histoDeg = uint16Array(ms.histo_deg.reinterpret(bytes))
+
+    console.log("<tcModelAnalysis histoCat>");
+    console.log(histoCat);
+
+
+    let bytes2 = (mi.max_category + 1) * Uint16Array.BYTES_PER_ELEMENT;
+    let histoCat2 = new Uint16Array(ms.histo_cat.reinterpret(bytes2))
+
+    console.log("<msStr histo_cat deref3>");
+    console.log(histoCat2);
+    console.log("<msStr histo_cat deref3 end>");
+
+    let test = new Uint16Array([1, 2, 3]);
+    console.log(test);
+
+    // Get values from Buffer
+    let bytes3 = (mi.max_category + 1) * uint16Array.BYTES_PER_ELEMENT;
+    let histoCat3 = uint16Array(ms.histo_cat.reinterpret(bytes3))
+
+    console.log("<tcModelAnalysis histoCat>");
+    console.log(histoCat);
+  }
+
   /**
    * 모듈 실행
    * @param {List<ModuleDataChunk>} inputs
@@ -217,47 +326,52 @@ ai[MODULES.NM500] = class extends ModuleBase {
         `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
       );
 
-      // 20.04.07 ffi-napi test
-      let count = 10;
-      let getDevices = nmengine.getDevices(count);
+      // // 20.04.07 ffi-napi test
+      // let count = 10;
+      // let getDevices = nmengine.getDevices(count);
 
-      // Check result code
-      if (getDevices.resultCode !== constants.SUCCESS) {
-        if (getDevices.resultCode === constants.ERROR_DEVICE_NOT_FOUND) {
-          console.log("[devices] Not found ");
-        } else {
-          console.log(
-            "[devices] Failed to get device list %d\n",
-            getDevices.resultCode
-          );
-        }
-        return 0;
-      }
+      // // Check result code
+      // if (getDevices.resultCode !== constants.SUCCESS) {
+      //   if (getDevices.resultCode === constants.ERROR_DEVICE_NOT_FOUND) {
+      //     console.log("[devices] Not found ");
+      //   } else {
+      //     console.log(
+      //       "[devices] Failed to get device list %d\n",
+      //       getDevices.resultCode
+      //     );
+      //   }
+      //   return 0;
+      // }
 
-      // Print detected device count
-      console.log("[devices] %d\t detected", getDevices.detectedCount);
-      for (let i = 0; i < getDevices.detectedCount; i++) {
-        console.log(
-          "ID: %d\t TYPE: %d\t PID: %d\t VID: %d\n",
-          i,
-          getDevices.devices[i].type,
-          getDevices.devices[i].vid,
-          getDevices.devices[i].pid
-        );
-      }
+      // // Print detected device count
+      // console.log("[devices] %d\t detected", getDevices.detectedCount);
+      // for (let i = 0; i < getDevices.detectedCount; i++) {
+      //   console.log(
+      //     "ID: %d\t TYPE: %d\t PID: %d\t VID: %d\n",
+      //     i,
+      //     getDevices.devices[i].type,
+      //     getDevices.devices[i].vid,
+      //     getDevices.devices[i].pid
+      //   );
+      // }
 
-      /**
-       * nm_connect
-       */
-      let connect = nmengine.connect();
+      // /**
+      //  * nm_connect
+      //  */
+      // let connect = nmengine.connect();
 
-      if (connect.resultCode !== constants.SUCCESS) {
-        console.log(
-          "[nm_connect] Failed initialize NM500, Error: %d, or Not supported device",
-          connect.resultCode
-        );
-        return 0;
-      }
+      // if (connect.resultCode !== constants.SUCCESS) {
+      //   console.log(
+      //     "[nm_connect] Failed initialize NM500, Error: %d, or Not supported device",
+      //     connect.resultCode
+      //   );
+      //   return 0;
+      // }
+
+      // /**
+      //  * nm_set_context
+      //  */
+      // this.setContext();
 
       // output 저장공간
       var output1 = new ModuleData(DATA_TYPE.IMAGE, [

@@ -316,7 +316,7 @@ feature[MODULES.HOG] = class extends ModuleBase {
       optionsStr.cell_per_block.height = cellPerBlockHeight;
       optionsStr.stride_distance.width = strideDistanceWidth;
       optionsStr.stride_distance.height = strideDistanceHeight;
-      optionsStr.use_magnitude = useMagnitude;
+      optionsStr.use_magnitude = useMagnitude === "TRUE" ? true : false;
 
       let optionsPtr = ref.alloc(datatypes.HogOptions, optionsStr);
 
@@ -334,7 +334,7 @@ feature[MODULES.HOG] = class extends ModuleBase {
       );
 
       // Create new ImageData
-      let newImageData = new ImageData(grayscale, mergeInputData.width);
+      let newImageData = new ImageData(grayscale, histogramBinNum);
 
       // output 저장공간
       var output1 = new ModuleData(DATA_TYPE.IMAGE, newImageData);
