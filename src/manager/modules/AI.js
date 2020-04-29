@@ -19,6 +19,7 @@ const constants = require("../../lib/nmengine/constants");
 const ArrayType = window.ArrayType;
 
 var ai = {};
+let uint16Array = ArrayType("uint16");
 
 ai[MODULES.NM500] = class extends ModuleBase {
   constructor() {
@@ -126,11 +127,11 @@ ai[MODULES.NM500] = class extends ModuleBase {
 
     this.connect(0);
     this.setContext();
-    // this.learnTest(10, 3, 1, 1);
-    // this.learnTest(20, 3, 2, 1);
-    // this.learnTest(50, 3, 5, 1);
+    this.learnTest(10, 3, 1, 1);
+    this.learnTest(20, 3, 2, 1);
+    this.learnTest(50, 3, 5, 1);
     // this.classifyTest(10, 3, 3);
-    // this.modelStatTest();
+    this.modelStatTest();
   }
 
   /**
@@ -304,8 +305,6 @@ ai[MODULES.NM500] = class extends ModuleBase {
   };
 
   modelStatTest = () => {
-    let uint16Array = ArrayType("uint16");
-
     let gmi = nmengine.getModelInfo();
     let mi = gmi.modelInfo;
     console.log(
@@ -445,13 +444,68 @@ ai[MODULES.DECISION_MAKER] = class extends ModuleBase {
       Category: {
         type: PROP_TYPE.DROPDOWN,
         options: [
-          { key: 0, text: "ALL", value: "ALL" },
+          { key: 0, text: "All", value: "All" },
           { key: 1, text: "1", value: "1" },
         ],
-        value: "ALL",
+        value: "All",
       },
     });
+
+    // Dropdown 옵션 설정
+    this.setCategoryOptions(0);
   }
+
+  /**
+   * 카메라 디바이스 탐색하여 Droopdown 옵션으로 설정
+   */
+  setCategoryOptions = (selectedIndex) => {
+    let gc = nmengine.getContext();
+    let context = gc.ctx.context;
+
+    let gmi = nmengine.getModelInfo();
+    let mi = gmi.modelInfo;
+    let maxCategory = mi.max_category;
+
+    console.log(gc);
+    console.log(context, maxCategory);
+
+    let gms = nmengine.getModelStat(context, maxCategory);
+    let ms = gms.modelStat;
+
+    // Get values from Buffer
+    let bytes = (maxCategory + 1) * uint16Array.BYTES_PER_ELEMENT;
+    let histoCat = uint16Array(ms.histo_cat.reinterpret(bytes));
+    let histoDeg = uint16Array(ms.histo_deg.reinterpret(bytes));
+
+    // create options
+    let options = [
+      {
+        key: 0,
+        value: 0,
+        text: "All",
+      },
+    ];
+
+    for (let i = 1; i <= maxCategory; i++) {
+      console.log(i, histoCat[i]);
+      if (histoCat[i] > 0) {
+        options.push({
+          key: i,
+          value: i,
+          text: i,
+        });
+      }
+    }
+
+    // Set property
+    let selectedValue = this.getProperties()
+    .getIn(["Category", "options", selectedIndex, "value"]);
+
+    let newProperties = this.getProperties()
+      .setIn(["Category", "options"], options)
+      .setIn(["Category", "value"], selectedValue);
+    this.setProperties(newProperties);
+  };
 
   /**
    * 모듈 실행
@@ -481,6 +535,8 @@ ai[MODULES.DECISION_MAKER] = class extends ModuleBase {
       console.log(
         `[PL Process] ${this.getName()} input이 모두 들어와 실행합니다.`
       );
+
+      // input이 리스트로 들어올꾸다
 
       // 부모 id 초기화. parentIds는 한 번의 process에만 유효하다.
       // this.setParentIds([]);
@@ -627,35 +683,29 @@ ai[MODULES.SCANNER] = class extends ModuleBase {
 
       // Classify
       for (let i = 0; i < dataList.length; i++) {
+        // vector값 이용하여 classify
+        let classify = nmengine.classify(1, dataList[i].data);
 
-      // vector값 이용하여 classify 
-      let classify = nmengine.classify(1, dataList[i].data);
+        // Classify result
+        if (classify.resultCode === constants.SUCCESS) {
+          let req = classify.req;
+          let category = req.matched_count > 0 ? req.matched_count[0] : null;
 
-      // Classify result
-      if (classify.resultCode === constants.SUCCESS) {
-        let req = classify.req;
-        let category = req.matched_count > 0 ? req.matched_count[0] : null;
-
-        // classify 결과 카테고리를 저장
-        dataList[i].category = category;
-        console.log(category);
-      } else {
-        console.log(
-          "[classify] Error: Failed to classify. %d\n",
-          classify.resultCode
-        );
+          // classify 결과 카테고리를 저장
+          dataList[i].category = category;
+          console.log(category);
+        } else {
+          console.log(
+            "[classify] Error: Failed to classify. %d\n",
+            classify.resultCode
+          );
+        }
       }
-      }
-      
+
       console.log(dataList);
 
       // output 저장공간
-      var output1 = new ModuleData(DATA_TYPE.IMAGE, [
-        this.getID(),
-        this.getID(),
-        this.getID(),
-        this.getID(),
-      ]);
+      var output1 = new ModuleData(DATA_TYPE.NM_DATA_LIST, dataList);
 
       output = new ModuleDataChunk();
       output.addModuleData(output1);
