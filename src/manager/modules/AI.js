@@ -127,11 +127,11 @@ ai[MODULES.NM500] = class extends ModuleBase {
 
     this.connect(0);
     this.setContext();
-    this.learnTest(10, 3, 1, 1);
-    this.learnTest(20, 3, 2, 1);
-    this.learnTest(50, 3, 5, 1);
+    // this.learnTest(10, 3, 1, 1);
+    // this.learnTest(20, 3, 2, 1);
+    // this.learnTest(50, 3, 5, 1);
     // this.classifyTest(10, 3, 3);
-    this.modelStatTest();
+    // this.modelStatTest();
   }
 
   /**

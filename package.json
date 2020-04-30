@@ -2,6 +2,7 @@
   "name": "react-router-tutorial",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "main": "public/electron.js",
   "devDependencies": {
     "concurrently": "^4.1.1",
@@ -31,7 +32,20 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-start": "electron ."
+    "electron-start": "electron .",
+
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "electron-builder build -m",
+    "install:osx": "electron-builder build  --mac",
+    "install:osx2": "yarn build && electron-builder build  --mac",
+    "install:linux": "yarn install:linux32 && yarn install:linux64",
+    "install:linux32": "electron-builder build  --linux --ia32=true tar.xz",
+    "install:linux64": "electron-builder build  --linux --x64=true tar.xz",
+    "install:win": "yarn install:win32 && yarn install:win64",
+    "install:win32": "electron-builder build -w --ia32=true",
+    "install:win64": "electron-builder build -w --x64=true"
+
   },
   "browserslist": {
     "production": [
@@ -44,5 +58,28 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@domain.com",
+    "url": "https://your-website.com"
+  },
+  "build": {
+    "appId": "com.my-website.my-app",
+    "productName": "MyApp",
+    "copyright": "Copyright © 2019 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "dist/",
+      "package.json",
+      "/src/lib/"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }
