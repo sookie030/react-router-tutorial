@@ -126,12 +126,12 @@ ai[MODULES.NM500] = class extends ModuleBase {
     });
 
     this.connect(0);
-    this.setContext();
-    this.learnTest(10, 3, 1, 1);
-    this.learnTest(20, 3, 2, 1);
-    this.learnTest(50, 3, 5, 1);
+    // this.setContext();
+    // this.learnTest(10, 3, 1, 1);
+    // this.learnTest(20, 3, 2, 1);
+    // this.learnTest(50, 3, 5, 1);
     // this.classifyTest(10, 3, 3);
-    this.modelStatTest();
+    // this.modelStatTest();
   }
 
   /**
@@ -146,13 +146,14 @@ ai[MODULES.NM500] = class extends ModuleBase {
     if (getDevices.resultCode !== constants.SUCCESS) {
       if (getDevices.resultCode === constants.ERROR_DEVICE_NOT_FOUND) {
         console.log("[devices] Not found ");
+        return RESULT_CODE.NM_NO_DEVICE;
       } else {
         console.log(
           "[devices] Failed to get device list %d\n",
           getDevices.resultCode
         );
+        return RESULT_CODE.ERROR_UNKNOWN;
       }
-      return null;
     }
 
     // Check detected device count
@@ -181,8 +182,11 @@ ai[MODULES.NM500] = class extends ModuleBase {
         "[nm_connect] Failed initialize NM500, Error: %d, or Not supported device",
         connect.resultCode
       );
-      return null;
+      return RESULT_CODE.ERROR_UNKNOWN;
     }
+
+    // Context 지정
+    this.setContext();
 
     // NM500 초기화
     let forget = nmengine.forget();
@@ -191,7 +195,7 @@ ai[MODULES.NM500] = class extends ModuleBase {
         "[nm_forget] Failed initialize NM500, Error: %d, or Not supported device",
         forget.resultCode
       );
-      return 0;
+      return RESULT_CODE.ERROR_UNKNOWN;
     }
 
     // 우선 Power save mode로 진입
