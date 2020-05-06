@@ -11,10 +11,11 @@ function createWindow() {
     height: 960,
     minWidth: 1350,
     minHeight: 960,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js")
-    }
+      preload: path.join(__dirname, "preload.js"),
+    },
   });
   mainWindow.loadURL(
     isDev
@@ -43,20 +44,20 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg)  // "ping" 출력
-  event.sender.send('asynchronous-reply', 'pong');
-})
+ipcMain.on("asynchronous-message", (event, arg) => {
+  console.log(arg); // "ping" 출력
+  event.sender.send("asynchronous-reply", "pong");
+});
 
-ipcMain.on('synchronous-message', (event, args) => {
+ipcMain.on("synchronous-message", (event, args) => {
   // console.log(args)  // "ping" 출력
   // console.log(args.data)  // "ping" 출력
   // console.log(args['data'])  // "ping" 출력
   // event.returnValue = [ 'pong', 'test' ]
   visionlib.cropImage(args);
-  event.returnValue = 'pong';
-})
+  event.returnValue = "pong";
+});
 
-ipcMain.on('crop-image', (event, ...args) => {
+ipcMain.on("crop-image", (event, ...args) => {
   visionlib.cropImage(args);
 });

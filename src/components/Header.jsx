@@ -143,13 +143,13 @@ const Header = (props) => (
     <div className="windowsbtn">
       <ul>
         <li>
-          <a href=""></a>
+          <a href="#" onClick={props.minimizeWindow}></a>
         </li>
         <li>
-          <a href=""></a>
+          <a href="#" onClick={props.maximizeWindow}></a>
         </li>
         <li>
-          <a href=""></a>
+          <a href="#" onClick={props.closeWindow}></a>
         </li>
       </ul>
     </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router";
-import "../assets/css/common.css";
 
 // import constants
 import * as EVENT_TYPE from "../constants/EventType";
@@ -12,16 +11,36 @@ import { setPipelineManager, setDummyNumber, setToast } from "../redux/actions";
 
 import Header from "../components/Header";
 
+const remote = window.electron.remote;
+
 // const Header = props => {
 class HeaderContainer extends React.Component {
   state = {
     isPipelineRunning: false,
   };
 
-  
+  closeWindow = () => {
+    var window = remote.getCurrentWindow();
+    window.close();
+  };
+
+  minimizeWindow = () => {
+    var window = remote.getCurrentWindow();
+    window.minmize();
+  };
+
+  maximizeWindow = () => {
+    var window = remote.getCurrentWindow();
+    window.isMaximized() ? window.unmaximize() : window.maximize();
+  };
+
   render() {
     return (
-      <Header/ >
+      <Header
+        closeWindow={this.closeWindow}
+        closeminimizeWindowWindow={this.minimizeWindow}
+        maximizeWindow={this.maximizeWindow}
+      />
     );
   }
 }

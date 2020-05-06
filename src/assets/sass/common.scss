@@ -478,12 +478,3 @@ main{
         }
     }
 }
-div#popup{
-    position:absolute; 
-    top:0; 
-    left:0;
-    object{
-        width:100vw;
-        height: 100vh;
-    } /* 참고 https://dgkim5360.tistory.com/entry/adjusting-iframe-height-100-precent */
-}

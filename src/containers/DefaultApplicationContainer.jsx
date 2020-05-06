@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/application.css";
+// import "../assets/styles/application.css";
 
 // import images
 import icModel from "../assets/images_ms/ic_model.png";

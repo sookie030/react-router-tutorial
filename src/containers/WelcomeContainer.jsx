@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/welcome.css";
+// import "../assets/styles/welcome.css";
 
 // redux module
 import { connect } from "react-redux";

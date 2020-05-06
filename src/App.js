@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import Reducer from "./redux/reducer";
 
 // css
+import "./App.css";
 import "./assets/css/common.css";
 import "./assets/css/board.css";
 import "./assets/css/module.css";
