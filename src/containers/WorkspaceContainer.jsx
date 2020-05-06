@@ -1,10 +1,12 @@
 import React from "react";
 
 // import container
-import ModuleList from "../components/ModuleList";
+// import ModuleList from "../components/ModuleList";
+import ModuleList from "./ModuleListContainer";
 
 class WorkspaceContainer extends React.Component {
   state = {
+    isWelcomeView: false,
     selectedDpl: 0,
   };
 

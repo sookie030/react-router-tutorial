@@ -26,7 +26,7 @@ class HeaderContainer extends React.Component {
 
   minimizeWindow = () => {
     var window = remote.getCurrentWindow();
-    window.minmize();
+    window.minimize();
   };
 
   maximizeWindow = () => {
@@ -38,7 +38,7 @@ class HeaderContainer extends React.Component {
     return (
       <Header
         closeWindow={this.closeWindow}
-        closeminimizeWindowWindow={this.minimizeWindow}
+        minimizeWindow={this.minimizeWindow}
         maximizeWindow={this.maximizeWindow}
       />
     );
