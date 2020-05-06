@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/styles/tab.css';
+// import '../assets/styles/tab.css';
 
 // import constants
 import * as EVENT_TYPE from '../constants/EventType';

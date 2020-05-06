@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/styles/property-navigator.css';
+// import '../assets/styles/property-navigator.css';
 
 // redux module
 import { connect } from 'react-redux';
@@ -9,9 +9,9 @@ import {
 } from '../redux/actions';
 
 // import icon images
-import icEdit from '../assets/images/ic_edit.png';
-import icSave from '../assets/images/ic_save.png';
-import icClose from '../assets/images/ic_close.png';
+import icEdit from '../assets/images_ms/ic_edit.png';
+import icSave from '../assets/images_ms/ic_save.png';
+import icClose from '../assets/images_ms/ic_close.png';
 
 // import container component
 import PropertyContentsContainer from './PropertyContentsContainer';

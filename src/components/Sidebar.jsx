@@ -1,21 +1,27 @@
-import React from 'react';
-import '../assets/styles/sidebar.css';
+import React from "react";
 
-const Sidebar = props => (
-  <React.Fragment>
-    <div
-      id="sidebar"
-      style={{ width: props.sidebarWidth }}
-      onMouseUp={props.onMouseUp}
-    >
-      <div id="groups" style={{ width: props.groupWidth }}>
-        {props.groups}
-      </div>
-      <div id="module-list" style={{ width: props.moduleListWidth }}>
-        {props.moduleList}
-      </div>
-    </div>
-  </React.Fragment>
+const Sidebar = (props) => (
+  <aside id="sidebar">
+    <ul className="leftmenu">
+      <li>
+        <a href="" className="on">
+          <span></span>
+        </a>
+      </li>
+      <li>
+        <a href="" className=" ">
+          <span></span>
+        </a>
+      </li>
+    </ul>
+    <ul className="botbtn">
+      <li>
+        <a href="">
+          <span></span>
+        </a>
+      </li>
+    </ul>
+  </aside>
 );
 
 export default Sidebar;

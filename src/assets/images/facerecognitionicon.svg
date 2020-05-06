@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Gui.uitemplate.facerecognition.icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Gui.uitemplate.facerecognition.icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="face-icon">
+            <polygon id="Path-6" fill="#ABB9C8" points="19.9007209 3.19322255 57.363084 3.19322255 66.8410924 32.5908276 61.8323482 60.8196634 39.0600562 75.7928835 16.2166651 60.9599905 11.2740306 32.5908276"></polygon>
+            <polygon id="Path" fill="#D2D8E2" points="19.9007209 3.19322255 27.2401434 15.3274682 21.5983678 24.9102543 11.2740306 32.5908276"></polygon>
+            <polygon id="Path-2" fill="#D2D8E2" points="57.4329357 3.19322255 51.3888889 15.3274682 56.070203 23.6292232 66.8410924 32.57087"></polygon>
+            <polygon id="Path-3" fill="#D2D8E2" points="27.2401434 15.3274682 52.2183783 15.3274682 43.8810738 25.3574301 39.7011954 40.180958 34.1224111 25.3574301"></polygon>
+            <path d="M11.2740306,32.57087 L32.6848373,43.1677536 L28.6078654,57.4524351 C36.2616207,69.6660956 39.7456843,75.7729258 39.0600562,75.7729258 C38.3744281,75.7729258 30.7599644,70.8286282 16.2166651,60.9400329 L11.2740306,32.57087 Z" id="Path-4" fill="#D2D8E2"></path>
+            <polygon id="Path-5" fill="#D2D8E2" points="67.0708711 32.57087 46.3770263 43.2647353 48.9318702 56.8119196 39.3743891 75.7729258 62.0621269 60.7997057"></polygon>
+            <polygon id="Path-7" fill="#7C91AB" points="51.3888889 15.3274682 43.8810738 25.3574301 56.7225684 24.4318946"></polygon>
+            <polygon id="Path-8" fill="#7C91AB" points="27.2401434 14.5285389 20.8536983 25.3898613 34.2976641 25.3898613"></polygon>
+            <polygon id="Path-9" fill="#7C91AB" points="39.844641 38.3186706 32.3492994 43.2700366 39.844641 48.2108 47.3468429 43.2647353"></polygon>
+            <circle id="Oval" fill="#3E64FF" cx="57.2564353" cy="3.19322255" r="3.19322255"></circle>
+            <circle id="Oval-Copy-3" fill="#3E64FF" cx="20.2150538" cy="3.19322255" r="3.19322255"></circle>
+            <circle id="Oval-Copy-4" fill="#3E64FF" cx="11.2740306" cy="32.57087" r="3.19322255"></circle>
+            <circle id="Oval-Copy-9" fill="#3E64FF" cx="27.2401434" cy="15.3274682" r="1.91593353"></circle>
+            <circle id="Oval-Copy-10" fill="#3E64FF" cx="52.1472792" cy="15.3274682" r="1.91593353"></circle>
+            <circle id="Oval-Copy-11" fill="#3E64FF" cx="43.8449006" cy="25.5457804" r="1.91593353"></circle>
+            <circle id="Oval-Copy-12" fill="#3E64FF" cx="33.6265885" cy="25.5351779" r="1.91593353"></circle>
+            <circle id="Oval-Copy-13" fill="#3E64FF" cx="20.8536983" cy="25.5457804" r="1.91593353"></circle>
+            <circle id="Oval-Copy-14" fill="#3E64FF" cx="39.3743891" cy="38.3186706" r="1.91593353"></circle>
+            <circle id="Oval-Copy-15" fill="#3E64FF" cx="32.3492994" cy="43.4278267" r="1.91593353"></circle>
+            <circle id="Oval-Copy-16" fill="#3E64FF" cx="47.0381232" cy="43.4278267" r="1.91593353"></circle>
+            <circle id="Oval-Copy-17" fill="#3E64FF" cx="40.0130336" cy="47.2596937" r="1.91593353"></circle>
+            <circle id="Oval-Copy-18" fill="#3E64FF" cx="29.1560769" cy="57.4780059" r="1.91593353"></circle>
+            <circle id="Oval-Copy-19" fill="#33A5B5" cx="48.9540567" cy="56.8393614" r="1.91593353"></circle>
+            <circle id="Oval-Copy-5" fill="#3E64FF" cx="17.0218312" cy="60.6712284" r="3.19322255"></circle>
+            <circle id="Oval-Copy-6" fill="#3E64FF" cx="40.0130336" cy="75.9986966" r="3.19322255"></circle>
+            <circle id="Oval-Copy-7" fill="#3E64FF" cx="63.6428804" cy="60.6712284" r="3.19322255"></circle>
+            <circle id="Oval-Copy-8" fill="#3E64FF" cx="66.836103" cy="32.57087" r="3.19322255"></circle>
+        </g>
+    </g>
+</svg>

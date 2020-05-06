@@ -1,0 +1,489 @@
+//공통변수
+*{
+    margin: 0px; padding:0px; font-family:roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;list-style: none; text-decoration: none;box-sizing: border-box; 
+}
+*:focus{
+    outline:none;
+}
+@import url("http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,100;1,300;1,500&display=swap');
+
+
+
+
+$width-max:100%;
+$contents-width:1920px;
+$line-color:#dfdfdf;
+$text-color:#455462;
+$text-disable-color:#c0c6ca;
+$point-blue-color:#3e64ff;
+$point-darkblue-color:#212b4f;
+$bg-color: #fff;
+$dot-color: #DFE2EA;
+
+$border-radius: 5px;
+$circle-radius: 50%;
+$notice-number-size:23px;
+$dot-size: 2px;
+$dot-space: 16px;
+$modulelist-width:260px;
+$title-text:16px;
+$title-text-bold:20px;
+
+
+@mixin font($color,$size,$weight) {
+    color:$color;
+    font-size:$size;
+    font-weight: $weight;
+    color:$color;
+}
+
+// header변수
+$header-overcolor:#374060;
+$header-font-color:#fff;
+$header-submenu-color:#f9fafc;
+
+$submenu-overcolor:#A3BCCA;
+$submenu-overfontcolor:#fff;
+
+$header-height:60px;
+$header-submenu:370px;
+$header-pad-topbot:18px;
+$header-pad-leftright:30px;
+$header-fontsize:20px;
+$header-fontweight:300;
+
+$submenu-pad-topbot:8px; //2뎁스 메뉴의 상하 여백, 좌우는 없음. (new 위에, quite 아래)
+$submenu-pad-leftright:0px;
+$submenu-padding-leftright:30px; //2,3뎁스 메뉴의 각 항목 좌우여백
+$submenu-padding-topbot:8px; //2,3뎁스 메뉴의 각 항목 상하여백
+$submenu-fontsize:18px;
+
+$childmenu-width:260px;
+
+$welcome-fontweight:500;
+
+$windowsbtn-size:18px;
+
+//left bar변수
+$left-bar-width:110px;
+$left-menu-icon-padding:37px;
+$left-menu-icon-size:36px;
+
+$left-bgcolor:#171d34;
+
+
+
+//contents 변수
+$contents-bg:#f2f6f9;
+$profile-y:$header-height+15px;
+$profile-space-right:20px;
+$profile-icon-size:50px;
+$notice-list:10px; //알림아이콘과 리스트 사이 여백
+$notice-list-box-width:350px;
+$notice-list-leftright-space:25px; //알림 리스트 여백 좌우 25px, 상하 15px
+$notice-list-topbot-space:15px;
+$list-icon-size:25px;
+$list-font-size:14px;
+$list-date-font-size:12px;
+$list-date-font-color:#77838f;
+$list-del-size:11px;
+$list-pageing-size:10px;
+
+//header
+header{
+    width: $width-max;
+    height: $header-height;
+    background: $point-darkblue-color;    
+    z-index: 10000000000000000;
+    h1{
+        position: absolute;
+        width: $left-bar-width;
+       a{
+        display:block;
+        width: 30px;// 로고파일 이미지 크기
+        height: 30px;
+        background: url(../images/logo.png);
+        background-repeat: no-repeat;  
+        margin:15px auto; 
+       } 
+    }
+    .nav{
+        position: absolute;
+        left:$left-bar-width;
+      ul{ 
+          position: relative;
+          display: inline-table;
+          li{  //1뎁스 메뉴들
+              float: left;      
+              a{
+                  display: block;
+                  @include font($header-font-color,$header-fontsize,$header-fontweight);
+                  padding: $header-pad-topbot $header-pad-leftright; // 메뉴 상하좌dn 여백
+              }
+              ul{  //2뎁스 메뉴들
+                  display:none;
+                  position: absolute;
+                  top:100%;
+                  width: $header-submenu;
+                  padding:$submenu-pad-topbot $submenu-pad-leftright;
+                  background:$header-submenu-color;
+                  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                  
+                  li{
+                      float: none;
+                      position: relative;    
+                        a{
+                          @include font($text-color,$submenu-fontsize,$header-fontweight);
+                          padding: $submenu-padding-topbot $submenu-padding-leftright; //2,3뎁스 메뉴의 각 항목 상하좌우여백
+                          span{
+                            float: right; // 단축키
+                            font-size:$submenu-fontsize;
+                            }
+                            span.viewsub{
+                                display: block;
+                                width:10px; height:18px;
+                                background:url(../images/gosub.png);
+                                background-repeat: no-repeat;
+                            }
+                      }
+                         a:hover{
+                             background:$submenu-overcolor;
+                             @include font($submenu-overfontcolor,$submenu-fontsize,$header-fontweight);
+                             span.viewsub{
+                                display: block;
+                                width:10px; height:18px;
+                                background:url(../images/gosubselect.png);
+                                background-repeat: no-repeat;
+                            }
+                           }
+                    ul{ //3뎁스 메뉴들
+                        position: absolute;
+                        left: 100%;
+                        top: -$submenu-pad-topbot;
+                        width:$childmenu-width;
+                    }
+                  }
+                  hr{
+                     border:none;
+                      border-bottom: 1px solid $line-color;
+                      margin: $submenu-pad-topbot $submenu-padding-leftright; //2뎁스 메뉴의 각 항목 좌우여백
+                    }
+                  li:hover{
+                      background:$header-submenu-color;    
+                  
+                  }
+              }
+          }
+        li:hover{ 
+            background:$header-overcolor;
+        }
+          li:hover > ul{
+            display: block;
+        }
+      }
+      ul:after{
+          content: "";
+          clear: both;
+          display: block;
+      }
+    }
+    div.welcome{
+       text-align: center;
+       padding: $header-pad-topbot $header-pad-leftright; // 메뉴 상하좌위 여백
+        span{
+            @include font($submenu-overfontcolor,$header-fontsize,$welcome-fontweight);
+        }
+    }
+    div.windowsbtn{
+        position:absolute;
+        right:0;
+        top:0;
+        ul{
+            display:inline-table;
+            padding: $header-pad-topbot $header-pad-leftright; // 메뉴 상하좌우 여백
+            li{
+                float: left;
+                padding: 3px 0px 3px 66px;
+                a{
+                    display: block;
+                    width:$windowsbtn-size; //이미지 크기
+                    height:$windowsbtn-size;
+                    background-image: url(../images/max_btn.png);
+                    background-repeat: no-repeat;
+                }
+            }
+            li:first-child{
+                padding-left: 0;
+                a{
+                    background-image: url(../images/min_btn.png);
+                  background-repeat: no-repeat;
+                }
+            }
+            li:last-child{
+                a{
+                    background-image: url(../images/close_btn.png);
+                  background-repeat: no-repeat;
+                }
+            }
+        }
+    }
+}
+// nav 에 대한 설명 https://www.blueb.co.kr/?c=2/31&p=2&uid=3836
+
+main{
+    clear: both;
+    height: calc(100% - 60px);
+    aside#sidebar{
+        float: left;
+        width:$left-bar-width;
+        background:$left-bgcolor;
+        height:100%;
+        ul.leftmenu{
+            li{
+                a{
+                    display:block;
+                    padding:$left-menu-icon-padding;
+                    span{
+                        display:block;
+                        width: $left-menu-icon-size;
+                        height:$left-menu-icon-size;
+                        margin: 0 auto;
+                    }
+                }
+                a.on{
+                    background-color: $point-blue-color;
+                }
+            }
+            li:first-child{
+                a{
+                    span{
+                        background: url(../images/left_menu1.png);
+                        background-repeat: no-repeat;
+                    }
+                }
+                a.on{
+                    span{
+                        background: url(../images/left_menu1_on.png);
+                        background-repeat: no-repeat;
+                    }
+                }
+            }
+            li:last-child{
+                a{
+                    span{
+                        background: url(../images/left_menu2.png);
+                        background-repeat: no-repeat;
+                    }
+                }
+            }
+        }
+        ul.botbtn{
+            position: absolute;
+            bottom: 0;
+            li{
+                display:block;
+                padding:$left-menu-icon-padding;
+                a{
+                    span{
+                        display:block;
+                        width: $left-menu-icon-size;
+                        height:$left-menu-icon-size;
+                        margin: 0 auto;
+                        background: url(../images/left_setting.png);
+                        background-repeat: no-repeat;
+                   }
+                }
+            }
+        }
+    }
+    section{
+        float: right;
+        width: calc(100% - 110px); // 사아드 바 가로크기 (변수가 안먹음)
+        height: 100%;
+        background:$contents-bg;
+        .menu{
+            position: absolute;
+            top:$profile-y;
+            right:$profile-space-right;
+            >ul{
+                display: inline-table;
+                >li{
+                    float: left;
+                    >a{
+                        position: relative;
+                        display: block;
+                        width:$profile-icon-size; //icon크기
+                        height:$profile-icon-size;
+                        margin-bottom: $notice-list; // 아이콘과 리스트 사이 여백
+                        
+                        span{
+                            display: block;
+                            width:$notice-number-size;
+                            height:$notice-number-size;
+                            background: #FF5B48;
+                            border-radius: $circle-radius;
+                            border:$contents-bg 3px solid;
+
+                            position: absolute;
+                            bottom: 0;
+                            right:0;
+
+                            @include font($contents-bg,14px,500);
+                            text-align: center;
+                        }
+                    }
+                }
+                >li:first-child{
+                    margin-right: 25px; // profile 아이콘 사이 간격
+                    >a{
+                        background: url(../images/gui-notice.svg);
+                        background-repeat: no-repeat;
+                    }
+                }
+                >li:last-child{
+                    >a{
+                        background:url(../images/gui-profile.png);
+                        background-repeat: no-repeat;
+                    }
+                }
+                li:hover>ul{
+                    display:block;
+                }
+                ul.list{ //notice 리스트에 관함
+                    display: none;
+                    width:$notice-list-box-width;
+                   
+                    background: #fff;
+                    border:1px solid $line-color; 
+                    border-radius: $border-radius; 
+                    box-shadow: 0px 0px 3px rgba(0,0,0,0.15);
+
+                    position: absolute;
+                    top:100%;
+                    right:0px;
+
+                    hr{
+                        border:none;
+                        border-bottom:1px dotted $line-color;
+                        margin:0 $notice-list-leftright-space;
+                      }
+                    >li{
+                        float: none;
+                        position:relative;
+                        margin:$notice-list-topbot-space $notice-list-leftright-space;
+
+                        div.icon{
+                            width: $list-icon-size;
+                            height:$list-icon-size;
+                            margin: 7px $notice-list-leftright-space 7px 0 ; // 아이콘여백 
+                            float: left;
+                          }
+                        div.alram{
+                            background: url(../images/Gui.notice.list.icon.alram.png);
+                            background-repeat: no-repeat;
+                        }
+                        div.date{
+                            background: url(../images/Gui.notice.list.icon.date.png);
+                            background-repeat: no-repeat;
+                        }
+                        a{
+                            display: block;
+                            float: left;
+                            @include font($text-color,$list-font-size,300);
+                            line-height: 20px;
+                              span{
+                                  @include font($list-date-font-color,$list-date-font-size,100)
+                              }  
+                        }
+                        div.del{    
+                            float: right;
+                            margin:15px 0; // 리스트 내용과 삭제 버튼의 위치 차이
+                            a{
+                                display: block;
+                                width:$list-del-size; 
+                                height: $list-del-size;
+                                background: url(../images/Gui.document.close.png);
+                                background-repeat: no-repeat;
+                            }
+                          }
+                    }
+                    
+                   > li:after{
+                        content:"";
+                        clear:both;
+                        display:block;
+                    }
+                    div.page{
+                        ul{
+                            text-align: center;
+                            margin:25px 0 5px 0; 
+                            li{
+                                display:inline-block;
+                                a{
+                                   display: block;
+                                    width:$list-pageing-size;
+                                    height:$list-pageing-size;
+                                    background:$line-color;
+                                    border-radius: $circle-radius;
+                                    margin: 3px;
+                                }
+                            }
+                            li.act{
+                                a{
+                                    background:$point-blue-color;;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        object{
+            position: relative;
+             width:100%;
+             height: 100%;
+             z-index:0;
+        }
+        .state{
+            position: absolute;
+            bottom:0;
+            width:calc(100% - 110px);
+            height:28px;
+            background: #d8d8d8;
+            .bar{
+                position: absolute;
+                bottom:0;
+                width:30%; //진행중일때 바뀜
+                height:28px;
+                background:$point-blue-color;
+             }
+             .processing{
+               position: absolute;
+               bottom:0;
+               width:100%;
+                p{
+                    margin:6px 30px;
+                    @include font(#171d34,14px,300);
+                    span{
+                        float: right;
+                    }
+                }
+             }
+             .act{
+                 p{
+                     color:#fff;
+                 }
+             }
+        }
+    }
+}
+div#popup{
+    position:absolute; 
+    top:0; 
+    left:0;
+    object{
+        width:100vw;
+        height: 100vh;
+    } /* 참고 https://dgkim5360.tistory.com/entry/adjusting-iframe-height-100-precent */
+}

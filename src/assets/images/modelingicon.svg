@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Gui.document.uitemplate.btn.off</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Gui.document.uitemplate.btn.off" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#DFDFE5" cx="28" cy="28" r="28"></circle>
+        <g id="icon" transform="translate(15.000000, 7.000000)" stroke="#77838F" stroke-width="2">
+            <path d="M7.81585359,7.86391341 L5.27076991,20.7292301 L18.1360866,18.1841464 L20.7243136,5.27568642 L7.81585359,7.86391341 Z" id="Rectangle" transform="translate(13.000000, 13.000000) rotate(45.000000) translate(-13.000000, -13.000000) "></path>
+            <path d="M1,16.8685171 L1,27.4648162 L11,34.1314829 L11,23.5351838 L1,16.8685171 Z" id="Rectangle"></path>
+            <path d="M15,16.8685171 L15,27.4648162 L25,34.1314829 L25,23.5351838 L15,16.8685171 Z" id="Rectangle" transform="translate(20.000000, 25.500000) scale(-1, 1) translate(-20.000000, -25.500000) "></path>
+        </g>
+    </g>
+</svg>

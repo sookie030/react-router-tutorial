@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../assets/styles/linkboard.css';
+// import '../assets/styles/linkboard.css';
 
 // redux module
 import { connect } from 'react-redux';

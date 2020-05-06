@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/styles/contextmenu.css';
+// import '../assets/styles/contextmenu.css';
 
 const ContextMenu = props => (
   <svg

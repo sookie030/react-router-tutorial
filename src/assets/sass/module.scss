@@ -1,0 +1,183 @@
+@import "common.scss";
+
+.hidden
+        {
+            display: none;
+        }
+.rotation{
+   button >  span{
+        -webkit-transform: rotate(-180deg);
+        -ms-transform: rotate(-180deg);
+         transform: rotate(-180deg);
+    }
+}
+.board{
+    position: relative;
+    .box{
+        top: 100px;
+        left:200px;
+    }
+    .box2{
+        top:240px;
+        left:700px;
+    }
+    .box, .box2{
+        position: absolute;
+        width:300px;
+        height: fit-content;
+        .modulebox{
+           
+            width:300px;
+            background: $header-submenu-color;
+            box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+    
+            span.groupname{
+                display: block;
+                @include font($text-color, 14px, 600);
+                padding:8px 20px;
+                clear: both;
+                a.setting{
+                    position: relative;
+                    float: right;
+                    padding: 5px 0;
+                    width: fit-content;
+                    height: 20px;
+                    .oval{
+                        display:inline-block;
+                        width: 3px;
+                        height: 3px;
+                        border: solid 1px #455462;
+                        border-radius:$circle-radius;
+                        margin: 2px;
+                    }
+                    .deloption{
+                        display: none;
+                        position: absolute;
+                        top:15px;
+                        width:110px;
+                        border-radius: 4px;
+                        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+                        border: solid 1px #e0e3ef;
+                        background-color: #f9fafc;
+                        padding:13px 16px;
+                        img{
+                        margin-right: 10px;
+                        }
+                        span{
+                            @include font($text-color,14px,300);
+                        }
+                    }
+                }
+                a.setting:hover{
+                   .deloption{  
+                        display: block;
+                        
+                    }
+                }
+            }
+            hr{
+                border:none;
+                border-bottom:1px solid $line-color;
+            }
+            div.module{
+                padding:20px 35px;
+                span{
+                    display: block;
+                }
+                span.name{
+                    @include font($point-darkblue-color,18px,600);
+                }
+                .info{
+                    @include font($list-date-font-color,12px,300);
+                    padding: 8px 0 12px 0;
+                }
+                .option{
+                    span{
+                        strong{
+                            margin-right: 5px;
+                        }
+                        display: inline-block;
+                        @include font($list-date-font-color,12px,300);
+                        background: #EBEFFF;
+                        padding:5px 12px;
+                        width: fit-content;
+                        height: 22px;
+                        border-radius: 15px;
+                        margin: 2px;
+                    }
+                }
+            }
+            .hiddenimg{
+                padding:2px
+            }
+            #more, #more2{
+              .more{
+                  width:100%;
+                  border:none;
+                    background: none;
+                  .tri{
+                    display: block;
+                    width: 8px;
+                    margin: 10px auto;
+                    border-top: 4px solid $point-darkblue-color;
+                    border-right: 4px solid transparent;
+                    border-left: 4px solid transparent;  
+        
+                    -webkit-transition: -webkit-transform .45s ease;
+                   transition: transform .45s ease;
+                }
+              }  
+            } 
+        }
+        .point{
+          position: absolute;
+          top:0px;
+          width:300px;
+          height: fit-content;
+          span{
+             position: absolute;
+              display: inline-block;
+              width:12px;
+              height: 12px;
+              border:1px solid $point-blue-color;
+              border-radius: 50%;
+              background: #fff;
+          }
+          .top{
+            top:-6px;
+            left: calc(50% - 6px);
+          }
+          .left{
+            left:-6px;
+            top: 104px;//<- 모듈박스의 height의 50%-6px;
+            
+          }
+          .right{
+            right:-6px;
+            top: 104px //<- 모듈박스의 height의 50%-6px;
+          }
+          .bottom{
+              top: 214px; //<- 모듈박스의 height를 잡아줄 수 있으면 bottom: 6px;로 줘도 될듯
+              left: calc(50% - 6px);
+          }
+        }
+        .modulboxdefault{
+            border-radius: $border-radius;
+            border:1px solid $line-color;
+        }
+        .moduleboxclick{
+            border:1px solid $point-blue-color;
+            border-radius: $border-radius;
+        }
+    }
+    div.line{
+        width:100%;
+        height: 100%;
+        svg{
+            width:100%;
+            height: 100%;
+        }
+    }
+}
+

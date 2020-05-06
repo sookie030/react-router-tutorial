@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Gui.popup.illust.objectrecognition</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Gui.popup.illust.objectrecognition" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="80" height="80"></rect>
+        <g id="ic_motion" transform="translate(0.000000, 20.000000)">
+            <circle id="Oval" fill="#DFE4EA" fill-rule="nonzero" cx="19.0233962" cy="20.5977358" r="19.0233962"></circle>
+            <circle id="Oval" fill="#91A2B9" fill-rule="nonzero" cx="31.9592453" cy="20.1449057" r="19.0233962"></circle>
+            <circle id="Oval" fill="#5E7798" fill-rule="nonzero" cx="40.3290566" cy="20.1449057" r="19.0233962"></circle>
+            <circle id="Oval" stroke="#3E64FF" stroke-width="6" cx="59.3524528" cy="20.1449057" r="18.2988679"></circle>
+            <path d="M58.0289831,0.360276377 L61.0726977,0.360276377 L61.0726977,11.774206 L58.0289831,11.774206 L58.0289831,0.360276377 Z M57.6321707,28.5146362 L60.6758853,28.5146362 L60.6758853,39.9285659 L57.6321707,39.9285659 L57.6321707,28.5146362 Z M79.1365789,18.8209701 L79.1365789,21.8646847 L67.7226492,21.8646847 L67.7226492,18.8209701 L79.1365789,18.8209701 Z M50.9822192,18.4241577 L50.9822192,21.4678723 L39.5682895,21.4678723 L39.5682895,18.4241577 L50.9822192,18.4241577 Z" id="Shape" fill="#3E64FF" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

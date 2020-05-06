@@ -2,7 +2,7 @@ import React from "react";
 import "../assets/styles/application.css";
 
 // import images
-import icModel from "../assets/images/ic_model.png";
+import icModel from "../assets/images_ms/ic_model.png";
 
 import { plain2immutable } from "../utils/plain2immutable";
 import * as PROP_TYPE from "../constants/PropertyType";

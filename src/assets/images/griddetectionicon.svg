@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Gui.uitemplate.griddetection.icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Gui.uitemplate.griddetection.icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="grid-icon">
+            <rect id="Rectangle" fill="#7C92AB" x="0" y="0" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-8" fill="#D3D9E2" x="0" y="16.3265306" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-13" fill="#D3D9E2" x="0" y="32.6530612" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-18" fill="#D3D9E2" x="0" y="48.9795918" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-23" fill="#7C92AB" x="0" y="65.3061224" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-4" fill="#D3D9E2" x="16.3265306" y="0" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-9" fill="#3E64FF" x="16.3265306" y="16.3265306" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-14" fill="#7C92AB" x="16.3265306" y="32.6530612" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-19" fill="#ABB8C9" x="16.3265306" y="48.9795918" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-24" fill="#D3D9E2" x="16.3265306" y="65.3061224" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-5" fill="#D3D9E2" x="32.6530612" y="0" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-10" fill="#ABB8C9" x="32.6530612" y="16.3265306" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-15" fill="#D3D9E2" x="32.6530612" y="32.6530612" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-20" fill="#3E64FF" x="32.6530612" y="48.9795918" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-25" fill="#D3D9E2" x="32.6530612" y="65.3061224" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-6" fill="#D3D9E2" x="48.9795918" y="0" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-11" fill="#3E64FF" x="48.9795918" y="16.3265306" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-16" fill="#D3D9E2" x="48.9795918" y="32.6530612" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-21" fill="#D3D9E2" x="48.9795918" y="48.9795918" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-26" fill="#7C92AB" x="48.9795918" y="65.3061224" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-7" fill="#7C92AB" x="65.3061224" y="0" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-12" fill="#D3D9E2" x="65.3061224" y="16.3265306" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-17" fill="#ABB9CA" x="65.3061224" y="32.6530612" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-22" fill="#ABB9CA" x="65.3061224" y="48.9795918" width="14.6938776" height="14.6938776" rx="2"></rect>
+            <rect id="Rectangle-Copy-27" fill="#D3D9E2" x="65.3061224" y="65.3061224" width="14.6938776" height="14.6938776" rx="2"></rect>
+        </g>
+    </g>
+</svg>

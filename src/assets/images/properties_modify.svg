@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="16px" viewBox="0 0 17 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>modify</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Gui.property.modify" transform="translate(-2.000000, -1.000000)" stroke="#455462">
+            <g id="modify">
+                <path d="M9.26776695,17.9959417 C10.0399879,16.7603882 10.1792829,16.5375162 11.1917661,14.9175431 C11.2414322,14.8380773 11.267767,14.7462535 11.267767,14.6525436 L11.267767,0.939339828 C11.267767,0.663197453 11.0439093,0.439339828 10.767767,0.439339828 L7.76776695,0.439339828 C7.49162458,0.439339828 7.26776695,0.663197453 7.26776695,0.939339828 L7.26776695,14.6525436 C7.26776695,14.7462535 7.29410168,14.8380773 7.3437678,14.9175431 C8.356251,16.5375162 8.49554598,16.7603882 9.26776695,17.9959417 Z" id="Rectangle" transform="translate(9.267767, 9.439340) rotate(45.000000) translate(-9.267767, -9.439340) "></path>
+                <path d="M4.5,15.5 L17.7530483,15.5" id="Line-2" stroke-linecap="square"></path>
+            </g>
+        </g>
+    </g>
+</svg>

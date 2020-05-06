@@ -1,4 +1,127 @@
-.header-area {
+header {
+  width: 100%;
+  height: 60px;
+  background: #212b4f;
+  z-index: 10000000000000000; }
+  header h1 {
+    position: absolute;
+    width: 110px; }
+    header h1 a {
+      display: block;
+      width: 30px;
+      height: 30px;
+      background: url(../images/logo.png);
+      background-repeat: no-repeat;
+      margin: 15px auto; }
+  header .nav {
+    position: absolute;
+    left: 110px; }
+    header .nav ul {
+      position: relative;
+      display: inline-table; }
+      header .nav ul li {
+        float: left; }
+        header .nav ul li a {
+          display: block;
+          color: #fff;
+          font-size: 20px;
+          font-weight: 300;
+          color: #fff;
+          padding: 18px 30px; }
+        header .nav ul li ul {
+          display: none;
+          position: absolute;
+          top: 100%;
+          width: 370px;
+          padding: 8px 0px;
+          background: #f9fafc;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); }
+          header .nav ul li ul li {
+            float: none;
+            position: relative; }
+            header .nav ul li ul li a {
+              color: #455462;
+              font-size: 18px;
+              font-weight: 300;
+              color: #455462;
+              padding: 8px 30px; }
+              header .nav ul li ul li a span {
+                float: right;
+                font-size: 18px; }
+              header .nav ul li ul li a span.viewsub {
+                display: block;
+                width: 10px;
+                height: 18px;
+                background: url(../images/gosub.png);
+                background-repeat: no-repeat; }
+            header .nav ul li ul li a:hover {
+              background: #A3BCCA;
+              color: #fff;
+              font-size: 18px;
+              font-weight: 300;
+              color: #fff; }
+              header .nav ul li ul li a:hover span.viewsub {
+                display: block;
+                width: 10px;
+                height: 18px;
+                background: url(../images/gosubselect.png);
+                background-repeat: no-repeat; }
+            header .nav ul li ul li ul {
+              position: absolute;
+              left: 100%;
+              top: -8px;
+              width: 260px; }
+          header .nav ul li ul hr {
+            border: none;
+            border-bottom: 1px solid #dfdfdf;
+            margin: 8px 30px; }
+          header .nav ul li ul li:hover {
+            background: #f9fafc; }
+      header .nav ul li:hover {
+        background: #374060; }
+      header .nav ul li:hover > ul {
+        display: block; }
+    header .nav ul:after {
+      content: "";
+      clear: both;
+      display: block; }
+  header div.welcome {
+    text-align: center;
+    padding: 18px 30px; }
+    header div.welcome span {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 500;
+      color: #fff; }
+  header div.windowsbtn {
+    position: absolute;
+    right: 0;
+    top: 0; }
+    header div.windowsbtn ul {
+      display: inline-table;
+      padding: 18px 30px; }
+      header div.windowsbtn ul li {
+        float: left;
+        padding: 3px 0px 3px 66px; }
+        header div.windowsbtn ul li a {
+          display: block;
+          width: 18px;
+          height: 18px;
+          background-image: url(../images/max_btn.png);
+          background-repeat: no-repeat; }
+      header div.windowsbtn ul li:first-child {
+        padding-left: 0; }
+        header div.windowsbtn ul li:first-child a {
+          background-image: url(../images/min_btn.png);
+          background-repeat: no-repeat; }
+      header div.windowsbtn ul li:last-child a {
+        background-image: url(../images/close_btn.png);
+        background-repeat: no-repeat; }
+
+
+
+
+/* .header-area {
   display: table;
   width: 100%;
   min-height: 56px;
@@ -77,4 +200,4 @@
 
 .button {
   cursor: pointer;
-}
+} */

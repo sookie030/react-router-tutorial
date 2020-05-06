@@ -8,6 +8,12 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Reducer from "./redux/reducer";
 
+// css
+import "./assets/css/common.css";
+import "./assets/css/board.css";
+import "./assets/css/module.css";
+import "./assets/css/popup.css";
+
 // Components
 import Welcome from "./containers/WelcomeContainer";
 import LinkWorkspace from "./containers/LinkWorkspaceContainer";
@@ -15,6 +21,8 @@ import AppView from "./containers/AppViewContainer";
 import NotFound from "./containers/NotFound";
 
 import Header from "./containers/HeaderContainer";
+import Sidebar from "./containers/SidebarContainer";
+import Workspace from "./containers/WorkspaceContainer";
 
 const store = createStore(Reducer);
 
@@ -23,20 +31,20 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div>
-            <Header
-              test={this.props.match}
-            />
-            <div>
+          <React.Fragment>
+            <Header />
+
+            <main>
+              <Sidebar />
+              <Workspace />
+            </main>
+
+            {/* <div>
               <Switch>
                 <Route exact path="/" component={Welcome} />
-                <Route exact path="/linkboard" component={LinkWorkspace} />
-                <Route path="/appview/:viewid" component={AppView}/>
-                {/* <Route path="/appview" component={AppView}/> */}
-                <Route component={NotFound} />
               </Switch>
-            </div>
-          </div>
+            </div> */}
+          </React.Fragment>
         </Router>
       </Provider>
     );
