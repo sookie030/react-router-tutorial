@@ -61,6 +61,7 @@ class PipelineManager {
    * @param {Object} position
    */
   addNode(name, group, position) {
+    console.log(`addNode(${name}, ${group}, ${position}) `)
     let newNode;
     switch (group) {
       case GROUPS.SOURCE:

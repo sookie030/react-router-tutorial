@@ -5,8 +5,9 @@
 .board {
   position: relative; }
   .board .box {
-    top: 100px;
-    left: 200px; }
+    /* top: 100px;
+    left: 200px;  */
+  }
   .board .box2 {
     top: 240px;
     left: 700px; }

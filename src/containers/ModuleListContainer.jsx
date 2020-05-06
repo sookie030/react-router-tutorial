@@ -87,16 +87,16 @@ class ModuleListContainer extends React.Component {
 
     console.log("moduleID", moduleID);
     console.log("groupName", groupName);
-    var module = MODULE_MANAGER.MODULE_LIST[groupName][moduleID];
+    var moduleName = MODULE_MANAGER.MODULE_LIST[groupName][moduleID];
 
     if (this.state.selectedModuleId !== moduleID) {
-      this.props.onSelectModule({ group: groupName, name: module });
+      this.props.onSelectModule({ group: groupName, name: moduleName });
       this.setState({
         selectedModuleId: moduleID,
       });
     }
 
-    e.dataTransfer.setData("module", module);
+    e.dataTransfer.setData("module", moduleName);
   };
 
   /**

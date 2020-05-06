@@ -1,7 +1,7 @@
 import React from "react";
 
 const Header = (props) => (
-  <header>
+  <header onDoubleClick={props.maximizeWindow}>
     <h1>
       <a href="#"></a>
     </h1>
