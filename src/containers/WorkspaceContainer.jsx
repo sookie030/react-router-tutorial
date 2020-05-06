@@ -4,16 +4,15 @@ import React from "react";
 import ModuleList from "../components/ModuleList";
 
 class WorkspaceContainer extends React.Component {
-
   state = {
-    selectedDpl: 0
-  }
+    selectedDpl: 0,
+  };
 
-  handleOnChangeDpl = e => {
+  handleOnChangeDpl = (e) => {
     this.setState({
-      selectedDpl: e.target.value
-    })
-  }
+      selectedDpl: e.target.value,
+    });
+  };
 
   render() {
     return (
@@ -21,14 +20,17 @@ class WorkspaceContainer extends React.Component {
         <ModuleList />
         <div className="runlist">
           <div className="custom-select">
-            <select value={this.state.selectedDpl} onChange={this.handleOnChangeDpl}>
+            <select
+              value={this.state.selectedDpl}
+              onChange={this.handleOnChangeDpl}
+            >
               <option value="0">Image training.dpl</option>
               <option value="1">Image training.dpl</option>
               <option value="2">Grid detection.dpl</option>
               <option value="3">UI Template</option>
             </select>
           </div>
-          <a href="">
+          <a href="#">
             <span>Run</span>
           </a>
         </div>
@@ -36,17 +38,17 @@ class WorkspaceContainer extends React.Component {
           <div className="tab" style={{ clear: "both" }}>
             <ul>
               <li className="acttab">
-                <a href="">
+                <a href="#">
                   Welcome<span></span>
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="#">
                   facerecognition.dpl<span></span>
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="#">
                   detection.dpl<span></span>
                 </a>
               </li>
@@ -56,7 +58,7 @@ class WorkspaceContainer extends React.Component {
           <div className="workspace">
             <div id="moduleboard"> </div>
             <div className="modelingbtn">
-              <a href=""></a>
+              <a href="#"></a>
             </div>
             {/* <!-- properties 띄우려고 만든 체크박스임, 워크보드 하단에 있는 체크박스. 제어가능하면 <input ..>삭제하거나 hidden 해주면 됨. 참고는 board.html의 19줄의 체크박스 활용한거임 (좌측 모듈리스트)--></input ..> */}
             <input type="checkbox" id="menu-button" />
@@ -149,6 +151,16 @@ class WorkspaceContainer extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="state">
+          {/* <!-- 진행상황 보여주는 파란색 bar--> */}
+          <div className="bar"></div>
+          {/* <!--활성화시 div에 act클래스 추가--> */}
+          <div className="processing">
+            <p>
+              Camera Processing...<span>14/30</span>
+            </p>
           </div>
         </div>
       </section>

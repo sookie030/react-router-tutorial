@@ -4,19 +4,19 @@ const Sidebar = (props) => (
   <aside id="sidebar">
     <ul className="leftmenu">
       <li>
-        <a href="" className="on">
+        <a href="#" className="on">
           <span></span>
         </a>
       </li>
       <li>
-        <a href="" className=" ">
+        <a href="#" className=" ">
           <span></span>
         </a>
       </li>
     </ul>
     <ul className="botbtn">
       <li>
-        <a href="">
+        <a href="#">
           <span></span>
         </a>
       </li>

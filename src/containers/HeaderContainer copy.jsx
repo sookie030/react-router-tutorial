@@ -208,54 +208,54 @@
 //                 <ul>
 //                   <li>
 //                     {/* <!-- 2depth --> */}
-//                     <a href="">
+//                     <a href="#">
 //                       New <span>Ctrl+N</span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       New Templete<span className="viewsub"></span>
 //                     </a>
 //                     <ul>
 //                       <li>
 //                         {/* <!-- 3depth --> */}
-//                         <a href="">Object Recognation</a>
+//                         <a href="#">Object Recognation</a>
 //                       </li>
 //                       <li>
-//                         <a href="">Grid Detection</a>
+//                         <a href="#">Grid Detection</a>
 //                       </li>
 //                       <li>
-//                         <a href="">Face Recognation</a>
+//                         <a href="#">Face Recognation</a>
 //                       </li>
 //                     </ul>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Open<span>Ctrl+O</span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Open Recently<span className="viewsub"></span>
 //                     </a>
 //                     <ul>
 //                       <li>
 //                         {/* <!-- 3depth --> */}
-//                         <a href="">fimename.dpl</a>
+//                         <a href="#">fimename.dpl</a>
 //                       </li>
 //                       <li>
-//                         <a href="">filename2.dpl</a>
+//                         <a href="#">filename2.dpl</a>
 //                       </li>
 //                     </ul>
 //                   </li>
 //                   <hr />
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Save<span>Ctrl+S</span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Save As<span>Ctrl+Alt+Save</span>
 //                     </a>
 //                   </li>
@@ -263,67 +263,67 @@
 //                     <hr />
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Quite<span>Ctrl+Q</span>
 //                     </a>
 //                   </li>
 //                 </ul>
 //               </li>
 //               <li>
-//                 <a href="">Tools</a>
+//                 <a href="#">Tools</a>
 //                 <ul>
 //                   <li>
 //                     {/* <!-- 2depth --> */}
-//                     <a href="">
+//                     <a href="#">
 //                       Knowledge Model Analysis <span></span>
 //                     </a>
 //                   </li>
 //                   <hr />
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Add UI Templates <span></span>
 //                     </a>
 //                   </li>
 //                   <hr />
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Export Data Pipeline <span></span>
 //                     </a>
 //                   </li>
 //                 </ul>
 //               </li>
 //               <li>
-//                 <a href="">Help</a>
+//                 <a href="#">Help</a>
 //                 <ul>
 //                   <li>
 //                     {/* <!-- 2depth --> */}
-//                     <a href="">
+//                     <a href="#">
 //                       About Knowledge Studio <span> </span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Documentation... <span> </span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Report Bug and Enhancement... <span> </span>
 //                     </a>
 //                   </li>
 //                   <hr />
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Check for Updates <span> </span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Licenses <span></span>
 //                     </a>
 //                   </li>
 //                   <li>
-//                     <a href="">
+//                     <a href="#">
 //                       Login<span></span>
 //                     </a>
 //                   </li>
@@ -337,13 +337,13 @@
 //           <div className="windowsbtn">
 //             <ul>
 //               <li>
-//                 <a href=""></a>
+//                 <a href="#"></a>
 //               </li>
 //               <li>
-//                 <a href=""></a>
+//                 <a href="#"></a>
 //               </li>
 //               <li>
-//                 <a href=""></a>
+//                 <a href="#"></a>
 //               </li>
 //             </ul>
 //           </div>

@@ -176,6 +176,7 @@ main {
           background: url(../images/left_setting.png);
           background-repeat: no-repeat; }
   main section {
+    position: relative;
     float: right;
     width: calc(100% - 110px);
     height: 100%;
@@ -296,7 +297,7 @@ main {
     main section .state {
       position: absolute;
       bottom: 0;
-      width: calc(100% - 110px);
+      width: 100%;
       height: 28px;
       background: #d8d8d8; }
       main section .state .bar {
