@@ -3,148 +3,183 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,100;1,300;1,500&display=swap");
 
 .board {
-  position: relative; }
-  .board .box {
-    /* top: 100px;
+  position: relative;
+}
+.board .box {
+  /* top: 100px;
     left: 200px;  */
-  }
-  .board .box {
-    position: absolute;
-    width: 300px;
-    height: fit-content; }
-    .board .box .modulebox {
-      width: 300px;
-      background: #f9fafc;
-      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
-      cursor: pointer; }
-      .board .box .modulebox span.groupname {
-        display: block;
-        color: #455462;
-        font-size: 14px;
-        font-weight: 600;
-        color: #455462;
-        padding: 8px 20px;
-        clear: both; }
-        .board .box .modulebox span.groupname a.setting {
-          position: relative;
-          float: right;
-          padding: 5px 0;
-          width: fit-content;
-          height: 20px; }
-          .board .box .modulebox span.groupname a.setting .oval {
-            display: inline-block;
-            width: 3px;
-            height: 3px;
-            border: solid 1px #455462;
-            border-radius: 50%;
-            margin: 2px; }
-          .board .box .modulebox span.groupname a.setting .deloption {
-            display: none;
-            position: absolute;
-            top: 15px;
-            width: 110px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-            border: solid 1px #e0e3ef;
-            background-color: #f9fafc;
-            padding: 13px 16px; }
-            .board .box .modulebox span.groupname a.setting .deloption img {
-              margin-right: 10px; }
-            .board .box .modulebox span.groupname a.setting .deloption span {
-              color: #455462;
-              font-size: 14px;
-              font-weight: 300;
-              color: #455462; }
-        .board .box .modulebox span.groupname a.setting:hover .deloption {
-          display: block; }
-      .board .box .modulebox hr {
-        border: none;
-        border-bottom: 1px solid #dfdfdf; }
-      .board .box .modulebox div.module {
-        padding: 20px 35px; }
-        .board .box .modulebox div.module span {
-          display: block; }
-        .board .box .modulebox div.module span.name {
-          color: #212b4f;
-          font-size: 18px;
-          font-weight: 600;
-          color: #212b4f; }
-        .board .box .modulebox div.module .info {
-          color: #77838f;
-          font-size: 12px;
-          font-weight: 300;
-          color: #77838f;
-          padding: 8px 0 12px 0; }
-        .board .box .modulebox div.module .option span {
-          display: inline-block;
-          color: #77838f;
-          font-size: 12px;
-          font-weight: 300;
-          color: #77838f;
-          background: #EBEFFF;
-          padding: 5px 12px;
-          width: fit-content;
-          height: 22px;
-          border-radius: 15px;
-          margin: 2px; }
-          .board .box .modulebox div.module .option span strong {
-            margin-right: 5px; }
-      .board .box .modulebox .hiddenimg {
-        padding: 2px; }
-        .board .box .modulebox .hiddenimg.hidden {
-          display: none; }
-        .board .box .modulebox .hiddenimg .hi {
-          padding: 2px; }
-      
-      .board .box .modulebox #more .more {
-        width: 100%;
-        border: none;
-        background: none; }
-        .board .box .modulebox #more .more .tri {
-          display: block;
-          width: 8px;
-          margin: 10px auto;
-          border-top: 4px solid #212b4f;
-          border-right: 4px solid transparent;
-          border-left: 4px solid transparent;
-          -webkit-transition: -webkit-transform .45s ease;
-          transition: transform .45s ease; }
-    .board .box .point {
-      position: absolute;
-      top: 0px;
-      width: 300px;
-      height: fit-content; }
-      .board .box .point span {
-        position: absolute;
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        border: 1px solid #3e64ff;
-        border-radius: 50%;
-        background: #fff; }
-      .board .box .point .top {
-        top: -6px;
-        left: calc(50% - 6px); }
-      .board .box .point .left {
-        left: -6px;
-        top: 104px; }
-      .board .box .point .right {
-        right: -6px;
-        top: 104px; }
-      .board .box .point .bottom {
-        top: 214px;
-        left: calc(50% - 6px); }
-    .board .box .moduleboxdefault {
-      border-radius: 5px;
-      border: 1px solid #dfdfdf; }
-    .board .box .moduleboxclick {
+}
+.board .box {
+  position: absolute;
+  width: 300px;
+  height: fit-content;
+}
+.board .box .modulebox {
+  width: 300px;
+  background: #f9fafc;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.board .box .modulebox span.groupname {
+  display: block;
+  color: #455462;
+  font-size: 14px;
+  font-weight: 600;
+  color: #455462;
+  padding: 8px 20px;
+  clear: both;
+}
+.board .box .modulebox span.groupname a.setting {
+  position: relative;
+  float: right;
+  padding: 5px 0;
+  width: fit-content;
+  height: 20px;
+}
+.board .box .modulebox span.groupname a.setting .oval {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border: solid 1px #455462;
+  border-radius: 50%;
+  margin: 2px;
+}
+.board .box .modulebox span.groupname a.setting .deloption {
+  display: none;
+  position: absolute;
+  top: 15px;
+  width: 110px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  border: solid 1px #e0e3ef;
+  background-color: #f9fafc;
+  padding: 13px 16px;
+}
+.board .box .modulebox span.groupname a.setting .deloption img {
+  margin-right: 10px;
+}
+.board .box .modulebox span.groupname a.setting .deloption span {
+  color: #455462;
+  font-size: 14px;
+  font-weight: 300;
+  color: #455462;
+}
+.board .box .modulebox span.groupname a.setting:hover .deloption {
+  display: block;
+}
+.board .box .modulebox hr {
+  border: none;
+  border-bottom: 1px solid #dfdfdf;
+}
+.board .box .modulebox div.module {
+  padding: 20px 35px;
+}
+.board .box .modulebox div.module span {
+  display: block;
+}
+.board .box .modulebox div.module span.name {
+  color: #212b4f;
+  font-size: 18px;
+  font-weight: 600;
+  color: #212b4f;
+}
+.board .box .modulebox div.module .info {
+  color: #77838f;
+  font-size: 12px;
+  font-weight: 300;
+  color: #77838f;
+  padding: 8px 0 12px 0;
+}
+.board .box .modulebox div.module .option span {
+  display: inline-block;
+  color: #77838f;
+  font-size: 12px;
+  font-weight: 300;
+  color: #77838f;
+  background: #ebefff;
+  padding: 5px 12px;
+  width: fit-content;
+  height: 22px;
+  border-radius: 15px;
+  margin: 2px;
+}
+.board .box .modulebox div.module .option span strong {
+  margin-right: 5px;
+}
+.board .box .modulebox .hiddenimg {
+  padding: 2px;
+}
+.board .box .modulebox .hiddenimg.hidden {
+  display: none;
+}
+.board .box .modulebox .hiddenimg .hi {
+  padding: 2px;
+}
+
+.board .box .modulebox #more .more {
+  width: 100%;
+  border: none;
+  background: none;
+}
+.board .box .modulebox #more .more .tri {
+  display: block;
+  width: 8px;
+  margin: 10px auto;
+  border-top: 4px solid #212b4f;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  -webkit-transition: -webkit-transform 0.45s ease;
+  transition: transform 0.45s ease;
+}
+.board .box .point {
+  position: absolute;
+  top: 0px;
+  width: 300px;
+  height: fit-content;
+}
+.board .box .point span {
+  position: absolute;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #3e64ff;
+  border-radius: 50%;
+  background: #fff;
+}
+.board .box .point .top {
+  top: -6px;
+  left: calc(50% - 6px);
+}
+.board .box .point .left {
+  left: -6px;
+  top: 104px;
+}
+.board .box .point .right {
+  right: -6px;
+  top: 104px;
+}
+.board .box .point .bottom {
+  top: 214px;
+  left: calc(50% - 6px);
+}
+.board .box .moduleboxdefault {
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+}
+.board .box .moduleboxdefault:hover {
+  border: 1px solid #3e64ff;
+  border-radius: 5px;
+}
+/* .board .box .moduleboxhover {
       border: 1px solid #3e64ff;
-      border-radius: 5px; }
-  .board div.line {
-    width: 100%;
-    height: 100%; }
-    .board div.line svg {
-      width: 100%;
-      height: 100%; }
+      border-radius: 5px; } */
+.board div.line {
+  width: 100%;
+  height: 100%;
+}
+.board div.line svg {
+  width: 100%;
+  height: 100%;
+}
 
 /*# sourceMappingURL=module.css.map */

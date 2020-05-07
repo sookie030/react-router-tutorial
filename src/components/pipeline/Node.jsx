@@ -4,7 +4,6 @@ import Draggable from "react-draggable";
 import * as MODULE_MANAGER from "../../constants/ModuleInfo";
 
 class Node extends React.Component {
-
   OUTPUT_WIDTH = 293;
   OUTPUT_HEIGHT = 165;
 
@@ -67,12 +66,7 @@ class Node extends React.Component {
         onStop={this.props.handleNodeDragStop}
       >
         <div className="box">
-          <div
-            className={`modulebox moduleboxdefault ${
-              this.props.preview ? "moduleboxclick" : ""
-            }`}
-            id="modulebox"
-          >
+          <div className="modulebox moduleboxdefault" id="modulebox">
             <span className="groupname">
               {this.props.node.getGroup()}
               <a href="" className="setting">
@@ -126,10 +120,7 @@ class Node extends React.Component {
               </button>
             </div>
           </div>
-          <div
-            className={`point ${this.props.preview ? "" : "hidden"}`}
-            id="point"
-          >
+          <div className={`point`} id="point">
             <span className="top"></span>
             <span className="left"></span>
             <span className="right"></span>

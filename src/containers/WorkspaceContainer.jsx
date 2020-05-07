@@ -26,7 +26,6 @@ import PipelineManager from "../manager/PipelineManager";
 import { closeSync } from "fs";
 
 class WorkspaceContainer extends React.Component {
-
   workspaceRef = React.createRef();
 
   state = {
@@ -127,6 +126,12 @@ class WorkspaceContainer extends React.Component {
             <ul>
               <li className="acttab">
                 <a href="#">
+                  Untitled.dpl
+                  {/* <span></span> */}
+                </a>
+              </li>
+              {/* <li className="acttab">
+                <a href="#">
                   Welcome<span></span>
                 </a>
               </li>
@@ -139,7 +144,7 @@ class WorkspaceContainer extends React.Component {
                 <a href="#">
                   detection.dpl<span></span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -150,7 +155,7 @@ class WorkspaceContainer extends React.Component {
             onMouseDown={(e) => this.handleMouseDown(e)}
             onDragOver={(e) => this.handleDragOver(e)}
             onDrop={(e) => this.handleDrop(e)}
-            ref={r => {
+            ref={(r) => {
               this.workspaceRef = r;
             }}
           >
