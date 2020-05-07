@@ -1,21 +1,32 @@
-import { MODULES } from '../../constants/ModuleInfo';
+import { MODULES } from "../../constants/ModuleInfo";
 
 var property = {};
 
-property[MODULES.SUBSAMPLE] = node => {
+property[MODULES.SUBSAMPLE] = (node) => {
   return [
-    `Grid ${
-      node.getProperties().getIn(['Grid Count', 'properties', 'Horizontal', 'value'])
-    }x${node.getProperties().getIn(['Grid Count', 'properties', 'Vertical', 'value'])}`,
+    {
+      Grid: `${node
+        .getProperties()
+        .getIn([
+          "Grid Count",
+          "properties",
+          "Horizontal",
+          "value",
+        ])}x${node
+        .getProperties()
+        .getIn(["Grid Count", "properties", "Vertical", "value"])}`,
+    },
   ];
 };
 
 /* Blur Filter는 속성값이 없음 */
 
-property[MODULES.HOG] = node => {
+property[MODULES.HOG] = (node) => {
   return [
-    `Edge ${node.getProperties().getIn(['Edge Type', 'value'])}`,
-    `Binning ${node.getProperties().getIn(['Histogram Binning Count', 'value'])}`,
+    { Edge: node.getProperties().getIn(["Edge Type", "value"]) },
+    {
+      Binning: node.getProperties().getIn(["Histogram Binning Count", "value"]),
+    },
   ];
 };
 

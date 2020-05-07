@@ -23,8 +23,12 @@ import Pipeline from "./PipelineContainer";
 
 // import pipelineManager
 import PipelineManager from "../manager/PipelineManager";
+import { closeSync } from "fs";
 
 class WorkspaceContainer extends React.Component {
+
+  workspaceRef = React.createRef();
+
   state = {
     isWelcomeView: false,
     selectedDpl: 0,
@@ -84,18 +88,21 @@ class WorkspaceContainer extends React.Component {
   handleDrop = (e) => {
     let droppedModuleName = e.dataTransfer.getData("module");
     console.log("handleDrop!", droppedModuleName);
+    console.log(this.workspaceRef.offsetLeft, this.workspaceRef.offsetTop)
+    console.log(this.workspaceRef.getBoundingClientRect())
 
     if (droppedModuleName !== null && droppedModuleName !== "") {
       let moduleName = this.props.selectedModule.name;
       let groupName = this.props.selectedModule.group;
       let position = {
-        x: e.clientX,
-        y: e.clientY,
+        x: e.clientX - this.workspaceRef.getBoundingClientRect().left - 149,
+        y: e.clientY - this.workspaceRef.getBoundingClientRect().top - 20,
       };
 
       this.props.pipelineManager.addNode(moduleName, groupName, position);
     }
     this.props.onSelectModule(null);
+    this.props.onSetDummyNumber();
   };
 
   render() {
@@ -146,8 +153,13 @@ class WorkspaceContainer extends React.Component {
             onMouseDown={(e) => this.handleMouseDown(e)}
             onDragOver={(e) => this.handleDragOver(e)}
             onDrop={(e) => this.handleDrop(e)}
+            ref={r => {
+              this.workspaceRef = r;
+            }}
           >
-            <div id="moduleboard"> </div>
+            <div id="moduleboard">
+              <Pipeline />
+            </div>
             <div className="modelingbtn">
               <a href="#"></a>
             </div>

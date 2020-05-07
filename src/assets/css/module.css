@@ -132,7 +132,7 @@
       .board .box .point .bottom, .board .box2 .point .bottom {
         top: 214px;
         left: calc(50% - 6px); }
-    .board .box .modulboxdefault, .board .box2 .modulboxdefault {
+    .board .box .moduleboxdefault, .board .box2 .moduleboxdefault {
       border-radius: 5px;
       border: 1px solid #dfdfdf; }
     .board .box .moduleboxclick, .board .box2 .moduleboxclick {

@@ -62,7 +62,7 @@ class Node extends React.Component {
         onStop={this.props.handleNodeDragStop}
       >
         <div className="box">
-          <div className="modulebox modulboxdefault" id="modulebox">
+          <div className="modulebox moduleboxdefault" id="modulebox">
             <span className="groupname">
             {this.props.node.getGroup()}
               <a href="" className="setting">
@@ -83,7 +83,8 @@ class Node extends React.Component {
                 orientation.
               </span>
               <div className="option">
-                <span>
+                {this.props.propertyCompopent}
+                {/* <span>
                   <strong>Camera</strong>0
                 </span>
                 <span>
@@ -91,7 +92,7 @@ class Node extends React.Component {
                 </span>
                 <span>
                   <strong>Size</strong>100x300
-                </span>
+                </span> */}
               </div>
             </div>
             <div id="hiddenid" className="hiddenimg">
