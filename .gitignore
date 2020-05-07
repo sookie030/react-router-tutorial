@@ -13,3 +13,194 @@ build
 .DS_Store
 .env
 npm-debug.log
+dist/builder-effective-config.yaml
+dist/KnowledgeStudio-0.1.0-mac.zip
+dist/KnowledgeStudio-0.1.0.dmg
+dist/KnowledgeStudio-0.1.0.dmg.blockmap
+dist/latest-mac.yml
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Electron Framework
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Libraries
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Resources
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libEGL.dylib
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libffmpeg.dylib
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libGLESv2.dylib
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libswiftshader_libEGL.dylib
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libswiftshader_libGLESv2.dylib
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/am.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ar.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/bg.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/bn.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ca.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_100_percent.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_200_percent.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/crashpad_handler
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/cs.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/da.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/de.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/el.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/en.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/en_GB.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/es.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/es_419.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/et.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/fa.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/fi.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/fil.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/fr.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/gu.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/he.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/hi.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/hr.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/hu.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/icudtl.dat
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/id.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/it.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ja.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/kn.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ko.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/lt.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/lv.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/MainMenu.nib
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ml.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/mr.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ms.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/natives_blob.bin
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/nb.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/nl.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/pl.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/pt_BR.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/pt_PT.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/resources.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ro.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ru.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/sk.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/sl.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/sr.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/sv.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/sw.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/ta.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/te.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/th.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/tr.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/uk.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/v8_context_snapshot.bin
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/vi.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/zh_CN.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/zh_TW.lproj/locale.pak
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Electron Framework.framework/Versions/Current
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (GPU).app/Contents/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (GPU).app/Contents/MacOS/KnowledgeStudio Helper (GPU)
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (GPU).app/Contents/PkgInfo
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (Plugin).app/Contents/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (Plugin).app/Contents/MacOS/KnowledgeStudio Helper (Plugin)
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (Plugin).app/Contents/PkgInfo
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (Renderer).app/Contents/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (Renderer).app/Contents/MacOS/KnowledgeStudio Helper (Renderer)
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper (Renderer).app/Contents/PkgInfo
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper.app/Contents/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper.app/Contents/MacOS/KnowledgeStudio Helper
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/KnowledgeStudio Helper.app/Contents/PkgInfo
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Headers
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Mantle
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Modules
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Resources
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/Mantle.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/MTLJSONAdapter.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/MTLManagedObjectAdapter.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/MTLModel+NSCoding.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/MTLModel.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/MTLValueTransformer.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/NSArray+MTLManipulationAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/NSDictionary+MTLManipulationAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/NSObject+MTLComparisonAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/NSValueTransformer+MTLInversionAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Headers/NSValueTransformer+MTLPredefinedTransformerAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Mantle
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Modules/module.modulemap
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/A/Resources/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Mantle.framework/Versions/Current
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Headers
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Modules
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/ReactiveCocoa
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Resources
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/EXTKeyPathCoding.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/EXTScope.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/metamacros.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSArray+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSControl+RACCommandSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSControl+RACTextSignalSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSData+RACSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSDictionary+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSEnumerator+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSFileHandle+RACSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSIndexSet+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSNotificationCenter+RACSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSObject+RACAppKitBindings.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSObject+RACDeallocating.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSObject+RACLifting.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSObject+RACPropertySubscribing.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSObject+RACSelectorSignal.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSOrderedSet+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSSet+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSString+RACSequenceAdditions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSString+RACSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSText+RACSignalSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSURLConnection+RACSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/NSUserDefaults+RACSupport.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACBacktrace.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACBehaviorSubject.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACChannel.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACCommand.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACCompoundDisposable.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACDisposable.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACEvent.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACGroupedSignal.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACKVOChannel.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACMulticastConnection.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACQueueScheduler+Subclass.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACQueueScheduler.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACReplaySubject.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACScheduler+Subclass.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACScheduler.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACScopedDisposable.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSequence.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSerialDisposable.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSignal+Operations.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSignal.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACStream.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSubject.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSubscriber.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACSubscriptingAssignmentTrampoline.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACTargetQueueScheduler.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACTestScheduler.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACTuple.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/RACUnit.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Headers/ReactiveCocoa.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Modules/module.modulemap
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/ReactiveCocoa
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/A/Resources/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/ReactiveCocoa.framework/Versions/Current
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Headers
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Modules
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Resources
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Squirrel
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Headers/NSBundle+SQRLVersionExtensions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Headers/NSProcessInfo+SQRLVersionExtensions.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Headers/SQRLDownloadedUpdate.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Headers/SQRLUpdate.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Headers/SQRLUpdater.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Headers/Squirrel.h
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Modules/module.modulemap
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/A/Squirrel
+dist/mac/KnowledgeStudio.app/Contents/Frameworks/Squirrel.framework/Versions/Current
+dist/mac/KnowledgeStudio.app/Contents/Info.plist
+dist/mac/KnowledgeStudio.app/Contents/MacOS/KnowledgeStudio
+dist/mac/KnowledgeStudio.app/Contents/PkgInfo
+dist/mac/KnowledgeStudio.app/Contents/Resources/app-update.yml
+dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar
+dist/mac/KnowledgeStudio.app/Contents/Resources/electron.asar
+dist/mac/KnowledgeStudio.app/Contents/Resources/electron.icns

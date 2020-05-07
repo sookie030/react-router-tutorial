@@ -7,7 +7,7 @@ const ArrayType = window.ArrayType;
 const constants = require("./constants");
 const datatypes = require("./datatypes");
 
-// libvision = "./lib/vision/libVisionLibrary1839.dylib";
+const path = require("path");
 
 // Declare int type
 const int16 = ref.types.int16;
@@ -86,19 +86,7 @@ const callbackFreeDataPtr = ffi.Function("void", [voidPtr]);
 const platform = process.platform;
 
 // Global variable for nmengine library
-let libvision = null;
-
-// Load appropriate library for the operating platform
-if (platform === "Windows") {
-  // libvision = './lib/nmengine.dll'
-  // return devices
-} else if (platform === "Linux") {
-  // libvision = './lib/libnmengine.so'
-} else {
-  // libvision = "./lib/vision/libVisionLibrary1839.dylib";
-  // libvision = "./src/lib/vision/libVisionLibrary1754.dylib";
-  libvision = "./src/lib/vision/libVisionLibrary.dylib";
-}
+let libvision = "src/lib/vision/libVisionLibrary.dylib";
 
 const visionlib = ffi.Library(libvision, {
   // 20.03.31 test on callback function

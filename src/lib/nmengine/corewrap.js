@@ -39,11 +39,14 @@
 // Load modules about ffi
 const ffi = window.ffi;
 const ref = window.ref;
-const ArrayType = window.ArrayType
+const ArrayType = window.ArrayType;
 
 // Load data
-const constants = require('./constants');
-const datatypes = require('./datatypes');
+const constants = require("./constants");
+const datatypes = require("./datatypes");
+
+const path = require("path");
+const fs = window.fs;
 
 // Declare uint type
 const uint8 = ref.types.uint8;
@@ -71,42 +74,246 @@ const neuronPtr = ref.refType(datatypes.Neuron);
 const platform = process.platform;
 
 // Global variable for nmengine library
-let libnmengine = null;
+console.log(window.location.pathname);
+console.log(__filename);
+console.log(__dirname);
+console.log(process.env.PATH);
+console.log(process.cwd());
+console.log(process.execPath);
 
-// Load appropriate library for the operating platform 
-if (platform === 'Windows') {
-    libnmengine = './lib/nmengine.dll'
-} else if (platform === 'Linux') {
-    libnmengine = './lib/libnmengine.so'
-} else {
-    libnmengine = './src/lib/nmengine/libnmengine.dylib'
+let testlibpath = path.join(__dirname, "lib/nmengine/libnmengine.dylib");
+
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
 }
 
+
+testlibpath = "static/js/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = "js/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = "lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = path.join(__dirname, "lib/nmengine/libnmengine.dylib");
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = path.join(window.location.pathname, "libnmengine.dylib");
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = "/Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/build/static/js/lib/nmengine/libnmengine.dylib"
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = path.join(__dirname, "./build/lib/nmengine/libnmengine.dylib");
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath = path.join(__dirname, "../build/lib/nmengine/libnmengine.dylib");
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath =  `file://${path.join(__dirname, "../build/lib/nmengine/libnmengine.dylib")}`;
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath =  "/Users/minsook/Documents/GitHub/react-router-tutorial/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath =  "/Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/build/static/js/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath =  "file:///Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/build/static/js/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+
+testlibpath =  "/Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/build/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath =  "file:///Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/build/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+
+testlibpath =  "/Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/src/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+testlibpath =  "file:///Users/minsook/Documents/GitHub/react-router-tutorial/dist/mac/KnowledgeStudio.app/Contents/Resources/app.asar/src/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+
+testlibpath =  "/Users/minsook/Download/app.asar/build/lib/nmengine/libnmengine.dylib";
+try {
+  const nmengine1 = ffi.Library(testlibpath, {
+    nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  });
+  console.log("wow", testlibpath);
+} catch (e) {
+  console.error(e);
+  console.log("fail", testlibpath);
+}
+
+
+
+// for dev environment
+let libnmengine = "src/lib/nmengine/libnmengine.dylib";
+
 const nmengine = ffi.Library(libnmengine, {
-    "nm_get_devices": [uint16, [deviceArrayPtr, uint8Ptr]],
-    "nm_connect": [uint16, [devicePtr]],
-    "nm_close": [uint16, [devicePtr]],
-    "nm_forget": [uint16, [devicePtr]],
-    "nm_reset": [uint16, [devicePtr]],
-    "nm_get_network_info": [uint16, [devicePtr, networkInfoPtr]],
-    "nm_get_neuron_count": [uint16, [devicePtr, uint32Ptr]],
-    "nm_get_network_status": [uint16, [devicePtr, networkStatusPtr]],
-    "nm_set_network_type": [uint16, [devicePtr, uint8]],
-    "nm_get_network_type": [uint16, [devicePtr, uint8Ptr]],
-    "nm_set_context": [uint16, [devicePtr, contextPtr]],
-    "nm_get_context": [uint16, [devicePtr, contextPtr]],
-    "nm_learn": [uint16, [devicePtr, learnReqPtr]],
-    "nm_learn_batch": [uint16, [devicePtr, ref.refType(datatypes.LearnBatchReq)]],
-    "nm_clusterize": [uint16, [devicePtr, ref.refType(datatypes.ClusterizeReq)]],
-    "nm_classify": [uint16, [devicePtr, classifyReqPtr]],
-    "nm_get_model_info": [uint16, [devicePtr, ref.refType(datatypes.ModelInfo)]],
-    "nm_get_model_stat": [uint16, [devicePtr, ref.refType(datatypes.ModelStat)]],
-    "nm_read_neuron": [uint16, [devicePtr, neuronPtr]],
-    "nm_read_neurons": [uint16, [devicePtr, neuronArrayPtr, uint32Ptr]],
-    "nm_write_neurons": [uint16, [devicePtr, neuronArrayPtr, uint32Ptr]],
-    "nm_save_model": [uint16, [devicePtr, neuronArrayPtr, uint32, 'CString']],
-    "nm_load_model": [uint16, [devicePtr, neuronArrayPtr, uint32Ptr, 'CString']],
-    "nm_power_save": [uint16, [devicePtr]],
+  nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
+  nm_connect: [uint16, [devicePtr]],
+  nm_close: [uint16, [devicePtr]],
+  nm_forget: [uint16, [devicePtr]],
+  nm_reset: [uint16, [devicePtr]],
+  nm_get_network_info: [uint16, [devicePtr, networkInfoPtr]],
+  nm_get_neuron_count: [uint16, [devicePtr, uint32Ptr]],
+  nm_get_network_status: [uint16, [devicePtr, networkStatusPtr]],
+  nm_set_network_type: [uint16, [devicePtr, uint8]],
+  nm_get_network_type: [uint16, [devicePtr, uint8Ptr]],
+  nm_set_context: [uint16, [devicePtr, contextPtr]],
+  nm_get_context: [uint16, [devicePtr, contextPtr]],
+  nm_learn: [uint16, [devicePtr, learnReqPtr]],
+  nm_learn_batch: [uint16, [devicePtr, ref.refType(datatypes.LearnBatchReq)]],
+  nm_clusterize: [uint16, [devicePtr, ref.refType(datatypes.ClusterizeReq)]],
+  nm_classify: [uint16, [devicePtr, classifyReqPtr]],
+  nm_get_model_info: [uint16, [devicePtr, ref.refType(datatypes.ModelInfo)]],
+  nm_get_model_stat: [uint16, [devicePtr, ref.refType(datatypes.ModelStat)]],
+  nm_read_neuron: [uint16, [devicePtr, neuronPtr]],
+  nm_read_neurons: [uint16, [devicePtr, neuronArrayPtr, uint32Ptr]],
+  nm_write_neurons: [uint16, [devicePtr, neuronArrayPtr, uint32Ptr]],
+  nm_save_model: [uint16, [devicePtr, neuronArrayPtr, uint32, "CString"]],
+  nm_load_model: [uint16, [devicePtr, neuronArrayPtr, uint32Ptr, "CString"]],
+  nm_power_save: [uint16, [devicePtr]],
 });
 
 let devices;
@@ -119,166 +326,156 @@ let targetPtr;
  * @return {number} detectedCount: The number of detected devices
  */
 exports.getDevices = (count) => {
+  let devicesPtr = ref.alloc(ArrayType(datatypes.Device, count));
+  let countPtr = ref.alloc("uint8", count);
+  let r = nmengine.nm_get_devices(devicesPtr, countPtr);
 
-    let devicesPtr = ref.alloc(ArrayType(datatypes.Device, count));
-    let countPtr = ref.alloc('uint8', count);
-    let r = nmengine.nm_get_devices(devicesPtr, countPtr);
+  devices = devicesPtr.deref();
 
-    devices = devicesPtr.deref();
-
-    return {
-        resultCode: r
-        , devices: devicesPtr.deref()
-        , detectedCount: countPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    devices: devicesPtr.deref(),
+    detectedCount: countPtr.deref(),
+  };
+};
 
 /**
  * @param {number} index device index
  * @return {number} resultCode: Result Code
  */
 exports.connect = (index) => {
+  targetPtr = ref.alloc(datatypes.Device, devices[index]);
+  let r = nmengine.nm_connect(targetPtr);
 
-    targetPtr = ref.alloc(datatypes.Device, devices[index]);
-    let r = nmengine.nm_connect(targetPtr);
-
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  */
 exports.close = () => {
-    let r = nmengine.nm_close(targetPtr);
+  let r = nmengine.nm_close(targetPtr);
 
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  */
 exports.forget = () => {
+  let r = nmengine.nm_forget(targetPtr);
 
-    let r = nmengine.nm_forget(targetPtr);
-
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  */
 exports.reset = () => {
+  let r = nmengine.nm_reset(targetPtr);
 
-    let r = nmengine.nm_reset(targetPtr);
-
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  * @return {NetworkStatus} status: The result struct of getNetworkStatus
  */
 exports.getNetworkStatus = () => {
+  let status = new datatypes.NetworkStatus();
+  let r = nmengine.nm_get_network_status(targetPtr, status.ref());
 
-    let status = new datatypes.NetworkStatus();
-    let r = nmengine.nm_get_network_status(targetPtr, status.ref());
-
-    return {
-        resultCode: r
-        , status: status
-    }
-}
+  return {
+    resultCode: r,
+    status: status,
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  * @return {NetworkInfo} info: The result struct of getNetworkInfo
  */
 exports.getNetworkInfo = () => {
+  let info = new datatypes.NetworkInfo();
+  let r = nmengine.nm_get_network_info(targetPtr, info.ref());
 
-    let info = new datatypes.NetworkInfo();
-    let r = nmengine.nm_get_network_info(targetPtr, info.ref());
-
-    return {
-        resultCode: r
-        , info: info
-    }
-}
+  return {
+    resultCode: r,
+    info: info,
+  };
+};
 
 /**
-* @return {number} resultCode: Result Code
-* @return {number} networkType: The result struct of getNetworkType
-*/
+ * @return {number} resultCode: Result Code
+ * @return {number} networkType: The result struct of getNetworkType
+ */
 exports.getNetworkType = () => {
+  let networkTypePtr = ref.alloc("uint8");
+  let r = nmengine.nm_get_network_type(targetPtr, networkTypePtr);
 
-    let networkTypePtr = ref.alloc('uint8');
-    let r = nmengine.nm_get_network_type(targetPtr, networkTypePtr);
-
-    return {
-        resultCode: r
-        , networkType: networkTypePtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    networkType: networkTypePtr.deref(),
+  };
+};
 
 /**
  * @param {number} networkType Network Type
-* @return {number} resultCode: Result Code
-*/
+ * @return {number} resultCode: Result Code
+ */
 exports.setNetworkType = (networkType) => {
+  let r = nmengine.nm_set_network_type(targetPtr, networkType);
 
-    let r = nmengine.nm_set_network_type(targetPtr, networkType);
-
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};
 
 /**
-* @return {number} resultCode: Result Code
-* @return {ctx} ctx: Context
-*/
+ * @return {number} resultCode: Result Code
+ * @return {ctx} ctx: Context
+ */
 exports.getContext = () => {
+  let ctx = new datatypes.Context();
+  let r = nmengine.nm_get_context(targetPtr, ctx.ref());
 
-    let ctx = new datatypes.Context();
-    let r = nmengine.nm_get_context(targetPtr, ctx.ref());
-
-    return {
-        resultCode: r
-        , ctx: ctx
-    }
-}
+  return {
+    resultCode: r,
+    ctx: ctx,
+  };
+};
 
 /**
  * @param {number} context GCR
  * @param {number} norm A distance evaluation unit (L1, Lsup)
- * @param {number} minif Minimum Influence Field (to control uncertainty domain) 
- * @param {number} maxif Maximum Influence Field  (to adjust conservatism) 
+ * @param {number} minif Minimum Influence Field (to control uncertainty domain)
+ * @param {number} maxif Maximum Influence Field  (to adjust conservatism)
  * @return {number} resultCode: Result Code
  * @return {ctx} ctx: Context
  */
 exports.setContext = (context, norm, minif, maxif) => {
+  let ctxStr = new datatypes.Context();
+  ctxStr.context = context;
+  ctxStr.norm = norm;
+  ctxStr.minif = minif;
+  ctxStr.maxif = maxif;
 
-    let ctxStr = new datatypes.Context();
-    ctxStr.context = context;
-    ctxStr.norm = norm;
-    ctxStr.minif = minif;
-    ctxStr.maxif = maxif;
+  let ctxPtr = ref.alloc(datatypes.Context, ctxStr);
+  let r = nmengine.nm_set_context(targetPtr, ctxPtr);
 
-    let ctxPtr = ref.alloc(datatypes.Context, ctxStr);
-    let r = nmengine.nm_set_context(targetPtr, ctxPtr);
-
-    return {
-        resultCode: r
-        , ctx: ctxPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    ctx: ctxPtr.deref(),
+  };
+};
 
 /**
  * @param {!Array<number>} vector Components of input vector
@@ -288,34 +485,34 @@ exports.setContext = (context, norm, minif, maxif) => {
  * @return {LearnReq} req: The result struct of Training
  */
 exports.learn = (vector, category, queryAffected) => {
-    let learnStr = new datatypes.LearnReq();
-    learnStr.category = category;
-    learnStr.size = constants.NEURON_MEMORY;
-    learnStr.vector = vector;
-    learnStr.query_affected = queryAffected;
+  let learnStr = new datatypes.LearnReq();
+  learnStr.category = category;
+  learnStr.size = constants.NEURON_MEMORY;
+  learnStr.vector = vector;
+  learnStr.query_affected = queryAffected;
 
-    let learnPtr = ref.alloc(datatypes.LearnReq, learnStr);
-    let r = nmengine.nm_learn(targetPtr, learnPtr);
+  let learnPtr = ref.alloc(datatypes.LearnReq, learnStr);
+  let r = nmengine.nm_learn(targetPtr, learnPtr);
 
-    return {
-        resultCode: r
-        , req: learnPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    req: learnPtr.deref(),
+  };
+};
 
 /**
-* @return {number} resultCode: Result Code
-* @return {number} ncount: ncount
-*/
+ * @return {number} resultCode: Result Code
+ * @return {number} ncount: ncount
+ */
 exports.getNeuronCount = () => {
-    let neuronCountPtr = ref.alloc('uint32');
-    let r = nmengine.nm_get_neuron_count(targetPtr, neuronCountPtr);
+  let neuronCountPtr = ref.alloc("uint32");
+  let r = nmengine.nm_get_neuron_count(targetPtr, neuronCountPtr);
 
-    return {
-        resultCode: r
-        , ncount: neuronCountPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    ncount: neuronCountPtr.deref(),
+  };
+};
 
 /**
  * @param {!Array<Neuron>} nid A id of neuron to read
@@ -323,18 +520,17 @@ exports.getNeuronCount = () => {
  * @return {Neuron} neuron: A read neuron
  */
 exports.readNeuron = (nid) => {
+  let neuron = new datatypes.Neuron();
+  neuron.nid = nid;
 
-    let neuron = new datatypes.Neuron();
-    neuron.nid = nid;
+  let neuronPtr = ref.alloc(datatypes.Neuron, neuron);
+  let r = nmengine.nm_read_neuron(targetPtr, neuronPtr);
 
-    let neuronPtr = ref.alloc(datatypes.Neuron, neuron)
-    let r = nmengine.nm_read_neuron(targetPtr, neuronPtr);
-
-    return {
-        resultCode: r
-        , neuron: neuronPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    neuron: neuronPtr.deref(),
+  };
+};
 
 /**
  * @param {!Array<Neuron>} neurons An array to store results of readNeurons
@@ -344,16 +540,16 @@ exports.readNeuron = (nid) => {
  * @return {number} readCount: The number of read neurons
  */
 exports.readNeurons = (neurons, readCount) => {
-    let neuronsPtr = ref.alloc(neurons);
-    let readCountPtr = ref.alloc('uint32', readCount);
-    let r = nmengine.nm_read_neurons(targetPtr, neuronsPtr, readCountPtr);
+  let neuronsPtr = ref.alloc(neurons);
+  let readCountPtr = ref.alloc("uint32", readCount);
+  let r = nmengine.nm_read_neurons(targetPtr, neuronsPtr, readCountPtr);
 
-    return {
-        resultCode: r
-        , neurons: neuronsPtr.deref()
-        , readCount: readCountPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    neurons: neuronsPtr.deref(),
+    readCount: readCountPtr.deref(),
+  };
+};
 
 /**
  * @param {!Array<Neuron>} neurons An array of neurons to write
@@ -362,28 +558,28 @@ exports.readNeurons = (neurons, readCount) => {
  * @return {number} writeCount: The number of write neurons
  */
 exports.writeNeurons = (neurons, writeCount) => {
-    let writeCountPtr = ref.alloc('uint32', writeCount);
-    let r = nmengine.nm_write_neurons(targetPtr, neurons.buffer, writeCountPtr);
+  let writeCountPtr = ref.alloc("uint32", writeCount);
+  let r = nmengine.nm_write_neurons(targetPtr, neurons.buffer, writeCountPtr);
 
-    return {
-        resultCode: r
-        , writeCount: writeCountPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    writeCount: writeCountPtr.deref(),
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  * @return {ModelInfo} modelInfo: The result struct of getModelInfo
  */
 exports.getModelInfo = () => {
-    let mi = new datatypes.ModelInfo();
-    let r = nmengine.nm_get_model_info(targetPtr, mi.ref());
+  let mi = new datatypes.ModelInfo();
+  let r = nmengine.nm_get_model_info(targetPtr, mi.ref());
 
-    return {
-        resultCode: r
-        , modelInfo: mi
-    }
-}
+  return {
+    resultCode: r,
+    modelInfo: mi,
+  };
+};
 
 /**
  * @param {number} context context
@@ -392,47 +588,53 @@ exports.getModelInfo = () => {
  * @return {ModelInfo} modelStat: The result struct of getModelStat
  */
 exports.getModelStat = (context, maxCategory) => {
-    let msStr = new datatypes.ModelStat();
-    msStr.context = context;
-    msStr.histo_cat = Buffer.from(new Uint16Array(maxCategory + 1).buffer);
-    msStr.histo_deg = Buffer.from(new Uint16Array(maxCategory + 1).buffer);
+  let msStr = new datatypes.ModelStat();
+  msStr.context = context;
+  msStr.histo_cat = Buffer.from(new Uint16Array(maxCategory + 1).buffer);
+  msStr.histo_deg = Buffer.from(new Uint16Array(maxCategory + 1).buffer);
 
-    let msPtr = ref.alloc(datatypes.ModelStat, msStr);
-    let r = nmengine.nm_get_model_stat(targetPtr, msPtr);
+  let msPtr = ref.alloc(datatypes.ModelStat, msStr);
+  let r = nmengine.nm_get_model_stat(targetPtr, msPtr);
 
-    return {
-        resultCode: r
-        , modelStat: msPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    modelStat: msPtr.deref(),
+  };
+};
 
 /**
  * @param {number} iterCount epoch
- * @param {number} iterable 
+ * @param {number} iterable
  * @param {number} vectorCount The size of input vector array
  * @param {!Array<uint8>} vectors Input vector array for batch
  * @param {!Array<uint16>} categories Categories for batch
  * @return {number} resultCode: Result Code
  * @return {LearnBatchReq} req: The result struct of learnBatch
  */
-exports.learnBatch = (iterCount, iterable, vectorCount, vectors, categories) => {
-    let batchStr = new datatypes.LearnBatchReq();
-    batchStr.iter_count = iterCount;
-    batchStr.iter_result = Buffer.from(new Uint32Array(iterCount).buffer);
-    batchStr.iterable = iterable;
-    batchStr.vector_size = constants.NEURON_MEMORY;
-    batchStr.vector_count = vectorCount;
-    batchStr.vectors = Buffer.from(vectors);
-    batchStr.categories = Buffer.from(categories.buffer);
+exports.learnBatch = (
+  iterCount,
+  iterable,
+  vectorCount,
+  vectors,
+  categories
+) => {
+  let batchStr = new datatypes.LearnBatchReq();
+  batchStr.iter_count = iterCount;
+  batchStr.iter_result = Buffer.from(new Uint32Array(iterCount).buffer);
+  batchStr.iterable = iterable;
+  batchStr.vector_size = constants.NEURON_MEMORY;
+  batchStr.vector_count = vectorCount;
+  batchStr.vectors = Buffer.from(vectors);
+  batchStr.categories = Buffer.from(categories.buffer);
 
-    let batchPtr = ref.alloc(datatypes.LearnBatchReq, batchStr);
-    let r = nmengine.nm_learn_batch(targetPtr, batchPtr);
+  let batchPtr = ref.alloc(datatypes.LearnBatchReq, batchStr);
+  let r = nmengine.nm_learn_batch(targetPtr, batchPtr);
 
-    return {
-        resultCode: r
-        , req: batchPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    req: batchPtr.deref(),
+  };
+};
 
 /**
  * @param {number} vectorCount The size of input vector array
@@ -475,32 +677,32 @@ exports.learnBatch = (iterCount, iterable, vectorCount, vectors, categories) => 
 
 /**
  * @param {number} initialCategory Initial category id (it must be greater than 0)
- * @param {number} incrementOf Unit of increasement of category id 
+ * @param {number} incrementOf Unit of increasement of category id
  * @param {number} vectorCount The size of input vector array
  * @param {!Array<uint8>} vectors Input vector array
  * @return {number} resultCode: Result Code
  * @return {ClusterizeReq} req: The result struct of clusterize
  */
 exports.clusterize = (initialCategory, incrementOf, vectorCount, vectors) => {
-    let cluStr = new datatypes.ClusterizeReq();
+  let cluStr = new datatypes.ClusterizeReq();
 
-    // The value of initial category must be greater than 0 
-    cluStr.initial_category = initialCategory;
-    // If incrementof is set to 0, all of vector will be trained with same category
-    cluStr.incrementof = incrementOf;
-    cluStr.vector_size = constants.NEURON_MEMORY;
-    cluStr.vector_count = vectorCount;
-    cluStr.vectors = Buffer.from(vectors);
+  // The value of initial category must be greater than 0
+  cluStr.initial_category = initialCategory;
+  // If incrementof is set to 0, all of vector will be trained with same category
+  cluStr.incrementof = incrementOf;
+  cluStr.vector_size = constants.NEURON_MEMORY;
+  cluStr.vector_count = vectorCount;
+  cluStr.vectors = Buffer.from(vectors);
 
-    // Do clusterize
-    let cluPtr = ref.alloc(datatypes.ClusterizeReq, cluStr)
-    let r = nmengine.nm_clusterize(targetPtr, cluPtr);
+  // Do clusterize
+  let cluPtr = ref.alloc(datatypes.ClusterizeReq, cluStr);
+  let r = nmengine.nm_clusterize(targetPtr, cluPtr);
 
-    return {
-        resultCode: r
-        , req: cluPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    req: cluPtr.deref(),
+  };
+};
 
 /**
  * @param {number} k mumber of returns matched
@@ -509,19 +711,19 @@ exports.clusterize = (initialCategory, incrementOf, vectorCount, vectors) => {
  * @return {ClassifyReq} The result struct of classify
  */
 exports.classify = (k, vector) => {
-    let classifyStr = new datatypes.ClassifyReq();
-    classifyStr.size = constants.NEURON_MEMORY;
-    classifyStr.k = k;
-    classifyStr.vector = vector
+  let classifyStr = new datatypes.ClassifyReq();
+  classifyStr.size = constants.NEURON_MEMORY;
+  classifyStr.k = k;
+  classifyStr.vector = vector;
 
-    let classifyPtr = ref.alloc(datatypes.ClassifyReq, classifyStr);
-    let r = nmengine.nm_classify(targetPtr, classifyPtr);
+  let classifyPtr = ref.alloc(datatypes.ClassifyReq, classifyStr);
+  let r = nmengine.nm_classify(targetPtr, classifyPtr);
 
-    return {
-        resultCode: r
-        , req: classifyPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    req: classifyPtr.deref(),
+  };
+};
 
 /**
  * @param {!Array<Neuron>} neurons Input vector array for save
@@ -530,12 +732,12 @@ exports.classify = (k, vector) => {
  * @return {number} resultCode: Result Code
  */
 exports.saveModel = (neurons, neuronCount, path) => {
-    let r = nmengine.nm_save_model(targetPtr, neurons.buffer, neuronCount, path);
+  let r = nmengine.nm_save_model(targetPtr, neurons.buffer, neuronCount, path);
 
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};
 
 /**
  * @param {!Array<Neuron>} neurons An array to store results of loadModel
@@ -545,24 +747,24 @@ exports.saveModel = (neurons, neuronCount, path) => {
  * @return {!Array<Neuron>} neurons: An array of neurons you load
  */
 exports.loadModel = (neurons, neuronCount, path) => {
-    let neuronsPtr = ref.alloc(neurons);
-    let neuronCountPtr = ref.alloc('uint32', neuronCount);
+  let neuronsPtr = ref.alloc(neurons);
+  let neuronCountPtr = ref.alloc("uint32", neuronCount);
 
-    let r = nmengine.nm_load_model(targetPtr, neuronsPtr, neuronCountPtr, path);
+  let r = nmengine.nm_load_model(targetPtr, neuronsPtr, neuronCountPtr, path);
 
-    return {
-        resultCode: r
-        , neurons: neuronsPtr.deref()
-    }
-}
+  return {
+    resultCode: r,
+    neurons: neuronsPtr.deref(),
+  };
+};
 
 /**
  * @return {number} resultCode: Result Code
  */
 exports.powerSave = () => {
-    let r = nmengine.nm_power_save(targetPtr);
+  let r = nmengine.nm_power_save(targetPtr);
 
-    return {
-        resultCode: r
-    }
-}
+  return {
+    resultCode: r,
+  };
+};

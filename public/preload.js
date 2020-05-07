@@ -7,4 +7,4 @@ window.ffi = require("ffi-napi");
 window.ref = require("ref-napi");
 window.ArrayType = require("ref-array-di")(window.ref);
 window.StructType = require("ref-struct-di")(window.ref);
-window.BufferTest = require("Buffer");
+

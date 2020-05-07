@@ -2,15 +2,18 @@
   "name": "react-router-tutorial",
   "version": "0.1.0",
   "private": true,
+  "asar": false,
   "homepage": "./",
   "main": "public/electron.js",
   "devDependencies": {
     "concurrently": "^4.1.1",
     "electron": "^6.0.0",
     "electron-builder": "^21.1.5",
+    "electron-rebuild": "^1.10.1",
     "wait-on": "^3.3.0"
   },
   "dependencies": {
+    "asar": "^3.0.3",
     "electron-is-dev": "^1.1.0",
     "express": "^4.14.0",
     "ffi-napi": "^2.4.7",
@@ -33,7 +36,6 @@
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-start": "electron .",
-
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
     "electron-pack": "electron-builder build -m",
@@ -45,7 +47,6 @@
     "install:win": "yarn install:win32 && yarn install:win64",
     "install:win32": "electron-builder build -w --ia32=true",
     "install:win64": "electron-builder build -w --x64=true"
-
   },
   "browserslist": {
     "production": [
@@ -60,13 +61,13 @@
     ]
   },
   "author": {
-    "name": "Your Name",
+    "name": "nepes",
     "email": "your.email@domain.com",
     "url": "https://your-website.com"
   },
   "build": {
     "appId": "com.my-website.my-app",
-    "productName": "MyApp",
+    "productName": "KnowledgeStudio",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
@@ -76,7 +77,7 @@
       "node_modules/**/*",
       "dist/",
       "package.json",
-      "/src/lib/"
+      "src/lib/**/*"
     ],
     "directories": {
       "buildResources": "assets"
