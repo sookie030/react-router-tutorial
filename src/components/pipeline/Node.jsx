@@ -1,8 +1,13 @@
 import React from "react";
 import Draggable from "react-draggable";
-import "../../assets/styles/node.css";
+
+import * as MODULE_MANAGER from "../../constants/ModuleInfo";
 
 class Node extends React.Component {
+
+  OUTPUT_WIDTH = 293;
+  OUTPUT_HEIGHT = 165;
+
   // TEXT_SPACE_X = 6;
   // TEXT_SPACE_Y = 13;
   // TEXT_LINE_SPACE_Y = 5;
@@ -62,9 +67,14 @@ class Node extends React.Component {
         onStop={this.props.handleNodeDragStop}
       >
         <div className="box">
-          <div className="modulebox moduleboxdefault" id="modulebox">
+          <div
+            className={`modulebox moduleboxdefault ${
+              this.props.preview ? "moduleboxclick" : ""
+            }`}
+            id="modulebox"
+          >
             <span className="groupname">
-            {this.props.node.getGroup()}
+              {this.props.node.getGroup()}
               <a href="" className="setting">
                 <span className="oval"></span>
                 <span className="oval"></span>
@@ -79,8 +89,7 @@ class Node extends React.Component {
             <div className="module">
               <span className="name">{this.props.node.getName()}</span>
               <span className="info">
-                Camera orientation (rear / front), to change the camera
-                orientation.
+                {MODULE_MANAGER.DESC[this.props.node.getName()].long}
               </span>
               <div className="option">
                 {this.props.propertyCompopent}
@@ -95,17 +104,32 @@ class Node extends React.Component {
                 </span> */}
               </div>
             </div>
-            <div id="hiddenid" className="hiddenimg">
-              <img src="images/images.png" />
+            <div
+              id="hiddenid"
+              className={`hiddenimg ${this.props.preview ? "" : "hidden"}`}
+            >
+              {/* <img src="images/images.png" /> */}
+              <canvas
+                ref={(r) => (this.canvasRef = r)}
+                width={this.OUTPUT_WIDTH}
+                height={this.OUTPUT_HEIGHT}
+              ></canvas>
             </div>
             <hr />
-            <div id="more">
-              <button type="button" id="Button1" className="more">
+            <div
+              id="more"
+              className={this.props.preview ? "" : "rotation"}
+              onMouseDown={this.props.handlePreviewMouseDown}
+            >
+              <button type="button" className="more">
                 <span className="tri"></span>
               </button>
             </div>
           </div>
-          <div className="point" id="point">
+          <div
+            className={`point ${this.props.preview ? "" : "hidden"}`}
+            id="point"
+          >
             <span className="top"></span>
             <span className="left"></span>
             <span className="right"></span>

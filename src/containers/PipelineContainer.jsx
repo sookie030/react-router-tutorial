@@ -303,55 +303,55 @@ class PipelineContainer extends React.Component {
   //   }
   // };
 
-  // /**
-  //  * Preview 버튼 이벤트
-  //  */
-  // handlePreviewMouseDown = (node, e) => {
-  //   e.stopPropagation();
-  //   if (e.button === 0) {
-  //     const selectedNodeID = node.getIsPreviewing();
+  /**
+   * Preview 버튼 이벤트
+   */
+  handlePreviewMouseDown = (node, e) => {
+    e.stopPropagation();
+    if (e.button === 0) {
+      // const selectedNodeID = node.getIsPreviewing();
 
-  //     if (!node.getIsPreviewing()) {
-  //       node.setIsPreviewing(true);
-  //       console.log(node.getIsPreviewing());
+      if (!node.getIsPreviewing()) {
+        node.setIsPreviewing(true);
+        console.log(node.getIsPreviewing());
 
-  //       // Node height 늘이기
-  //       node.setSize({
-  //         width: node.getSize()["width"],
-  //         height: node.getSize()["height"] + this.PREVIEW_SIZE
-  //       });
+        // // Node height 늘이기
+        // node.setSize({
+        //   width: node.getSize()["width"],
+        //   height: node.getSize()["height"] + this.PREVIEW_SIZE
+        // });
 
-  //       // 연결된 Path들의 좌표값 변경
-  //       this.props.pipelineManager.moveLinksByResizingNode(
-  //         node.getID(),
-  //         0,
-  //         this.PREVIEW_SIZE
-  //       );
-  //     } else {
-  //       node.setIsPreviewing(false);
+        // 연결된 Path들의 좌표값 변경
+        this.props.pipelineManager.moveLinksByResizingNode(
+          node.getID(),
+          0,
+          this.PREVIEW_SIZE
+        );
+      } else {
+        node.setIsPreviewing(false);
 
-  //       // Node height 줄이기
-  //       node.setSize({
-  //         width: node.getSize()["width"],
-  //         height: node.getSize()["height"] - this.PREVIEW_SIZE
-  //       });
+        // // Node height 줄이기
+        // node.setSize({
+        //   width: node.getSize()["width"],
+        //   height: node.getSize()["height"] - this.PREVIEW_SIZE
+        // });
 
-  //       // 연결된 Path들의 좌표값 변경
-  //       this.props.pipelineManager.moveLinksByResizingNode(
-  //         node.getID(),
-  //         0,
-  //         -this.PREVIEW_SIZE
-  //       );
-  //     }
+        // 연결된 Path들의 좌표값 변경
+        this.props.pipelineManager.moveLinksByResizingNode(
+          node.getID(),
+          0,
+          -this.PREVIEW_SIZE
+        );
+      }
 
-  //     // 파이프라인이 동작 중일 땐 수행하지 않는 이유:
-  //     // 파이프라인 한 사이클 완료 시, onSetDummyNumber 함수를 호출하는 것이 중복됨.
-  //     // preview (output)이 버벅거리는 이슈가 생김.
-  //     if (!this.props.isPipelingRunning) {
-  //       this.props.onSetDummyNumber();
-  //     }
-  //   }
-  // };
+      // 파이프라인이 동작 중일 땐 수행하지 않는 이유:
+      // 파이프라인 한 사이클 완료 시, onSetDummyNumber 함수를 호출하는 것이 중복됨.
+      // preview (output)이 버벅거리는 이슈가 생김.
+      if (!this.props.isPipelingRunning) {
+        this.props.onSetDummyNumber();
+      }
+    }
+  };
 
   // handleNodeClick = (node, e) => {
   //   e.stopPropagation();
@@ -387,7 +387,6 @@ class PipelineContainer extends React.Component {
     // let optionElementList = [];
 
     const options = getPropertyComponent(node);
-    console.log(options);
     let optionElementList = options.map((option, i) => {
       let optionKey = Object.keys(option);
       return (
@@ -404,13 +403,7 @@ class PipelineContainer extends React.Component {
    * Node 그리기
    */
   getNodeList = () => {
-    // const PROP_SPACE_Y = 30;
-    // const INIT_NODE_HEIGHT = 100;
-
-    console.log("getNodeList");
-
     let list = this.props.pipelineManager.getNodes().map((node) => {
-      console.log(node.getName());
       //   const propertyCompopent = getPropertyComponent(node);
 
       //   if (propertyCompopent.length > 0) {
@@ -461,7 +454,7 @@ class PipelineContainer extends React.Component {
       //     }
       //   }
       let preview = node.getIsPreviewing();
-      let output = preview ? this.getOutput(node) : null;
+      // let output = preview ? this.getOutput(node) : null;
       let propertyCompopent = this.createOptionElement(node);
       return (
         <Node
@@ -486,7 +479,7 @@ class PipelineContainer extends React.Component {
           handleNodeClick={(e) => this.handleNodeClick(node, e)}
           // preview
           preview={preview}
-          output={output}
+          // output={output}
         />
       );
     });
@@ -537,11 +530,8 @@ class PipelineContainer extends React.Component {
    * render
    */
   render() {
-    // const translateX = this.props.translate.x;
-    // const translateY = this.props.translate.y;
     const nodeList =
       this.props.pipelineManager !== null ? this.getNodeList() : null;
-    console.log(nodeList);
     // const linkList = this.getLinkList();
     return (
       <React.Fragment>

@@ -1,3 +1,6 @@
+/**
+ * Module Name
+ */
 const MODULES = {
   // Source
   CAMERA: "Camera",
@@ -43,6 +46,9 @@ const MODULES = {
   FILE_SAVER: "File Saver",
 };
 
+/**
+ * Group Name
+ */
 const GROUPS = {
   SOURCE: "Source",
   FILTER: "Filter",
@@ -53,6 +59,9 @@ const GROUPS = {
   DISPATCHER: "Dispatcher",
 };
 
+/**
+ * Module list in each group
+ */
 const MODULE_LIST = {};
 
 MODULE_LIST[GROUPS.SOURCE] = [
@@ -97,49 +106,56 @@ MODULE_LIST[GROUPS.AI] = [
 
 MODULE_LIST[GROUPS.DISPATCHER] = [MODULES.FILE_SAVER];
 
+/**
+ * Module Description
+ */
 const DESC = {};
 
 // Source
-DESC[MODULES.CAMERA] = "Camera";
-DESC[MODULES.FACE_CAMERA] = "Face Camera";
-DESC[MODULES.FILE_LOADER] = "File Loader";
-DESC[MODULES.MIC] = "Microphone";
+// DESC[MODULES.CAMERA] = "Camera";
+DESC[MODULES.CAMERA] = {
+  short: "Camera",
+  long: "Camera orientation (rear / front), to change the camera orientation.",
+};
+DESC[MODULES.FACE_CAMERA] = { short: "Face Camera", long: "" };
+DESC[MODULES.FILE_LOADER] = { short: "File Loader", long: "" };
+DESC[MODULES.MIC] = { short: "Microphone", long: "" };
 
 // Filter
-DESC[MODULES.ROI] = "Region Of Interest";
-DESC[MODULES.BLUR_AVERAGE] = "Blur Average";
-DESC[MODULES.BLUR_MEDIAN] = "Blur Median";
-DESC[MODULES.BLUR_BIATERAL] = "Blur Biateral";
-DESC[MODULES.EDGE_SOBEL] = "Edge Sobel";
-DESC[MODULES.EDGE_PREWITT] = "Edge Prewitt";
-DESC[MODULES.EDGE_ROBERTS] = "Edge Roberts";
-DESC[MODULES.EDGE_CANNY] = "Edge Canny";
-DESC[MODULES.EDGE_HOUGH] = "Edge Hough";
-DESC[MODULES.GRAYSCALE] = "Grayscale";
-DESC[MODULES.RESIZE] = "Resize";
-DESC[MODULES.CROP] = "Crop";
-DESC[MODULES.GRID] = "Grid";
+DESC[MODULES.ROI] = { short: "Region Of Interest", long: "" };
+DESC[MODULES.BLUR_AVERAGE] = { short: "Blur Average", long: "" };
+DESC[MODULES.BLUR_MEDIAN] = { short: "Blur Median", long: "" };
+DESC[MODULES.BLUR_BIATERAL] = { short: "Blur Biateral", long: "" };
+DESC[MODULES.EDGE_SOBEL] = { short: "Edge Sobel", long: "" };
+DESC[MODULES.EDGE_PREWITT] = { short: "Edge Prewitt", long: "" };
+DESC[MODULES.EDGE_ROBERTS] = { short: "Edge Roberts", long: "" };
+DESC[MODULES.EDGE_CANNY] = { short: "Edge Canny", long: "" };
+DESC[MODULES.EDGE_HOUGH] = { short: "Edge Hough", long: "" };
+DESC[MODULES.GRAYSCALE] = { short: "Grayscale", long: "" };
+DESC[MODULES.RESIZE] = { short: "Resize", long: "" };
+DESC[MODULES.CROP] = { short: "Crop", long: "" };
+DESC[MODULES.GRID] = { short: "Grid", long: "" };
 
 // Detector
-DESC[MODULES.FACE_DETECTOR] = "Face Detector";
+DESC[MODULES.FACE_DETECTOR] = { short: "Face Detector", long: "" };
 
 // Feature
-DESC[MODULES.SUBSAMPLE] = "Subsample";
-DESC[MODULES.HOG] = "HOG";
-DESC[MODULES.LBP] = "LBP";
+DESC[MODULES.SUBSAMPLE] = { short: "Subsample", long: "" };
+DESC[MODULES.HOG] = { short: "HOG", long: "" };
+DESC[MODULES.LBP] = { short: "LBP", long: "" };
 
 // AI
-DESC[MODULES.NM500] = "NM500";
-DESC[MODULES.DECISION_MAKER] = "Decision Maker";
-DESC[MODULES.SCANNER] = "Scanner";
+DESC[MODULES.NM500] = { short: "NM500", long: "" };
+DESC[MODULES.DECISION_MAKER] = { short: "Decision Maker", long: "" };
+DESC[MODULES.SCANNER] = { short: "Scanner", long: "" };
 
 // Notifier
-DESC[MODULES.SOUND] = "Sound";
-DESC[MODULES.VIBRATION] = "Vibration";
-DESC[MODULES.DISPLAY] = "Display";
-DESC[MODULES.GRID_MAKER] = "Grid Maker";
+DESC[MODULES.SOUND] = { short: "Sound", long: "" };
+DESC[MODULES.VIBRATION] = { short: "Vibration", long: "" };
+DESC[MODULES.DISPLAY] = { short: "Display", long: "" };
+DESC[MODULES.GRID_MAKER] = { short: "Grid Maker", long: "" };
 
 // dispatcher
-DESC[MODULES.FILE_SAVER] = "File Saver";
+DESC[MODULES.FILE_SAVER] = { short: "File Saver", long: "" };
 
 export { MODULES, GROUPS, MODULE_LIST, DESC };

@@ -84,9 +84,6 @@ class ModuleListContainer extends React.Component {
     // 기존에 클릭을 통해 선택한 모듈이 있고, 그것과 다른 모듈을 드래그하려 할 때
     // 드래그하려는 모듈을 selectedModule로 설정한다.
     var groupName = Object.keys(MODULE_MANAGER.MODULE_LIST)[groupID];
-
-    console.log("moduleID", moduleID);
-    console.log("groupName", groupName);
     var moduleName = MODULE_MANAGER.MODULE_LIST[groupName][moduleID];
 
     if (this.state.selectedModuleId !== moduleID) {
@@ -181,7 +178,7 @@ class ModuleListContainer extends React.Component {
                     >
                       <a href="#">
                         {moduleName}
-                        <span>{MODULE_MANAGER.DESC[moduleName]}</span>
+                        <span>{MODULE_MANAGER.DESC[moduleName].short}</span>
                       </a>
                     </li>
                     // <div

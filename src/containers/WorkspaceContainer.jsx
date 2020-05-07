@@ -87,9 +87,6 @@ class WorkspaceContainer extends React.Component {
 
   handleDrop = (e) => {
     let droppedModuleName = e.dataTransfer.getData("module");
-    console.log("handleDrop!", droppedModuleName);
-    console.log(this.workspaceRef.offsetLeft, this.workspaceRef.offsetTop)
-    console.log(this.workspaceRef.getBoundingClientRect())
 
     if (droppedModuleName !== null && droppedModuleName !== "") {
       let moduleName = this.props.selectedModule.name;
