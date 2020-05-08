@@ -17,6 +17,8 @@ import { setPipelineManager, setDummyNumber, setToast } from "../redux/actions";
 
 import PipelineManager from "../manager/PipelineManager";
 
+const isDev = window.electronIsDev;
+
 const WelcomeHeader = props => {
   return (
     <div className="header-area">
@@ -160,7 +162,7 @@ class Header extends React.Component {
   };
 
   getHeader() {
-    const location = this.props.location.pathname;
+    const location = isDev ? this.props.location.pathname : process.cwd();
     console.log(location);
     switch (location) {
       case "/":

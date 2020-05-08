@@ -14,13 +14,9 @@ import ModuleData from './ModuleData';
 // import utils
 import * as ImageFormatConverter from "../../utils/ImageFormatConverter";
 
-// const vision = require("../../lib/vision/corewrap");
-// const constants = require("../../lib/vision/constants");
-// const datatypes = require("../../lib/vision/datatypes");
-
-import vision from "../../lib/vision/corewrap";
-import constants from "../../lib/vision/constants";
-import datatypes from "../../lib/vision/datatypes";
+const vision = require("../../lib/vision/corewrap");
+const constants = require("../../lib/vision/constants");
+const datatypes = require("../../lib/vision/datatypes");
 
 // import module from preload
 const ref = window.ref;

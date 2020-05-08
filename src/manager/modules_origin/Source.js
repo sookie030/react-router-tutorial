@@ -1,18 +1,18 @@
 // import parent
-const SourceModuleBase = require("./SourceModuleBase");
-const PROP_TYPE = require("../../constants/PropertyType");
+import SourceModuleBase from "./SourceModuleBase";
+import * as PROP_TYPE from "../../constants/PropertyType";
 
 // import constants
-const DATA_TYPE = require("../../constants/DataType");
-const RESULT_CODE = require("../../constants/ResultCode");
-const MODULES = require("../../constants/ModuleInfo").MODULES;
+import * as DATA_TYPE from "../../constants/DataType";
+import * as RESULT_CODE from "../../constants/ResultCode";
+import { MODULES } from "../../constants/ModuleInfo";
 
 // import components
-const ModuleDataChunk = require("./ModuleDataChunk");
-const ModuleData = require("./ModuleData");
+import ModuleDataChunk from "./ModuleDataChunk";
+import ModuleData from "./ModuleData";
 
 // import utils
-const DeviceManager = require("../../utils/DeviceManager");
+import * as DeviceManager from "../../utils/DeviceManager";
 
 // import module from preload
 const fs = window.fs;
@@ -587,5 +587,4 @@ source[MODULES.MIC] = class extends SourceModuleBase {
   };
 };
 
-// export default source;
-module.exports = source;
+export default source;

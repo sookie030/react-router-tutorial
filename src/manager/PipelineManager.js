@@ -7,13 +7,13 @@ import { MESSAGE, MESSAGE_TYPE } from "../constants/Message";
 import { MODULES, GROUPS } from "../constants/ModuleInfo";
 
 // import module classes
-import AIModules from "./modules/AI";
-import DetectorModules from "./modules/Detector";
-import FeatureModules from "./modules/Feature";
-import FilterModules from "./modules/Filter";
-import NotifierModules from "./modules/Notifier";
-import SourceModules from "./modules/Source";
-import DispatcherModules from "./modules/Dispatcher";
+import AIModules from "./modules_import/AI";
+import DetectorModules from "./modules_import/Detector";
+import FeatureModules from "./modules_import/Feature";
+import FilterModules from "./modules_import/Filter";
+import NotifierModules from "./modules_import/Notifier";
+import SourceModules from "./modules_import/Source";
+import DispatcherModules from "./modules_import/Dispatcher";
 
 // import event
 import events from "events";

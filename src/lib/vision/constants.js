@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+const constants = Object.freeze({
   /***********************************************************
    * subsample.h, edgegap.h
    ***********************************************************/
@@ -3096,3 +3096,5 @@ module.exports = Object.freeze({
     EDGE_ROBERTS: 2,
   },
 });
+
+export default constants;
