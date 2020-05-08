@@ -51,7 +51,7 @@ source[MODULES.CAMERA] = class extends SourceModuleBase {
           { key: 6, text: "256x144", value: "256x144" },
           { key: 7, text: "176x144", value: "176x144" },
         ],
-        value: "800x450",
+        value: "176x144",
       },
     });
 

@@ -6,8 +6,12 @@ const ref = window.ref;
 const ArrayType = window.ArrayType;
 
 // Load data
-const constants = require("./constants");
+const constants = require("./constants").default;
 const datatypes = require("./datatypes");
+console.log(constants);
+console.log(datatypes);
+
+console.log(constants);
 
 const path = require("path");
 
