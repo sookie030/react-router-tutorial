@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 // Router
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 // Redux
 import { createStore } from "redux";

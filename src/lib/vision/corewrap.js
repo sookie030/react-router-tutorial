@@ -8,12 +8,11 @@ const ArrayType = window.ArrayType;
 // Load data
 const constants = require("./constants").default;
 const datatypes = require("./datatypes");
-console.log(constants);
-console.log(datatypes);
-
-console.log(constants);
 
 const path = require("path");
+
+// Declare array type
+let uint16Array = ArrayType("uint16");
 
 // Declare int type
 const int16 = ref.types.int16;
@@ -1490,12 +1489,12 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
     new Uint16Array(grayscaleImageSize).buffer
   );
   let edgeGradientPtr = Buffer.from(new Uint16Array(grayscaleImageSize).buffer);
-  console.log(edgeMagnitudePtr)
-  console.log(edgeGradientPtr)
-  console.log(new Uint16Array(grayscaleImageSize).buffer);
-  console.log(new Uint16Array(grayscaleImageSize).buffer);
-  console.log(Buffer.from(new Uint16Array(grayscaleImageSize)));
-  console.log(Buffer.from(new Uint16Array(grayscaleImageSize)));
+  // console.log(edgeMagnitudePtr)
+  // console.log(edgeGradientPtr)
+  // console.log(new Uint16Array(grayscaleImageSize).buffer);
+  // console.log(new Uint16Array(grayscaleImageSize).buffer);
+  // console.log(Buffer.from(new Uint16Array(grayscaleImageSize)));
+  // console.log(Buffer.from(new Uint16Array(grayscaleImageSize)));
 
   switch (optionsStr.edge) {
     case constants.EDGE_TYPE.EDGE_SOBEL:
@@ -1544,54 +1543,18 @@ exports.featureHog = (imageInfoStr, optionsStr) => {
       );
       break;
   }
-
-  // get values from Buffer (Edge Gradient 0~359 result)
-  console.log(grayscaleImageSize);
-  console.log(edgeGradientPtr);
+  
+  // Uint8Array
   let result = ref.reinterpret(edgeGradientPtr, grayscaleImageSize * Uint16Array.BYTES_PER_ELEMENT);
-  let result2 = Uint16Array.from(result);
-  console.log(result2);
-  // // Create result buffer
-  // let hogOptionsStr = optionsStr.hog_options.deref();
+  
+  // Uint8Array to uint16ArrayType
+  let result2 = uint16Array(result);
 
-  // let blockNumX =
-  //   (grayscaleImageStr.size.width -
-  //     hogOptionsStr.cell_per_block.width * hogOptionsStr.pixel_per_cell.width +
-  //     hogOptionsStr.stride_distance.width) /
-  //   hogOptionsStr.stride_distance.width;
-  // let blockNumY =
-  //   (grayscaleImageStr.size.height -
-  //     hogOptionsStr.cell_per_block.height *
-  //       hogOptionsStr.pixel_per_cell.height +
-  //     hogOptionsStr.stride_distance.height) /
-  //   hogOptionsStr.stride_distance.height;
-  // let histogramBlockLen =
-  //   hogOptionsStr.cell_per_block.width *
-  //   hogOptionsStr.cell_per_block.height *
-  //   hogOptionsStr.histogram_bin_num;
-
-  // let resultSize = blockNumX * blockNumY * histogramBlockLen;
-  // let resultVectorPtrPtr = new datatypes.VectorInfo().ref().ref();
-
-  // this.getHogFeature(
-  //   grayscaleImageStr.size,
-  //   edgeMagnitudePtr,
-  //   edgeGradientPtr,
-  //   optionsStr.hog_options,
-  //   resultVectorPtrPtr
-  // );
-
-  // console.log(resultVectorPtrPtr.deref().deref());
-
-  // let resultVectorPtr = resultVectorPtrPtr.deref().deref().vector;
-  // console.log(resultVectorPtrPtr.deref().deref().length, resultVectorPtr);
-
-  // // get values from Buffer (result)
-  // let result = ref.reinterpret(resultVectorPtr, resultSize);
-
-  console.log(result);
-
-  return result;
+  // uint16ArrayType to Uint16Array
+  let result3 = Uint16Array.from(result2);
+ 
+  // TODO: 추후에 한 번에 변환할 방법 찾아보기
+  return result3;
 };
 
 /**

@@ -17,7 +17,7 @@ import { setPipelineManager, setDummyNumber, setToast } from "../redux/actions";
 
 import PipelineManager from "../manager/PipelineManager";
 
-const isDev = window.electronIsDev;
+// const isDev = window.electronIsDev;
 
 const WelcomeHeader = props => {
   return (
@@ -162,7 +162,8 @@ class Header extends React.Component {
   };
 
   getHeader() {
-    const location = isDev ? this.props.location.pathname : process.cwd();
+    // console.log("기존 this.props.location.pathname..:", this.props.location.pathname);
+    const location = this.props.location.pathname;
     console.log(location);
     switch (location) {
       case "/":

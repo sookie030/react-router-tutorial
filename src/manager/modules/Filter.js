@@ -14,9 +14,12 @@ import ModuleData from "./ModuleData";
 // import utils
 import * as ImageFormatConverter from "../../utils/ImageFormatConverter";
 
-const vision = require("../../lib/vision/corewrap");
-const constants = require("../../lib/vision/constants");
-const datatypes = require("../../lib/vision/datatypes");
+// import * as vision from "../../lib/vision/corewrap";
+// import constants from "../../lib/vision/constants";
+// import * as datatypes from "../../lib/vision/datatypes";
+import vision from "../../lib/vision/corewrap";
+import constants from "../../lib/vision/constants";
+import datatypes from "../../lib/vision/datatypes";
 
 // import module from preload
 const ref = window.ref;
@@ -107,8 +110,7 @@ filter[MODULES.ROI] = class extends ModuleBase {
       let context = canvas.getContext("2d");
       context.drawImage(image, 0, 0);
       let myData = context.getImageData(0, 0, image.width, image.height);
-      console.log(myData);
-
+      
       // output 저장공간
       var output1 = new ModuleData(DATA_TYPE.IMAGE, myData);
 
@@ -683,7 +685,6 @@ filter[MODULES.EDGE_ROBERTS] = class extends ModuleBase {
       const props = this.getProperties();
       const useMath = props.getIn(["Use Math Function", "value"]);
       const ThresholdRatio = Number(props.getIn(["Threshold Ratio", "value"]));
-console.log(ThresholdRatio)
       let optionsStr = new datatypes.RobertsOptions();
       optionsStr.use_math = useMath;
       optionsStr.threshold_ratio = ThresholdRatio;
@@ -1334,7 +1335,7 @@ filter[MODULES.CROP] = class extends ModuleBase {
       let context = canvas.getContext("2d");
       context.drawImage(image, 0, 0);
       let myData = context.getImageData(0, 0, image.width, image.height);
-      console.log(myData);
+      
 
       // output 저장공간
       var output1 = new ModuleData(DATA_TYPE.IMAGE, myData);
