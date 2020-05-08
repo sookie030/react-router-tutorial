@@ -2,7 +2,6 @@
   "name": "react-router-tutorial",
   "version": "0.1.0",
   "private": true,
-  "asar": false,
   "homepage": "./",
   "main": "public/electron.js",
   "devDependencies": {
@@ -69,6 +68,7 @@
     "appId": "com.my-website.my-app",
     "productName": "KnowledgeStudio",
     "copyright": "Copyright © 2019 ${author}",
+    "asar": false,
     "mac": {
       "category": "public.app-category.utilities"
     },

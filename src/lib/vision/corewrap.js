@@ -1,3 +1,5 @@
+const isDev = window.electronIsDev;
+
 // Load modules about ffi
 const ffi = window.ffi;
 const ref = window.ref;
@@ -86,7 +88,13 @@ const callbackFreeDataPtr = ffi.Function("void", [voidPtr]);
 const platform = process.platform;
 
 // Global variable for nmengine library
-let libvision = "src/lib/vision/libVisionLibrary.dylib";
+// let libvision = "src/lib/vision/libVisionLibrary.dylib";
+let indexHtmlPath = window.location.pathname;
+let parentPathArr = indexHtmlPath.split("/").slice(0, -2);
+let parentPath = parentPathArr.join("/");
+let libPath = "src/lib/vision/libVisionLibrary.dylib";
+let newPath = parentPath.concat("/", libPath);
+let libvision = isDev ? libPath : newPath;
 
 const visionlib = ffi.Library(libvision, {
   // 20.03.31 test on callback function

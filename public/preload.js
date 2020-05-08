@@ -2,6 +2,7 @@ window.fs = require("fs");
 window.electron = require("electron");
 window.dialog = require("electron").remote.dialog;
 window.nativeImage = require("electron").nativeImage;
+window.electronIsDev = require("electron-is-dev");
 
 window.ffi = require("ffi-napi");
 window.ref = require("ref-napi");
