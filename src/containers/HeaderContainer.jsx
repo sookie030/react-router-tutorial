@@ -46,7 +46,7 @@ const LinkboardHeader = props => {
         >
           {props.isPipelineRunning ? "STOP" : "RUN"}
         </div>
-        <div
+        {/* <div
           className={`header-button bg-color-orange ${
             props.isPipelineRunning ? "disabled" : ""
           }`}
@@ -58,7 +58,7 @@ const LinkboardHeader = props => {
           }}
         >
           Application View
-        </div>
+        </div> */}
       </div>
     </div>
   );

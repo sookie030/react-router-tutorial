@@ -38,19 +38,19 @@ filter[MODULES.ROI] = class extends ModuleBase {
         properties: {
           x: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 140,
+            value: 0,
           },
           y: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 125,
+            value: 0,
           },
           Width: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 220,
+            value: 120,
           },
           Height: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 220,
+            value: 120,
           },
         },
       },
@@ -1265,19 +1265,19 @@ filter[MODULES.CROP] = class extends ModuleBase {
         properties: {
           x: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+            value: 20,
           },
           y: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+            value: 20,
           },
           Width: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+            value: 50,
           },
           Height: {
             type: PROP_TYPE.NUMBER_EDIT,
-            value: 0,
+            value: 50,
           },
         },
       },

@@ -400,3 +400,5 @@ dist/mac/KnowledgeStudio.app/Contents/Resources/app/src/lib/vision/constants.js
 dist/mac/KnowledgeStudio.app/Contents/Resources/app/src/lib/vision/corewrap.js
 dist/mac/KnowledgeStudio.app/Contents/Resources/app/src/lib/vision/datatypes.js
 dist/mac/KnowledgeStudio.app/Contents/Resources/app/src/lib/vision/libVisionLibrary.dylib
+dist/mac/KnowledgeStudio.app/Contents/Resources/KnowledgeStudio.icns
+dist/.icon-icns/icon.icns
