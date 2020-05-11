@@ -73,15 +73,21 @@ const neuronArrayPtr = ref.refType(neuronArray);
 const neuronPtr = ref.refType(datatypes.Neuron);
 
 // Check OS
-const platform = process.platform;
+const platform = window.platform;
+let libPath = '';
+if (platform === 'Windows') {
+  libPath = "src/lib/nmengine/x86/libnmengine.dll";
+} else if (platform === "darwin") {
+  libPath = "src/lib/nmengine/macos/libnmengine.dylib";
+}
 
 // let libnmengine = "src/lib/nmengine/libnmengine.dylib";
-let indexHtmlPath = window.location.pathname;
-let parentPathArr = indexHtmlPath.split("/").slice(0, -2);
+let introPath = window.location.pathname;
+let parentPathArr = introPath.split("/").slice(0, -2);
 let parentPath = parentPathArr.join("/");
-let libPath = "src/lib/nmengine/libnmengine.dylib";
-let newPath = parentPath.concat("/", libPath);
-let libnmengine = isDev ? libPath : newPath;
+// let libPath = "src/lib/nmengine/macos/libnmengine.dylib";
+let libPathInApp = parentPath.concat("/", libPath);
+let libnmengine = isDev ? libPath : libPathInApp;
 
 const nmengine = ffi.Library(libnmengine, {
   nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
