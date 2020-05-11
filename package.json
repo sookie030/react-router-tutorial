@@ -65,11 +65,18 @@
   },
   "build": {
     "appId": "com.theneuromorphic.knowledgestudio",
-    "productName": "KnowledgeStudio",
+    "productName": "Knowledge Studio",
     "copyright": "Copyright © 2029 ${author}",
     "asar": false,
     "mac": {
       "category": "public.app-category.utilities",
+      "icon": "public/icon.png"
+    },
+    "win": { 
+      "target": [  
+        "zip",
+        "nsis"
+      ],
       "icon": "public/icon.png"
     },
     "files": [
