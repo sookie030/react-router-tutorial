@@ -92,12 +92,12 @@ const platform = process.platform;
 
 // Global variable for nmengine library
 // let libvision = "src/lib/vision/libVisionLibrary.dylib";
-let indexHtmlPath = window.location.pathname;
-let parentPathArr = indexHtmlPath.split("/").slice(0, -2);
+let introPath = window.location.pathname;
+let parentPathArr = introPath.split("/").slice(0, -2);
 let parentPath = parentPathArr.join("/");
 let libPath = "src/lib/vision/libVisionLibrary.dylib";
-let newPath = parentPath.concat("/", libPath);
-let libvision = isDev ? libPath : newPath;
+let libPathInApp = parentPath.concat("/", libPath);
+let libvision = isDev ? libPath : libPathInApp;
 
 const visionlib = ffi.Library(libvision, {
   // 20.03.31 test on callback function

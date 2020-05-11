@@ -72,6 +72,13 @@
       "category": "public.app-category.utilities",
       "icon": "public/icon.png"
     },
+    "win": {
+        "target": [
+             "zip",
+             "nsis"
+         ],
+         "icon": "public/icon.png"
+    },
     "files": [
       "build/**/*",
       "node_modules/**/*",
