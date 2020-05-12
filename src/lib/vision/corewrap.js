@@ -88,12 +88,14 @@ const functionCalculateMagnitudeSobelPtr = ffi.Function("void", [
 const callbackFreeDataPtr = ffi.Function("void", [voidPtr]);
 
 // Check OS
-const platform = process.platform;
+const platform = window.platform;
 
 let env = window.env;
 let app = window.app;
 let appPath = app.getAppPath();
 let libPath = '';
+
+console.log(platform);
 
 if (platform === 'win32') {
 
@@ -103,13 +105,13 @@ if (platform === 'win32') {
   if (window.arch === 'x64' || env.hasOwnProperty('PROCESSOR_ARCHITEW6432')) {
 
     // windows 64 bits
-    localLibPath = "src\\lib\\vision\\x64\\VisionLibrary.dll";
+    localLibPath = "src\\lib\\vision\\x64\\libvision.dll";
     libDirPath = "src\\lib\\vision\\x64";
 
   } else {
 
     // windows 32 bits
-    localLibPath = "src\\lib\\vision\\x86\\VisionLibrary.dll";
+    localLibPath = "src\\lib\\vision\\x86\\libvision.dll";
     libDirPath = "src\\lib\\vision\\x86";
 
   }
@@ -118,10 +120,10 @@ if (platform === 'win32') {
   let absoluteLibDirPath = appPath.concat("\\", libDirPath);
   env.PATH = `${env.PATH}${path.delimiter}${absoluteLibDirPath}`;
 
-  libPath = "VisionLibrary.dll"
+  libPath = "libvision.dll"
 
 } else if (platform === "darwin") {
-  let localLibPath = "src/lib/vision/macos/libVisionLibrary.dylib";
+  let localLibPath = "src/lib/vision/macos/libvision.dylib";
   let absoluteLibPath = appPath.concat("/", localLibPath);
   libPath = isDev ? localLibPath : absoluteLibPath;
 }

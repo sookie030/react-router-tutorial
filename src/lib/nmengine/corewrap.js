@@ -88,13 +88,13 @@ if (platform === 'win32') {
   if (window.arch === 'x64' || env.hasOwnProperty('PROCESSOR_ARCHITEW6432')) {
 
     // windows 64 bits
-    localLibPath = "src\\lib\\nmengine\\x64\\nmengine.dll";
+    localLibPath = "src\\lib\\nmengine\\x64\\libnmengine.dll";
     libDirPath = "src\\lib\\nmengine\\x64";
 
   } else {
 
     // windows 32 bits
-    localLibPath = "src\\lib\\nmengine\\x86\\nmengine.dll";
+    localLibPath = "src\\lib\\nmengine\\x86\\libnmengine.dll";
     libDirPath = "src\\lib\\nmengine\\x86";
 
   }
@@ -103,7 +103,7 @@ if (platform === 'win32') {
   let absoluteLibDirPath = appPath.concat("\\", libDirPath);
 
   env.PATH = `${env.PATH}${path.delimiter}${absoluteLibDirPath}`;
-  libPath = "nmengine.dll"
+  libPath = "libnmengine.dll"
 
 } else if (platform === "darwin") {
   let localLibPath = "src/lib/nmengine/macos/libnmengine.dylib";
