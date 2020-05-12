@@ -74,22 +74,46 @@ const neuronPtr = ref.refType(datatypes.Neuron);
 
 // Check OS
 const platform = window.platform;
+
+let env = window.env;
+let app = window.app;
+let appPath = app.getAppPath();
 let libPath = '';
-if (platform === 'Windows') {
-  libPath = "src/lib/nmengine/x86/libnmengine.dll";
+
+if (platform === 'win32') {
+
+  let localLibPath = '';
+  let libDirPath = '';
+  
+  if (window.arch === 'x64' || env.hasOwnProperty('PROCESSOR_ARCHITEW6432')) {
+
+    // windows 64 bits
+    localLibPath = "src\\lib\\nmengine\\x64\\nmengine.dll";
+    libDirPath = "src\\lib\\nmengine\\x64";
+
+  } else {
+
+    // windows 32 bits
+    localLibPath = "src\\lib\\nmengine\\x86\\nmengine.dll";
+    libDirPath = "src\\lib\\nmengine\\x86";
+
+  }
+
+  let absoluteLibPath = appPath.concat("\\", localLibPath);
+  let absoluteLibDirPath = appPath.concat("\\", libDirPath);
+
+  env.PATH = `${env.PATH}${path.delimiter}${absoluteLibDirPath}`;
+  libPath = "nmengine.dll"
+
 } else if (platform === "darwin") {
-  libPath = "src/lib/nmengine/macos/libnmengine.dylib";
+  let localLibPath = "src/lib/nmengine/macos/libnmengine.dylib";
+  let absoluteLibPath = appPath.concat("/", localLibPath);
+  libPath = isDev ? localLibPath : absoluteLibPath;
 }
 
-// let libnmengine = "src/lib/nmengine/libnmengine.dylib";
-let introPath = window.location.pathname;
-let parentPathArr = introPath.split("/").slice(0, -2);
-let parentPath = parentPathArr.join("/");
-// let libPath = "src/lib/nmengine/macos/libnmengine.dylib";
-let libPathInApp = parentPath.concat("/", libPath);
-let libnmengine = isDev ? libPath : libPathInApp;
+console.log("libPath", libPath);
 
-const nmengine = ffi.Library(libnmengine, {
+const nmengine = ffi.Library(libPath, {
   nm_get_devices: [uint16, [deviceArrayPtr, uint8Ptr]],
   nm_connect: [uint16, [devicePtr]],
   nm_close: [uint16, [devicePtr]],

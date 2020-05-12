@@ -59,21 +59,21 @@
     ]
   },
   "author": {
-    "name": "nepes",
+    "name": "Nepes C.",
     "email": "ai-lab@nepes.co.kr",
     "url": "http://www.theneuromorphic.com"
   },
   "build": {
     "appId": "com.theneuromorphic.knowledgestudio",
     "productName": "Knowledge Studio",
-    "copyright": "Copyright © 2029 ${author}",
+    "copyright": "Copyright © 2020 ${author}",
     "asar": false,
     "mac": {
       "category": "public.app-category.utilities",
       "icon": "public/icon.png"
     },
-    "win": { 
-      "target": [  
+    "win": {
+      "target": [
         "zip",
         "nsis"
       ],

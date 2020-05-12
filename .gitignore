@@ -2027,3 +2027,24 @@ dist/win-unpacked/snapshot_blob.bin
 dist/win-unpacked/swiftshader/libEGL.dll
 dist/win-unpacked/swiftshader/libGLESv2.dll
 dist/win-unpacked/v8_context_snapshot.bin
+dist/Knowledge Studio Setup 0.1.0.exe
+dist/Knowledge Studio Setup 0.1.0.exe.blockmap
+dist/Knowledge Studio-0.1.0-ia32-win.zip
+dist/win-ia32-unpacked/Knowledge Studio.exe
+dist/win-ia32-unpacked/resources/app/dist/.icon-ico/icon.ico
+dist/win-ia32-unpacked/resources/app/dist/Knowledge Studio-0.1.0-ia32-win.zip
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/macos/libnmengine.dylib
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x64/CyAPI.lib
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x64/cyusbserial.dll
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x64/cyusbserial.lib
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x64/nmengine.dll
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x64/nmengine.lib
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x86/CyAPI.lib
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x86/cyusbserial.dll
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x86/cyusbserial.lib
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x86/nmengine.dll
+dist/win-ia32-unpacked/resources/app/src/lib/nmengine/x86/nmengine.lib
+dist/win-ia32-unpacked/resources/app/src/lib/vision/x64/VisionLibrary.dll
+dist/win-ia32-unpacked/resources/app/src/lib/vision/x64/VisionLibrary.lib
+dist/win-ia32-unpacked/resources/app/src/lib/vision/x86/VisionLibrary.dll
+dist/win-ia32-unpacked/resources/app/src/lib/vision/x86/VisionLibrary.lib

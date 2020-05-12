@@ -1,6 +1,6 @@
 import React from "react";
-import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "../assets/styles/Header.css";
 
 // import images
